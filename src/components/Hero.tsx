@@ -6,12 +6,39 @@ import Header from "./Header";
 const fadeInHero = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(40px) scale(0.98);
+    transform: translateY(5rem) scale(0.98);
     filter: blur(4px);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+`;
+
+
+const fadeInHeader= keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-5rem) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+`;
+
+const fadeInCornerTag= keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(10rem) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
     filter: blur(0);
   }
 `;
@@ -66,11 +93,7 @@ const Overlay = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.3) 80%,
-    rgb(10 12 27) 100%
-  ) !important;
+  background: rgba(0, 0, 0, 0.3);
   animation: ${overlayFade} 1.5s ease-out forwards;
   z-index: 1;
 `;
@@ -81,7 +104,7 @@ const HeaderContainer = styled.div`
   left: 0;
   width: 100%;
   z-index: 2;
-  animation: ${fadeInHero} 1.5s ease-out both;
+  animation: ${fadeInHeader} 1.5s ease-out both;
 `;
 
 const Content = styled.div`
@@ -135,6 +158,8 @@ const CornerTag = styled.div`
   transform: skewX(-20deg);
   text-transform: uppercase;
   white-space: pre;
+    animation: ${fadeInCornerTag} 1.5s ease-out both;
+
 `;
 
 const Description = styled.div`
@@ -167,7 +192,7 @@ export default function Hero() {
           <br /> <span style={{ color: "black" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
-      <CornerTag>Released  3.5  years  ago... </CornerTag>
+      <CornerTag>Released 3.5 years ago... </CornerTag>
     </HeroSection>
   );
 }

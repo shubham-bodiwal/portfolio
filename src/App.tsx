@@ -1,11 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import Hero from "./components/Hero";
 import Gallery from "./components/Gallery";
 import Portfolio from "./components/Portfolio";
 import Projects from "./components/Projects";
 import Footer from "./components/Footer";
 import HoverInspectorWrapper from "./HOC/HoverInspectorWrapper ";
+
+const fadeInIndicator= keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-3rem) translateY(-50%) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(-50%) scale(1);
+    filter: blur(0);
+  }
+`;
 
 const AppWrapper = styled.div`
   background-color: #0a0c1b;
@@ -48,6 +61,8 @@ const IndicatorWrapper = styled.div`
   align-items: center;
   gap: 1rem;
   z-index: 10;
+    animation: ${fadeInIndicator} 1.5s ease-out both;
+
 `;
 
 const Dot = styled.div<{ active?: boolean }>`
