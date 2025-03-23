@@ -38,12 +38,12 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <NavLink className="active" href="#about">
-        About
-      </NavLink>
-      <NavLink href="#work">Work</NavLink>
+        Specifications
+      </NavLink> {/* Changed from "about" to "Specs" */}
+      <NavLink href="#work">Loadouts</NavLink> {/* Changed from "skill" to "Loadouts" */}
       <Logo src={logoImage} alt="Logo" />
-      <NavLink href="#shop">Shop</NavLink>
-      <NavLink href="#contacts">Contacts</NavLink>
+      <NavLink href="#shop">Exposures</NavLink> {/* Changed from "projects" to "Exposures" */}
+      <NavLink href="#contacts">Playground</NavLink>  {/* Changed from "contacts" to "Playground" */}
     </HeaderWrapper>
   );
 }

@@ -119,11 +119,11 @@ const Subtitle = styled.p`
 const CornerTag = styled.div`
   position: absolute;
   bottom: 3rem;
-  right: 3rem;
+  right: 0rem;
   background: #ffaa33;
   color: black;
   font-weight: 700;
-  padding: 0.5  rem 4rem;
+  padding: 0.5rem 4rem;
   font-size: 0.75rem;
   transform: ;
   transform-origin: bottom left;
@@ -133,6 +133,8 @@ const CornerTag = styled.div`
   margin-top: 1.5rem;
   letter-spacing: 0.7em;
   transform: skewX(-20deg);
+  text-transform: uppercase;
+  white-space: pre;
 `;
 
 const Description = styled.div`
@@ -165,7 +167,7 @@ export default function Hero() {
           <br /> <span style={{ color: "black" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
-      <CornerTag>OUT OF THE BOX</CornerTag>
+      <CornerTag>Released  3.5  years  ago... </CornerTag>
     </HeroSection>
   );
 }
