@@ -86,9 +86,10 @@ const HeaderContainer = styled.div`
 
 const Content = styled.div`
   z-index: 2;
-  max-width: 90%;
+  max-width: 85%;
+  padding: 1rem 5rem;
   animation: ${fadeInHero} 1.5s ease-out both;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(5px);
 
   border: 1px solid rgba(255, 255, 255, 0.1);
 `;
@@ -96,10 +97,10 @@ const Content = styled.div`
 const Title = styled.h1`
   font-size: 4.5rem;
   font-weight: 800;
-  letter-spacing: 0.5em;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-
+  letter-spacing: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
+  margin-left: 2rem;
   @media (max-width: 768px) {
     font-size: 3rem;
   }
@@ -108,10 +109,40 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   color: #ffaa33;
   text-decoration: none;
-  letter-spacing: 2.5em;
-  line-height: 1em;
+  letter-spacing: 4rem;
+  margin-left: 4rem;
+  line-height: 2rem;
   font-weight: 900;
   font-size: 2rem;
+`;
+
+const CornerTag = styled.div`
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  background: #ffaa33;
+  color: black;
+  font-weight: 700;
+  padding: 0.5  rem 4rem;
+  font-size: 0.75rem;
+  transform: ;
+  transform-origin: bottom left;
+  z-index: 3;
+
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+  letter-spacing: 0.7em;
+  transform: skewX(-20deg);
+`;
+
+const Description = styled.div`
+  font-size: 1rem;
+  color: #ffffff66;
+  margin-top: 1rem;
+  letter-spacing: 7rem;
+  text-transform: uppercase;
+  text-align: center;
+  margin-left: 7rem;
 `;
 
 // === Component ===
@@ -127,11 +158,14 @@ export default function Hero() {
         <Header />
       </HeaderContainer>
       <Content>
+        <Description>Portfolio</Description>
         <Title>SHUBHAM BHODIWAL</Title>
         <Subtitle>
-          FRONTEND <span style={{ color: "black" }}>DEVELOPER</span>
+          FRONTEND
+          <br /> <span style={{ color: "black" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
+      <CornerTag>OUT OF THE BOX</CornerTag>
     </HeroSection>
   );
 }

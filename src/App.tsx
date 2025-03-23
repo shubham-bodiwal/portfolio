@@ -10,7 +10,7 @@ import HoverInspectorWrapper from "./HOC/HoverInspectorWrapper ";
 const AppWrapper = styled.div`
   background-color: #0a0c1b;
   color: #fff;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   overflow: hidden;
   height: calc(var(--vh, 1vh) * 100);
   position: relative;
@@ -54,7 +54,7 @@ const Dot = styled.div<{ active?: boolean }>`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: ${(p) => (p.active ? '#ffaa33' : '#ffffff88')};
+  background-color: ${(p) => (p.active ? "#ffaa33" : "#ffffff88")};
   transition: background-color 0.3s;
 `;
 
@@ -67,6 +67,7 @@ const VerticalLabel = styled.div`
   letter-spacing: 0.7em;
 `;
 
+
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
@@ -76,11 +77,14 @@ function App() {
 
   useEffect(() => {
     const setVh = () => {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight * 0.01}px`
+      );
     };
     setVh();
-    window.addEventListener('resize', setVh);
-    return () => window.removeEventListener('resize', setVh);
+    window.addEventListener("resize", setVh);
+    return () => window.removeEventListener("resize", setVh);
   }, []);
 
   useEffect(() => {
@@ -115,7 +119,10 @@ function App() {
       const touchEndY = e.changedTouches[0].clientY;
       if (isScrolling.current) return;
 
-      if (touchStartY - touchEndY > 50 && currentIndex.current < sections.length - 1) {
+      if (
+        touchStartY - touchEndY > 50 &&
+        currentIndex.current < sections.length - 1
+      ) {
         currentIndex.current++;
         animateTo(currentIndex.current);
       } else if (touchEndY - touchStartY > 50 && currentIndex.current > 0) {
@@ -137,20 +144,31 @@ function App() {
 
   return (
     // <HoverInspectorWrapper>
-      <AppWrapper ref={containerRef}>
-        <Section $active={active === 0}><Hero /></Section>
-        <Section $active={active === 1}><Gallery /></Section>
-        <Section $active={active === 2}><Portfolio /></Section>
-        <Section $active={active === 3}><Projects /></Section>
-        <Section $active={active === 4}><Footer /></Section>
+    <AppWrapper ref={containerRef}>
+      <Section $active={active === 0}>
+        <Hero />
+      </Section>
+      <Section $active={active === 1}>
+        <Gallery />
+      </Section>
+      <Section $active={active === 2}>
+        <Portfolio />
+      </Section>
+      <Section $active={active === 3}>
+        <Projects />
+      </Section>
+      <Section $active={active === 4}>
+        <Footer />
+      </Section>
 
-        <IndicatorWrapper>
-          {[...Array(totalSections)].map((_, i) => (
-            <Dot key={i} active={active === i} />
-          ))}
-          <VerticalLabel>YOU'RE HERE</VerticalLabel>
-        </IndicatorWrapper>
-      </AppWrapper>
+      <IndicatorWrapper>
+        {[...Array(totalSections)].map((_, i) => (
+          <Dot key={i} active={active === i} />
+        ))}
+        <VerticalLabel>YOU'RE HERE</VerticalLabel>
+      </IndicatorWrapper>
+
+    </AppWrapper>
     // </HoverInspectorWrapper>
   );
 }
