@@ -60,7 +60,7 @@ export default function SkillGraph() {
         onEdgesChange={onEdgesChange}
         fitView
       >
-        <MiniMap nodeColor={(n) => n.style?.background || "#00f5d4"} />
+        <MiniMap nodeColor={(n) => n.style?.background as string || "#00f5d4"} />
         <Controls />
         <Background color="#222" gap={16} />
       </ReactFlow>

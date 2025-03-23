@@ -1,18 +1,23 @@
 import { useState, useEffect, ReactNode } from "react";
 import styled from "styled-components";
 
-const InspectorPanel = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 400px;
+const Wrapper = styled.div`
+  display: flex;
   height: 100vh;
+  overflow: hidden;
+`;
+
+const PageContent = styled.div`
+  flex: 1;
+  overflow-y: auto;
+`;
+
+const InspectorPanel = styled.div`
+  width: 400px;
   background: #1e1e2f;
   color: #fff;
   font-size: 12px;
-  overflow-y: auto;
   border-left: 1px solid #444;
-  z-index: 9999;
   display: flex;
   flex-direction: column;
 `;
@@ -41,6 +46,7 @@ const Tab = styled.button<{ active: boolean }>`
 
 const ContentArea = styled.div`
   padding: 1rem;
+  overflow-y: auto;
 `;
 
 const Pre = styled.pre`
@@ -48,6 +54,13 @@ const Pre = styled.pre`
   text-wrap: normal;
   padding: 0.5rem;
   border-radius: 4px;
+`;
+
+const StyleBlock = styled.div`
+  margin-bottom: 1rem;
+  border: 1px solid #444;
+  padding: 0.5rem;
+  border-radius: 6px;
 `;
 
 type ElementDetails = {
@@ -64,7 +77,6 @@ export default function HoverInspectorWrapper({ children }: Props) {
   const [details, setDetails] = useState<ElementDetails | null>(null);
   const [activeTab, setActiveTab] = useState<"styles" | "html">("styles");
 
-  // Gather declared CSS from each class
   const getClassStyles = (el: HTMLElement) => {
     const classStyles: Record<string, Record<string, string>> = {};
     const classes = Array.from(el.classList);
@@ -97,7 +109,6 @@ export default function HoverInspectorWrapper({ children }: Props) {
     return classStyles;
   };
 
-  // Simple regex-based HTML formatter
   const formatHtml = (html: string) => {
     let pretty = html.replace(/>\s*</g, ">\n<");
     let pad = 0;
@@ -113,7 +124,6 @@ export default function HoverInspectorWrapper({ children }: Props) {
       .trim();
   };
 
-  // Extract details from element
   const getElementDetails = (el: HTMLElement) => {
     if (!el) return null;
     const attributes: Record<string, string> = {};
@@ -137,8 +147,9 @@ export default function HoverInspectorWrapper({ children }: Props) {
   }, []);
 
   return (
-    <>
-      {children}
+    <Wrapper>
+      <PageContent>{children}</PageContent>
+
       {details && (
         <InspectorPanel>
           <TabBar>
@@ -160,17 +171,16 @@ export default function HoverInspectorWrapper({ children }: Props) {
               <>
                 <strong>Declared CSS (class-wise):</strong>
                 {Object.entries(details.declaredStyles).map(([className, props]) => {
-                  // Skip if no declared properties
                   if (!Object.keys(props).length) return null;
                   return (
-                    <div key={className}>
+                    <StyleBlock key={className}>
                       <strong>.{className}</strong>
                       <Pre>
                         {Object.entries(props)
                           .map(([prop, val]) => `${prop}: ${val}`)
                           .join("\n")}
                       </Pre>
-                    </div>
+                    </StyleBlock>
                   );
                 })}
               </>
@@ -185,6 +195,6 @@ export default function HoverInspectorWrapper({ children }: Props) {
           </ContentArea>
         </InspectorPanel>
       )}
-    </>
+    </Wrapper>
   );
 }

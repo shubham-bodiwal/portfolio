@@ -1,5 +1,4 @@
-// File: src/pages/PerformanceDashboard.tsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   LineChart,
@@ -7,7 +6,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 
 const Wrapper = styled.div`
@@ -55,14 +54,19 @@ export default function PerformanceDashboard() {
   const [hydrationTime, setHydrationTime] = useState(200);
   const [bundleSize, setBundleSize] = useState("~180kb");
   const [lazyComponents, setLazyComponents] = useState(6);
-  const [fpsHistory, setFpsHistory] = useState<{ time: number; fps: number }[]>([]);
+  const [fpsHistory, setFpsHistory] = useState<{ time: number; fps: number }[]>(
+    []
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
       const nextFps = Math.floor(Math.random() * 15 + 50);
       setFps(nextFps);
       setHydrationTime(Math.floor(Math.random() * 100 + 150));
-      setFpsHistory((prev) => [...prev.slice(-19), { time: Date.now(), fps: nextFps }]);
+      setFpsHistory((prev) => [
+        ...prev.slice(-19),
+        { time: Date.now(), fps: nextFps },
+      ]);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -76,11 +80,21 @@ export default function PerformanceDashboard() {
           <Label>Frame Rate (Live simulated)</Label>
           <ResponsiveContainer width="100%" height={100}>
             <LineChart data={fpsHistory}>
-              <Line type="monotone" dataKey="fps" stroke="#00f5d4" strokeWidth={2} dot={false} />
+              <Line
+                type="monotone"
+                dataKey="fps"
+                stroke="#00f5d4"
+                strokeWidth={2}
+                dot={false}
+              />
               <XAxis hide dataKey="time" />
               <YAxis hide domain={[30, 75]} />
               <Tooltip
-                contentStyle={{ backgroundColor: "#1c1e2b", border: "none", color: "#fff" }}
+                contentStyle={{
+                  backgroundColor: "#1c1e2b",
+                  border: "none",
+                  color: "#fff",
+                }}
                 labelFormatter={() => "Time"}
               />
             </LineChart>
@@ -104,7 +118,9 @@ export default function PerformanceDashboard() {
 
         <Card>
           <h3 style={{ color: "#fff" }}>Optimization Summary</h3>
-          <ul style={{ fontSize: "0.85rem", marginTop: "0.5rem", color: "#ccc" }}>
+          <ul
+            style={{ fontSize: "0.85rem", marginTop: "0.5rem", color: "#ccc" }}
+          >
             <li>✅ Code Splitting Enabled</li>
             <li>✅ Lazy Loaded Routes</li>
             <li>✅ Tree Shaking Active</li>
@@ -115,7 +131,9 @@ export default function PerformanceDashboard() {
 
         <Card>
           <h3 style={{ color: "#ff4d4f" }}>🚨 Detected Warnings</h3>
-          <ul style={{ fontSize: "0.85rem", marginTop: "0.5rem", color: "#faa" }}>
+          <ul
+            style={{ fontSize: "0.85rem", marginTop: "0.5rem", color: "#faa" }}
+          >
             <li>🖼️ Large image not optimized</li>
             <li>🔁 Possible unnecessary re-renders</li>
             <li>⛔ Excessive DOM depth (9+ levels)</li>

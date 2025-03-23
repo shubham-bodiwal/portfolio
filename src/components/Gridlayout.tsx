@@ -1,20 +1,4 @@
-import Masonry from "react-masonry-css";
-import styled, { createGlobalStyle } from "styled-components";
-
-const MasonryStyles = createGlobalStyle`
-  .masonry-grid {
-    display: flex;
-    margin-left: -1rem;
-    width: auto;
-  }
-  .masonry-column {
-    padding-left: 1rem;
-    background-clip: padding-box;
-  }
-  .masonry-column > div {
-    margin-bottom: 1rem;
-  }
-`;
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 4rem 2rem;
@@ -38,6 +22,24 @@ const Description = styled.p`
   margin: 0 auto 3rem;
 `;
 
+const ResizableContainer = styled.div`
+  resize: horizontal;
+  overflow: auto;
+  padding: 1rem;
+  border: 2px dashed #333;
+  border-radius: 10px;
+  min-width: 280px;
+  max-width: 100%;
+  margin: 0 auto 2rem;
+  background: #131622;
+  width: 80%;
+`;
+
+const MasonryContainer = styled.div`
+  column-width: 250px;
+  column-gap: 1.5rem;
+`;
+
 const Card = styled.div`
   background: #1b1e2b;
   padding: 1.5rem;
@@ -45,6 +47,7 @@ const Card = styled.div`
   border: 1px solid #222;
   box-shadow: 0 0 6px rgba(0, 245, 212, 0.1);
   margin-bottom: 1.5rem;
+  break-inside: avoid;
 `;
 
 const ImageCard = styled(Card)`
@@ -78,69 +81,58 @@ const CTAButton = styled.button`
   }
 `;
 
-const breakpointColumnsObj = {
-  default: 4,
-  1100: 3,
-  768: 2,
-  500: 1
-};
-
 export default function GridLayout() {
   return (
     <Wrapper>
-      <MasonryStyles />
-      <Title>📐 Advanced Masonry Grid Layout</Title>
+      <Title>📐 CSS Masonry Layout (No Library)</Title>
       <Description>
-        This layout uses a responsive <strong>Pinterest-style Masonry grid</strong> with auto-adjustable
-        columns and dynamic card heights using <code>react-masonry-css</code>. Great for showcasing
-        cards of varied sizes while minimizing vertical whitespace.
+        This layout mimics a Pinterest-style masonry using <code>column-width</code> so it adapts to
+        the <strong>resizable parent container</strong> instead of the full viewport.
       </Description>
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="masonry-grid"
-        columnClassName="masonry-column"
-      >
-        <Card>
-          <h3>Simple Text Card</h3>
-          <p>This is a basic card layout for quick information display.</p>
-        </Card>
+      <ResizableContainer>
+        <MasonryContainer>
+          <Card>
+            <h3>Simple Text Card</h3>
+            <p>This is a basic card layout for quick information display.</p>
+          </Card>
 
-        <Card>
-          <h3>Double Content</h3>
-          <p>This card simulates more vertical height and fills the column accordingly with more text content to demonstrate height differences.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</p>
-        </Card>
+          <Card>
+            <h3>Double Content</h3>
+            <p>This card simulates more vertical height and fills the column accordingly with more text content to demonstrate height differences.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</p>
+          </Card>
 
-        <ImageCard>
-          <span>🖼️ Background Image Card</span>
-        </ImageCard>
+          <ImageCard>
+            <span>🖼️ Background Image Card</span>
+          </ImageCard>
 
-        <StatCard>
-          <h2>1.2K+</h2>
-          <p>Visitors this month</p>
-        </StatCard>
+          <StatCard>
+            <h2>1.2K+</h2>
+            <p>Visitors this month</p>
+          </StatCard>
 
-        <Card>
-          <h3>Quote Block</h3>
-          <blockquote>
-            "Design is not just what it looks like. Design is how it works." – Steve Jobs
-          </blockquote>
-        </Card>
+          <Card>
+            <h3>Quote Block</h3>
+            <blockquote>
+              "Design is not just what it looks like. Design is how it works." – Steve Jobs
+            </blockquote>
+          </Card>
 
-        <Card>
-          <h3>Call to Action</h3>
-          <p>Want to learn more about building UI like this?</p>
-          <CTAButton>Explore Docs</CTAButton>
-        </Card>
+          <Card>
+            <h3>Call to Action</h3>
+            <p>Want to learn more about building UI like this?</p>
+            <CTAButton>Explore Docs</CTAButton>
+          </Card>
 
-        <Card>
-          <h3>Another Tall Card</h3>
-          <p>
-            This block is intentionally taller to simulate varying content. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Donec vehicula.
-          </p>
-        </Card>
-      </Masonry>
+          <Card>
+            <h3>Another Tall Card</h3>
+            <p>
+              This block is intentionally taller to simulate varying content. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit. Donec vehicula.
+            </p>
+          </Card>
+        </MasonryContainer>
+      </ResizableContainer>
     </Wrapper>
   );
 }

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Gallery from "./components/Gallery";
 import Portfolio from "./components/Portfolio";
@@ -17,7 +16,6 @@ function App() {
   return (
     <HoverInspectorWrapper>
     <AppWrapper>
-      <Header />
       <Hero />
       <Gallery />
       <Portfolio />
