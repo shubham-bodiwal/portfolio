@@ -81,7 +81,6 @@ const HeaderContainer = styled.div`
   left: 0;
   width: 100%;
   z-index: 2;
-  backdrop-filter: blur(10px);
   animation: ${fadeInHero} 1.5s ease-out both;
 `;
 
@@ -89,12 +88,17 @@ const Content = styled.div`
   z-index: 2;
   max-width: 90%;
   animation: ${fadeInHero} 1.5s ease-out both;
+  backdrop-filter: blur(4px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const Title = styled.h1`
   font-size: 4.5rem;
   font-weight: 800;
-  letter-spacing: -1px;
+  letter-spacing: 0.5em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
 
   @media (max-width: 768px) {
     font-size: 3rem;
@@ -102,10 +106,11 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.p`
-  color:  #ffaa33; ;
+  color: #ffaa33;
   text-decoration: none;
-  letter-spacing: 0.05em;
-  font-weight: 700;
+  letter-spacing: 2.5em;
+  line-height: 1em;
+  font-weight: 900;
   font-size: 2rem;
 `;
 
@@ -123,7 +128,9 @@ export default function Hero() {
       </HeaderContainer>
       <Content>
         <Title>SHUBHAM BHODIWAL</Title>
-        <Subtitle>FRONTEND  DEVELOPER</Subtitle>
+        <Subtitle>
+          FRONTEND <span style={{ color: "black" }}>DEVELOPER</span>
+        </Subtitle>
       </Content>
     </HeroSection>
   );

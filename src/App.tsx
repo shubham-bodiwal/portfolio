@@ -61,10 +61,10 @@ const Dot = styled.div<{ active?: boolean }>`
 const VerticalLabel = styled.div`
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: #ffffff66;
   margin-top: 1rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.7em;
 `;
 
 function App() {
@@ -136,7 +136,7 @@ function App() {
   }, []);
 
   return (
-    <HoverInspectorWrapper>
+    // <HoverInspectorWrapper>
       <AppWrapper ref={containerRef}>
         <Section $active={active === 0}><Hero /></Section>
         <Section $active={active === 1}><Gallery /></Section>
@@ -151,7 +151,7 @@ function App() {
           <VerticalLabel>YOU'RE HERE</VerticalLabel>
         </IndicatorWrapper>
       </AppWrapper>
-    </HoverInspectorWrapper>
+    // </HoverInspectorWrapper>
   );
 }
 
