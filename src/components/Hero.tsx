@@ -38,6 +38,7 @@ const overlayFade = keyframes`
 const HeroSection = styled.section`
   position: relative;
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,7 +57,7 @@ const BackgroundVideo = styled.video`
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  animation: ${BlurInVideo} 2s ease-out forwards;
+  animation: ${BlurInVideo} 1.5s ease-out forwards;
 `;
 
 const Overlay = styled.div`
@@ -70,7 +71,7 @@ const Overlay = styled.div`
     rgba(0, 0, 0, 0.3) 80%,
     rgb(10 12 27) 100%
   ) !important;
-  animation: ${overlayFade} 2s ease-out forwards;
+  animation: ${overlayFade} 1.5s ease-out forwards;
   z-index: 1;
 `;
 
@@ -81,13 +82,13 @@ const HeaderContainer = styled.div`
   width: 100%;
   z-index: 2;
   backdrop-filter: blur(10px);
-  animation: ${fadeInHero} 2s ease-out both;
+  animation: ${fadeInHero} 1.5s ease-out both;
 `;
 
 const Content = styled.div`
   z-index: 2;
   max-width: 90%;
-  animation: ${fadeInHero} 2s ease-out both;
+  animation: ${fadeInHero} 1.5s ease-out both;
 `;
 
 const Title = styled.h1`
@@ -101,14 +102,11 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.p`
-  margin-top: 1.25rem;
-  font-size: 1.5rem;
-  color: #00f5d4;
-  font-weight: 500;
-
-  @media (max-width: 768px) {
-    font-size: 1.125rem;
-  }
+  color:  #ffaa33; ;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 2rem;
 `;
 
 // === Component ===
@@ -124,8 +122,8 @@ export default function Hero() {
         <Header />
       </HeaderContainer>
       <Content>
-        <Title>Shubham Bhodiwal</Title>
-        <Subtitle>Frontend Developer</Subtitle>
+        <Title>SHUBHAM BHODIWAL</Title>
+        <Subtitle>FRONTEND  DEVELOPER</Subtitle>
       </Content>
     </HeroSection>
   );
