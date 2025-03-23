@@ -33,12 +33,12 @@ const fadeInHeader= keyframes`
 const fadeInCornerTag= keyframes`
   0% {
     opacity: 0;
-    transform: translateX(10rem) scale(0.98);
+    transform: translateX(10rem) skewX(-20deg); scale(0.98);
     filter: blur(4px);
   }
   100% {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translateX(0) skewX(-20deg); scale(1);
     filter: blur(0);
   }
 `;
@@ -158,6 +158,7 @@ const CornerTag = styled.div`
   transform: skewX(-20deg);
   text-transform: uppercase;
   white-space: pre;
+
     animation: ${fadeInCornerTag} 1.5s ease-out both;
 
 `;
@@ -192,7 +193,7 @@ export default function Hero() {
           <br /> <span style={{ color: "black" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
-      <CornerTag>Released 3.5 years ago... </CornerTag>
+      <CornerTag>Released in november 2021 </CornerTag>
     </HeroSection>
   );
 }
