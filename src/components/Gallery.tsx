@@ -28,7 +28,7 @@ const GalleryWrapper = styled.section`
 const GalleryContainer = styled.div`
   padding: 2rem;
   border: 1px solid #e0e0e0;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
@@ -45,7 +45,7 @@ const GalleryItem = styled.div<GalleryItemProps>`
   flex-direction: column;
   justify-content: space-around;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid ${props => props.isWhite ? '#e0e0e0' : '#333333'};
+  border: 1px solid ${props => props.isWhite ? '#000000' : '#ffffff'};
   background: ${props => props.isWhite ? '#ffffff' : '#000000'};
 
   &::after {
@@ -88,10 +88,12 @@ const GalleryImage = styled.img`
   border-radius: 0.2rem;
   margin-top: 1rem;
   filter: grayscale(100%) contrast(110%);
+  display: none;
 
   ${GalleryItem}:hover & {
     opacity: 1;
     transform: scale(1) translateY(-10px);
+    display: block;
   }
 `;
 
