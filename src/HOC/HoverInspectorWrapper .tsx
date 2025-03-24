@@ -1,5 +1,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import styled from "styled-components";
+import bgImage from "../assets/inspectBg.png";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,33 +15,26 @@ const PageContent = styled.div`
 
 const InspectorPanel = styled.div`
   width: 400px;
-  background: #1e1e2f;
+  position: relative;
+  background: url(${bgImage}) no-repeat center center;
+  background-size: cover;
   color: #fff;
   font-size: 12px;
-  border-left: 1px solid #444;
+  border-left: 1px solid grey;
   display: flex;
   flex-direction: column;
-`;
 
-const TabBar = styled.div`
-  display: flex;
-  border-bottom: 1px solid #444;
-`;
-
-const Tab = styled.button<{ active: boolean }>`
-  flex: 1;
-  padding: 0.5rem;
-  background: ${(p) => (p.active ? "#2e2e4d" : "transparent")};
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: ${(p) => (p.active ? "bold" : "normal")};
-  border-right: 1px solid #444;
-  &:last-child {
-    border-right: none;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
   }
-  &:hover {
-    background: #333352;
+
+  > * {
+    position: relative;
+    z-index: 1;
   }
 `;
 
@@ -50,10 +44,12 @@ const ContentArea = styled.div`
 `;
 
 const Pre = styled.pre`
-  background-color: #282c34;
-  text-wrap: normal;
   padding: 0.5rem;
   border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #ddd;
+  line-height: 1.4;
 `;
 
 const StyleBlock = styled.div`
@@ -61,6 +57,8 @@ const StyleBlock = styled.div`
   border: 1px solid #444;
   padding: 0.5rem;
   border-radius: 6px;
+  backdrop-filter: blur(10px);
+  background-color: #00000030;
 `;
 
 type ElementDetails = {
@@ -152,46 +150,35 @@ export default function HoverInspectorWrapper({ children }: Props) {
 
       {details && (
         <InspectorPanel>
-          <TabBar>
-            <Tab active={activeTab === "styles"} onClick={() => setActiveTab("styles")}>
-              Styles
-            </Tab>
-            <Tab active={activeTab === "html"} onClick={() => setActiveTab("html")}>
-              HTML
-            </Tab>
-          </TabBar>
           <ContentArea>
             <h4>Tag: {details.tagName}</h4>
-            <strong>Attributes:</strong>
-            <Pre>{JSON.stringify(details.attributes, null, 2)}</Pre>
-            <strong>Children:</strong>
-            <Pre>{details.children}</Pre>
+            <StyleBlock>
+              <strong>Attributes:</strong>
+              <Pre>{JSON.stringify(details.attributes, null, 2)}</Pre>
+            </StyleBlock>
+            <StyleBlock>
+              <strong>Children:</strong>
+              <Pre>{details.children}</Pre>
+            </StyleBlock>
 
-            {activeTab === "styles" && (
-              <>
-                <strong>Declared CSS (class-wise):</strong>
-                {Object.entries(details.declaredStyles).map(([className, props]) => {
-                  if (!Object.keys(props).length) return null;
-                  return (
-                    <StyleBlock key={className}>
-                      <strong>.{className}</strong>
-                      <Pre>
-                        {Object.entries(props)
-                          .map(([prop, val]) => `${prop}: ${val}`)
-                          .join("\n")}
-                      </Pre>
-                    </StyleBlock>
-                  );
-                })}
-              </>
-            )}
-
-            {activeTab === "html" && (
-              <>
-                <strong>HTML:</strong>
-                <Pre>{details.outerHTML}</Pre>
-              </>
-            )}
+            <strong>Declared CSS (class-wise):</strong>
+            {Object.entries(details.declaredStyles).map(([className, props]) => {
+              if (!Object.keys(props).length) return null;
+              return (
+                <StyleBlock key={className}>
+                  <strong>.{className}</strong>
+                  <Pre>
+                    {Object.entries(props)
+                      .map(([prop, val]) => `${prop}: ${val}`)
+                      .join("\n")}
+                  </Pre>
+                </StyleBlock>
+              );
+            })}
+            <StyleBlock>
+              <strong>HTML:</strong>
+              <Pre>{details.outerHTML}</Pre>
+            </StyleBlock>
           </ContentArea>
         </InspectorPanel>
       )}

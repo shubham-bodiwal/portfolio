@@ -6,6 +6,7 @@ import Portfolio from "./components/Portfolio";
 import Projects from "./components/Projects";
 import Footer from "./components/Footer";
 import HoverInspectorWrapper from "./HOC/HoverInspectorWrapper ";
+import PerformanceDashboard from "./components/PerformanceDashboard";
 
 const fadeInIndicator= keyframes`
   0% {
@@ -184,8 +185,9 @@ function App() {
       </IndicatorWrapper>
 
     </AppWrapper>
-    // </HoverInspectorWrapper>
+      // </HoverInspectorWrapper>
   );
+
 }
 
 export default App;

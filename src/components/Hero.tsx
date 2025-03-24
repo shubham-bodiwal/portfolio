@@ -17,7 +17,7 @@ const fadeInHero = keyframes`
 `;
 
 
-const fadeInHeader= keyframes`
+const fadeInHeader = keyframes`
   0% {
     opacity: 0;
     transform: translateY(-5rem) scale(0.98);
@@ -30,7 +30,7 @@ const fadeInHeader= keyframes`
   }
 `;
 
-const fadeInCornerTag= keyframes`
+const fadeInCornerTag = keyframes`
   0% {
     opacity: 0;
     transform: translateX(10rem) skewX(-20deg); scale(0.98);
@@ -112,28 +112,30 @@ const Content = styled.div`
   max-width: 85%;
   padding: 1rem 5rem;
   animation: ${fadeInHero} 1.5s ease-out both;
-  backdrop-filter: blur(5px);
-
+  backdrop-filter: blur(3px);
+background: #19223849;
   border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const Title = styled.h1`
   font-size: 4.5rem;
   font-weight: 800;
-  letter-spacing: 2rem;
+  letter-spacing: 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 2rem;
-  margin-left: 2rem;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
   @media (max-width: 768px) {
     font-size: 3rem;
-  }
-`;
+    }
+    `;
+// font-family: "Zen Dots", sans-serif;
 
 const Subtitle = styled.p`
   color: #ffaa33;
   text-decoration: none;
   letter-spacing: 4rem;
-  margin-left: 4rem;
+  padding-left: 4rem;
   line-height: 2rem;
   font-weight: 900;
   font-size: 2rem;
@@ -165,18 +167,23 @@ const CornerTag = styled.div`
 
 const Description = styled.div`
   font-size: 1rem;
-  color: #ffffff66;
+  color: #ffffff8f;
   margin-top: 1rem;
   letter-spacing: 7rem;
   text-transform: uppercase;
   text-align: center;
-  margin-left: 7rem;
+  padding-left: 7rem;
+  position: absolute;
+  top: 0rem;
+  z-index: 10;
+    animation: ${fadeInHeader} 1.5s ease-out both;
 `;
 
 // === Component ===
 export default function Hero() {
   return (
     <HeroSection>
+      <Description>Portfolio</Description>
       <BackgroundVideo autoPlay loop muted playsInline>
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
@@ -186,11 +193,10 @@ export default function Hero() {
         <Header />
       </HeaderContainer>
       <Content>
-        <Description>Portfolio</Description>
         <Title>SHUBHAM BHODIWAL</Title>
         <Subtitle>
           FRONTEND
-          <br /> <span style={{ color: "black" }}>DEVELOPER</span>
+          <br /> <span style={{ color: "white" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
       <CornerTag>Released in november 2021 </CornerTag>

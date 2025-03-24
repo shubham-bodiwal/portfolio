@@ -19,31 +19,74 @@ const Logo = styled.img`
 `;
 
 const NavLink = styled.a`
+  position: relative;
   color: #ffffff;
   text-decoration: none;
   letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 1.125rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-block; /* ensures scale animation doesn't affect layout */
+
+  span {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
 
   &:hover {
-    color: #00f5d4;
+    color: #ffaa33;
+    transform: scale(1.1);
   }
 
   &.active {
-    color: #ffaa33; /* Gold-ish active color like in your screenshot */
+    color: #ffaa33;
+  }
+
+  &.active::before,
+  &.active::after,
+  &.active span::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    background: #ffaa33;
+  }
+
+  &.active::before {
+    width: 50px;
+    bottom: -15px;
+    left: -49px;
+    transform: rotate(60deg);
+    transform-origin: right top;
+  }
+
+  &.active::after {
+    width: 50px;
+    bottom: -15px;
+    right: -49px;
+    transform: rotate(-60deg);
+    transform-origin: left top;
+  }
+
+  &.active span::after {
+    width: 100%;
+    left: 0;
+    top: calc(100% + 14px);
   }
 `;
+
+
+
 
 export default function Header() {
   return (
     <HeaderWrapper>
       <NavLink className="active" href="#about">
-        Specifications
-      </NavLink> {/* Changed from "about" to "Specs" */}
-      <NavLink href="#work">Loadouts</NavLink> {/* Changed from "skill" to "Loadouts" */}
+        <span>Specifications</span>
+      </NavLink>
+      <NavLink href="#work">Loadouts</NavLink>
       <Logo src={logoImage} alt="Logo" />
-      <NavLink href="#shop">Exposures</NavLink> {/* Changed from "projects" to "Exposures" */}
-      <NavLink href="#contacts">Playground</NavLink>  {/* Changed from "contacts" to "Playground" */}
+      <NavLink href="#shop">Exposures</NavLink>
+      <NavLink href="#contacts">Playground</NavLink>
     </HeaderWrapper>
   );
 }
