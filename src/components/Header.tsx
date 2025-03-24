@@ -20,7 +20,7 @@ const Logo = styled.img`
 
 const NavLink = styled.a`
   position: relative;
-  color: #ffffff;
+  color: #566278;
   text-decoration: none;
   letter-spacing: 0.05em;
   font-weight: 700;
@@ -39,15 +39,15 @@ const NavLink = styled.a`
   }
 
   &.active {
-    color: red;
+    color: #ffaa33;
   }
   &.active::before,
   &.active::after,
   &.active span::after {
-    content: '';
+    content: "";
     position: absolute;
     height: 1px;
-    background: red;
+    background: #ffaa33;
   }
 
   &.active::before {
@@ -72,9 +72,6 @@ const NavLink = styled.a`
     top: calc(100% + 14px);
   }
 `;
-
-
-
 
 export default function Header() {
   return (

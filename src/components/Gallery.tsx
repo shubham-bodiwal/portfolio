@@ -64,11 +64,7 @@ const GalleryItem = styled.div<GalleryItemProps>`
 
   &:hover {
     height: 25rem;
-    background: ${props => props.isWhite ? '#f5f5f5' : '#111111'};
     transform: translateY(-5px);
-    box-shadow: ${props => props.isWhite 
-      ? '0 10px 20px rgba(0,0,0,0.1)' 
-      : '0 10px 20px rgba(255,255,255,0.05)'};
     
     &::after {
       width: 50%;
@@ -103,18 +99,22 @@ const Title = styled.h3<GalleryItemProps>`
   letter-spacing: 1rem;
   color: ${props => props.isWhite ? '#000000' : '#ffffff'};
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 600;
   
   ${GalleryItem}:hover & {
     transform: translateY(-5px);
   }
 `;
 
-const Number = styled.span`
+const Number = styled.span<GalleryItemProps>`
   color: #aaaaaa;
   font-size: 0.875rem;
   display: block;
   margin-top: 0.5rem;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    font-weight: 600;
+  color: ${props => props.isWhite ? '#000000' : '#ffffff'};
+
   
   ${GalleryItem}:hover & {
     transform: translateY(-5px);
@@ -136,7 +136,7 @@ export default function Gallery() {
         {galleries.map((g, i) => (
           <GalleryItem key={i} isWhite={i % 2 === 0}>
             <Title isWhite={i % 2 === 0}>{g.title}</Title>
-            <Number>{g.number}</Number>
+            <Number isWhite={i % 2 === 0}>{g.number}</Number>
             <GalleryImage src={g.image} alt={g.title} />
           </GalleryItem>
         ))}

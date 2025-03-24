@@ -1,7 +1,17 @@
 import styled, { keyframes } from "styled-components";
 import heroVideo from "../assets/hero-video.mp4";
 import Header from "./Header";
+import { motion } from "framer-motion";
+import { springUpFade } from "../animations/motionConfig";
 
+const gradientFlow = keyframes`
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 300% center;
+  }
+`;
 // === Animations ===
 const fadeInHero = keyframes`
   0% {
@@ -15,7 +25,6 @@ const fadeInHero = keyframes`
     filter: blur(0);
   }
 `;
-
 
 const fadeInHeader = keyframes`
   0% {
@@ -35,11 +44,13 @@ const fadeInCornerTag = keyframes`
     opacity: 0;
     transform: translateX(10rem) skewX(-20deg); scale(0.98);
     filter: blur(4px);
+
   }
   100% {
     opacity: 1;
     transform: translateX(0) skewX(-20deg); scale(1);
     filter: blur(0);
+    
   }
 `;
 
@@ -62,7 +73,7 @@ const overlayFade = keyframes`
 `;
 
 // === Styled Components ===
-const HeroSection = styled.section`
+const HeroSection = styled(motion.div)`
   position: relative;
   height: 100vh;
   width: 100%;
@@ -113,7 +124,7 @@ const Content = styled.div`
   padding: 1rem 5rem;
   animation: ${fadeInHero} 1.5s ease-out both;
   backdrop-filter: blur(3px);
-background: #19223849;
+  background: #19223849;
   border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
@@ -127,8 +138,8 @@ const Title = styled.h1`
   padding-left: 1.5rem;
   @media (max-width: 768px) {
     font-size: 3rem;
-    }
-    `;
+  }
+`;
 // font-family: "Zen Dots", sans-serif;
 
 const Subtitle = styled.p`
@@ -149,20 +160,26 @@ const CornerTag = styled.div`
   color: black;
   font-weight: 700;
   padding: 0.5rem 4rem;
-  font-size: 0.75rem;
-  transform: ;
-  transform-origin: bottom left;
-  z-index: 3;
-
   font-size: 0.9rem;
   margin-top: 1.5rem;
   letter-spacing: 0.7em;
   transform: skewX(-20deg);
   text-transform: uppercase;
   white-space: pre;
+  z-index: 3;
+  overflow: hidden;
+  isolation: isolate;
 
-    animation: ${fadeInCornerTag} 1.5s ease-out both;
-
+  background: linear-gradient(
+    to left,
+    #ffaa33,
+    #aaff33,
+    #33ffee,
+    #cc33ff,
+    #ffaa33
+  );
+  background-size: 300% auto;
+  animation: ${gradientFlow} 5s linear infinite;
 `;
 
 const Description = styled.div`
@@ -174,15 +191,31 @@ const Description = styled.div`
   text-align: center;
   padding-left: 7rem;
   position: absolute;
-  top: 0rem;
+  top: 0.1rem;
   z-index: 10;
-    animation: ${fadeInHeader} 1.5s ease-out both;
+  backdrop-filter: blur(4px);
+  animation: ${fadeInHeader} 1.5s ease-out both;
+  background: linear-gradient(
+    to left,
+    #ffaa33,
+    #aaff33,
+    #33ffee,
+    #cc33ff,
+    #ffaa33
+  );
+  background-size: 300% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  animation: ${gradientFlow} 5s linear infinite;
 `;
 
 // === Component ===
 export default function Hero() {
   return (
-    <HeroSection>
+    <HeroSection {...springUpFade}>
       <Description>Portfolio</Description>
       <BackgroundVideo autoPlay loop muted playsInline>
         <source src={heroVideo} type="video/mp4" />

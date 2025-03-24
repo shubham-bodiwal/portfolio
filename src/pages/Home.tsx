@@ -7,6 +7,21 @@ import Projects from "../components/Projects";
 import Footer from "../components/Footer";
 import HoverInspectorWrapper from "../HOC/HoverInspectorWrapper ";
 
+const fadeInText = keyframes`
+  0% {
+    opacity: 0;
+
+    transform: translateX(3rem) translateY(-50%) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+
+    transform: translateX(0) translateY(-50%) scale(1);
+    filter: blur(0);
+  }
+`;
+
 const fadeInIndicator = keyframes`
   0% {
     opacity: 0;
@@ -53,16 +68,19 @@ const Section = styled.section<{ $active?: boolean }>`
 
 const IndicatorWrapper = styled.div`
   position: fixed;
-  left: 2rem;
+  left: 0rem;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   z-index: 10;
-    animation: ${fadeInIndicator} 1.5s ease-out both;
-
+  animation: ${fadeInIndicator} 1.5s ease-out both;
+  backdrop-filter: blur(4px);
+  height: 100%;
+  padding: 0.5rem;
 `;
 
 const Dot = styled.div<{ active?: boolean }>`
@@ -80,8 +98,33 @@ const VerticalLabel = styled.div`
   color: #ffffff66;
   margin-top: 1rem;
   letter-spacing: 0.7em;
+  text-transform: uppercase;
 `;
 
+const TeaserTextWrapper = styled.div`
+  position: fixed;
+  right: 0rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  z-index: 10;
+  animation: ${fadeInText} 1.5s ease-out both;
+  font-size: 0.85rem;
+  color: #ffffff66;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  padding: 0.5rem;
+  pointer-events: none;
+  height: 100%;
+  text-align: center;
+  writing-mode: vertical-rl;
+  font-size: 0.9rem;
+  color: #ffffff66;
+  margin-top: 1rem;
+  letter-spacing: 0.7em;
+  text-transform: uppercase;
+`;
 
 function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -146,9 +189,15 @@ function Home() {
       }
     };
 
-    containerRef.current?.addEventListener("wheel", handleWheel, { passive: true });
-    containerRef.current?.addEventListener("touchstart", handleTouchStart, { passive: true });
-    containerRef.current?.addEventListener("touchend", handleTouchEnd, { passive: true });
+    containerRef.current?.addEventListener("wheel", handleWheel, {
+      passive: true,
+    });
+    containerRef.current?.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    containerRef.current?.addEventListener("touchend", handleTouchEnd, {
+      passive: true,
+    });
 
     return () => {
       containerRef.current?.removeEventListener("wheel", handleWheel);
@@ -159,34 +208,35 @@ function Home() {
 
   return (
     // <HoverInspectorWrapper>
-      <AppWrapper ref={containerRef}>
-        <Section $active={active === 0}>
-          <Hero />
-        </Section>
-        <Section $active={active === 1}>
-          <Gallery />
-        </Section>
-        <Section $active={active === 2}>
-          <Portfolio />
-        </Section>
-        <Section $active={active === 3}>
-          <Projects />
-        </Section>
-        <Section $active={active === 4}>
-          <Footer />
-        </Section>
+    <AppWrapper ref={containerRef}>
+      <Section $active={active === 0}>
+        <Hero />
+      </Section>
+      <Section $active={active === 1}>
+        <Gallery />
+      </Section>
+      <Section $active={active === 2}>
+        <Portfolio />
+      </Section>
+      <Section $active={active === 3}>
+        <Projects />
+      </Section>
+      <Section $active={active === 4}>
+        <Footer />
+      </Section>
 
-        <IndicatorWrapper>
-          {[...Array(totalSections)].map((_, i) => (
-            <Dot key={i} active={active === i} />
-          ))}
-          <VerticalLabel>YOU'RE HERE</VerticalLabel>
-        </IndicatorWrapper>
+      <IndicatorWrapper>
+        <VerticalLabel>are you Lost?</VerticalLabel>
+        {[...Array(totalSections)].map((_, i) => (
+          <Dot key={i} active={active === i} />
+        ))}
+        <VerticalLabel>YOU'RE HERE</VerticalLabel>
+      </IndicatorWrapper>
 
-      </AppWrapper>
+      <TeaserTextWrapper>want to check out more?</TeaserTextWrapper>
+    </AppWrapper>
     // </HoverInspectorWrapper>
   );
-
 }
 
 export default Home;
