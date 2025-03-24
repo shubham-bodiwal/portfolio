@@ -5,18 +5,15 @@ import Gallery from "../components/Gallery";
 import Portfolio from "../components/Portfolio";
 import Projects from "../components/Projects";
 import Footer from "../components/Footer";
-import HoverInspectorWrapper from "../HOC/HoverInspectorWrapper ";
 
 const fadeInText = keyframes`
   0% {
     opacity: 0;
-
     transform: translateX(3rem) translateY(-50%) scale(0.98);
     filter: blur(4px);
   }
   100% {
     opacity: 1;
-
     transform: translateX(0) translateY(-50%) scale(1);
     filter: blur(0);
   }
@@ -141,13 +138,11 @@ function Home() {
       );
     };
     setVh();
-    containerRef.current?.addEventListener("resize", setVh);
-    return () => containerRef.current?.removeEventListener("resize", setVh);
+    window.addEventListener("resize", setVh);
+    return () => window.removeEventListener("resize", setVh);
   }, []);
 
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
-
     const animateTo = (index: number) => {
       isScrolling.current = true;
       setActive(index);
@@ -159,7 +154,7 @@ function Home() {
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling.current) return;
 
-      if (e.deltaY > 0 && currentIndex.current < sections.length - 1) {
+      if (e.deltaY > 0 && currentIndex.current < totalSections - 1) {
         currentIndex.current++;
         animateTo(currentIndex.current);
       } else if (e.deltaY < 0 && currentIndex.current > 0) {
@@ -179,7 +174,7 @@ function Home() {
 
       if (
         touchStartY - touchEndY > 50 &&
-        currentIndex.current < sections.length - 1
+        currentIndex.current < totalSections - 1
       ) {
         currentIndex.current++;
         animateTo(currentIndex.current);
@@ -189,41 +184,29 @@ function Home() {
       }
     };
 
-    containerRef.current?.addEventListener("wheel", handleWheel, {
+    const container = containerRef.current;
+    container?.addEventListener("wheel", handleWheel, { passive: true });
+    container?.addEventListener("touchstart", handleTouchStart, {
       passive: true,
     });
-    containerRef.current?.addEventListener("touchstart", handleTouchStart, {
-      passive: true,
-    });
-    containerRef.current?.addEventListener("touchend", handleTouchEnd, {
+    container?.addEventListener("touchend", handleTouchEnd, {
       passive: true,
     });
 
     return () => {
-      containerRef.current?.removeEventListener("wheel", handleWheel);
-      containerRef.current?.removeEventListener("touchstart", handleTouchStart);
-      containerRef.current?.removeEventListener("touchend", handleTouchEnd);
+      container?.removeEventListener("wheel", handleWheel);
+      container?.removeEventListener("touchstart", handleTouchStart);
+      container?.removeEventListener("touchend", handleTouchEnd);
     };
   }, []);
 
   return (
-    // <HoverInspectorWrapper>
     <AppWrapper ref={containerRef}>
-      <Section $active={active === 0}>
-        <Hero />
-      </Section>
-      <Section $active={active === 1}>
-        <Gallery />
-      </Section>
-      <Section $active={active === 2}>
-        <Portfolio />
-      </Section>
-      <Section $active={active === 3}>
-        <Projects />
-      </Section>
-      <Section $active={active === 4}>
-        <Footer />
-      </Section>
+      <Section $active={active === 0}>{active === 0 && <Hero />}</Section>
+      <Section $active={active === 1}>{active === 1 && <Gallery />}</Section>
+      <Section $active={active === 2}>{active === 2 && <Portfolio />}</Section>
+      <Section $active={active === 3}>{active === 3 && <Projects />}</Section>
+      <Section $active={active === 4}>{active === 4 && <Footer />}</Section>
 
       <IndicatorWrapper>
         <VerticalLabel>are you Lost?</VerticalLabel>
@@ -235,7 +218,6 @@ function Home() {
 
       <TeaserTextWrapper>want to check out more?</TeaserTextWrapper>
     </AppWrapper>
-    // </HoverInspectorWrapper>
   );
 }
 

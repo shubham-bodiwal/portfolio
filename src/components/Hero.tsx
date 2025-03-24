@@ -194,7 +194,6 @@ const Description = styled.div`
   top: 0.1rem;
   z-index: 10;
   backdrop-filter: blur(4px);
-  animation: ${fadeInHeader} 1.5s ease-out both;
   background: linear-gradient(
     to left,
     #ffaa33,
@@ -209,7 +208,8 @@ const Description = styled.div`
   color: transparent;
   -webkit-text-fill-color: transparent;
 
-  animation: ${gradientFlow} 5s linear infinite;
+  animation: ${gradientFlow} 5s linear infinite,
+    ${fadeInHeader} 1.5s ease-out both;
 `;
 
 // === Component ===
