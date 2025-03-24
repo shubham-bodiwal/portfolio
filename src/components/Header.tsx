@@ -39,16 +39,15 @@ const NavLink = styled.a`
   }
 
   &.active {
-    color: #ffaa33;
+    color: red;
   }
-
   &.active::before,
   &.active::after,
   &.active span::after {
     content: '';
     position: absolute;
     height: 1px;
-    background: #ffaa33;
+    background: red;
   }
 
   &.active::before {

@@ -1,6 +1,5 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, ReactNode, useRef } from "react";
 import styled from "styled-components";
-import bgImage from "../assets/inspectBg.png";
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,20 +15,24 @@ const PageContent = styled.div`
 const InspectorPanel = styled.div`
   width: 400px;
   position: relative;
-  background: url(${bgImage}) no-repeat center center;
+  background-color: #08101d;
   background-size: cover;
   color: #fff;
   font-size: 12px;
   border-left: 1px solid grey;
   display: flex;
   flex-direction: column;
-
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
     z-index: 0;
+    backdrop-filter: blur(1px);
   }
 
   > * {
@@ -57,8 +60,8 @@ const StyleBlock = styled.div`
   border: 1px solid #444;
   padding: 0.5rem;
   border-radius: 6px;
-  backdrop-filter: blur(10px);
-  background-color: #00000030;
+  backdrop-filter: blur(3px);
+  background-color: #ffffff05;
 `;
 
 type ElementDetails = {
@@ -73,7 +76,7 @@ type Props = { children: ReactNode };
 
 export default function HoverInspectorWrapper({ children }: Props) {
   const [details, setDetails] = useState<ElementDetails | null>(null);
-  const [activeTab, setActiveTab] = useState<"styles" | "html">("styles");
+  const pageContentRef = useRef<HTMLDivElement>(null)
 
   const getClassStyles = (el: HTMLElement) => {
     const classStyles: Record<string, Record<string, string>> = {};
@@ -140,13 +143,13 @@ export default function HoverInspectorWrapper({ children }: Props) {
       const el = e.target as HTMLElement;
       setDetails(getElementDetails(el));
     };
-    document.addEventListener("mouseover", handleMouseOver);
-    return () => document.removeEventListener("mouseover", handleMouseOver);
+    pageContentRef.current?.addEventListener("mouseover", handleMouseOver);
+    return () => pageContentRef.current?.removeEventListener("mouseover", handleMouseOver);
   }, []);
 
   return (
     <Wrapper>
-      <PageContent>{children}</PageContent>
+      <PageContent ref={pageContentRef}>{children}</PageContent>
 
       {details && (
         <InspectorPanel>
