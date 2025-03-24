@@ -93,7 +93,7 @@ const Overlay = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3) !important;
   animation: ${overlayFade} 1.5s ease-out forwards;
   z-index: 1;
 `;
