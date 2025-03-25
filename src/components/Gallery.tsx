@@ -1,9 +1,11 @@
-import styled, { keyframes } from "styled-components";
+import { useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 import { motion } from "framer-motion";
 
 interface GalleryItemProps {
   isWhite: boolean;
   "data-index"?: string;
+  animation?: string;
 }
 
 interface GalleryData {
@@ -12,67 +14,110 @@ interface GalleryData {
   content: string;
 }
 
-const boxAnimation = keyframes`
+export const collapseWidth = keyframes`
   0% {
+    opacity: 1;
+    width: 100%;
+  }
+
+  100% {
+    opacity: 0;
+    width: 0;
+  }
+`;
+
+const boxAnimationOpposite = keyframes`
+	0% {
 		animation-timing-function: ease-in;
 		opacity: 0;
-		transform: translateY(-250px);
+		transform: translateX(250px);
 	}
 
 	38% {
 		animation-timing-function: ease-out;
 		opacity: 1;
-		transform: translateY(0);
+		transform: translateX(0);
 	}
 
 	55% {
 		animation-timing-function: ease-in;
-		transform: translateY(-65px);
+		transform: translateX(68px);
 	}
 
 	72% {
 		animation-timing-function: ease-out;
-		transform: translateY(0);
+		transform: translateX(0);
 	}
 
 	81% {
 		animation-timing-function: ease-in;
-		transform: translateY(-28px);
+		transform: translateX(32px);
 	}
 
 	90% {
 		animation-timing-function: ease-out;
-		transform: translateY(0);
+		transform: translateX(0);
 	}
 
 	95% {
 		animation-timing-function: ease-in;
-		transform: translateY(-8px);
+		transform: translateX(8px);
 	}
 
 	100% {
 		animation-timing-function: ease-out;
-		transform: translateY(0);
-	}
+		transform: translateX(0);
+	}`;
+
+const boxAnimation = keyframes`
+  0% {
+    animation-timing-function: ease-in;
+    opacity: 0;
+    transform: translateX(-250px);
+  }
+  38% {
+    animation-timing-function: ease-out;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  55% {
+    animation-timing-function: ease-in;
+    transform: translateX(-65px);
+  }
+  72% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+  81% {
+    animation-timing-function: ease-in;
+    transform: translateX(-28px);
+  }
+  90% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
+  95% {
+    animation-timing-function: ease-in;
+    transform: translateX(-8px);
+  }
+  100% {
+    animation-timing-function: ease-out;
+    transform: translateX(0);
+  }
 `;
 
-
 const headerAnimation = keyframes`
-  0% {
-letter-spacing: 12rem
-	}
+  0% { letter-spacing: 12rem }
+  100% { letter-spacing: 6rem }
+`;
 
-	100% {
-	letter-spacing: 6rem
-
-	}`
 const GalleryWrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4rem;
   text-align: center;
-  background: linear-gradient(to bottom,#0f1827,#3a4965, #03050b);
+  background: linear-gradient(to bottom, #0f1827, #3a4965, #03050b);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -81,25 +126,23 @@ const GalleryWrapper = styled.section`
   flex-direction: column;
 `;
 
-// border: 1px solid rgba(255, 255, 255, 0.56);
-const GalleryContainer = styled.div`
-  padding: 2rem;
-  backdrop-filter: blur(4px);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  height: 30rem;
+const GallerySlider = styled.div`
+  display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 96rem;
+  padding: 2rem;
 `;
 
-
-
-const GalleryItem = styled(motion.div) <GalleryItemProps>`
+const GalleryItem = styled(motion.div)<GalleryItemProps>`
   position: relative;
   padding: 2rem;
   border-radius: 0.2rem;
+  margin: 7.5rem 2.5rem;
   height: 15rem;
-  display: flex;
+  width: 15rem;
+  aspect-ratio: 1/1;
   flex-direction: column;
   justify-content: space-around;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -107,11 +150,20 @@ const GalleryItem = styled(motion.div) <GalleryItemProps>`
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   box-shadow: 0 0 0 transparent;
   cursor: pointer;
-  animation: ${boxAnimation} 2s ease 0s 1 normal forwards;
+  display: ${(props) => (props.animation === "none" ? "none" : "flex")};
+  ${(props) =>
+    props.animation === "right"
+      ? css`
+          animation: ${boxAnimationOpposite} 2s ease 0s 1 normal forwards;
+        `
+      : props.animation === "left"
+      ? css`
+          animation: ${boxAnimation} 2s ease 0s 1 normal forwards;
+        `
+      : "none"}
 
-   -webkit-box-reflect: below 1rem
+  -webkit-box-reflect: below 1rem
     linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent 20%);
-
 
   &::after {
     content: "";
@@ -121,8 +173,6 @@ const GalleryItem = styled(motion.div) <GalleryItemProps>`
     transform: translateX(-50%);
     width: 10%;
     height: 4px;
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-
     background-color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
     opacity: 0.6;
     border-radius: 1px;
@@ -133,6 +183,8 @@ const GalleryItem = styled(motion.div) <GalleryItemProps>`
     height: 25rem;
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    margin-top: 0rem;
+    margin-bottom: 0rem;
 
     &::after {
       width: 50%;
@@ -140,7 +192,7 @@ const GalleryItem = styled(motion.div) <GalleryItemProps>`
     }
 
     &::before {
-     font-size: 30rem;
+      font-size: 26rem;
     }
   }
 
@@ -150,64 +202,45 @@ const GalleryItem = styled(motion.div) <GalleryItemProps>`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 22rem;
+    font-size: 18rem;
     font-weight: 900;
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    color: ${(props) => (props.isWhite ? "#bdbdbd28" : "#ffffff18")};
+    color: ${(props) => (props.isWhite ? "#bdbdbd3b" : "#ffffff18")};
     pointer-events: none;
     z-index: 0;
     user-select: none;
-    white-space: nowrap;
-}
-
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 `;
 
 const Title = styled.h3<GalleryItemProps>`
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 1rem;
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  font-weight: 600;
+  z-index: 1;
 
   ${GalleryItem}:hover & {
     transform: translateY(-5px);
   }
-    z-index:1;
 `;
-
-// const Number = styled.span<GalleryItemProps>`
-//   font-size: 0.875rem;
-//   font-weight: 600;
-//   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
-//   display: block;
-//   margin-top: 0.5rem;
-//   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-//     z-index:1;
-
-//   ${GalleryItem}:hover & {
-//     transform: translateY(-5px);
-//     letter-spacing: 0.2rem;
-//   }
-// `;
 
 const Subtitle = styled.p`
   color: #ffaa33;
-  text-decoration: none;
-  letter-spacing: 6rem;
-  padding-left: 6rem;
-  line-height: 2rem;
-  font-weight: 900;
-  font-size: 3rem;
-  margin-bottom: 8rem;
+  margin-top: 0;
   text-transform: uppercase;
   animation: ${headerAnimation} 2s ease 0s 1 normal forwards;
-    z-index:1;
-
-  `;
-// -webkit-box-reflect: below 0px
-//   linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent 80%);
-
+  z-index: 1;
+  margin-bottom: 0;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 4.5rem;
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
+`;
 
 const Content = styled.span<GalleryItemProps>`
   font-size: 1rem;
@@ -215,15 +248,12 @@ const Content = styled.span<GalleryItemProps>`
   font-weight: 600;
   line-height: 1.5;
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
-  display: block;
   margin-top: 0.5rem;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   display: none;
 
   ${GalleryItem}:hover & {
-    opacity: 1;
-    transform: scale(1) translateY(-10px);
     display: block;
+    transform: scale(1) translateY(-10px);
   }
 `;
 
@@ -233,87 +263,141 @@ const Line = styled.span<{ isWhite: boolean }>`
   height: 3rem;
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   left: 0;
-top: 50%;
-transform: translateY(-50%);
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
-
+const NavButton = styled.button`
+  color: #ffaa33;
+  background: transparent;
+  border: none;
 `;
 
 const galleries: GalleryData[] = [
   {
     title: "Resume.io",
-    number: "1",
-    content:
-      "Built ATS-friendly resume templates with responsive design. Improved parsing accuracy and customization for cross-platform use.",
+    number: "01",
+    content: "Built ATS-friendly resume templates...",
   },
   {
     title: "Gulf-HR",
-    number: "2",
-    content:
-      "Developed modular HRMS features like onboarding, payroll, and dynamic form generation tailored to user needs.",
+    number: "02",
+    content: "Developed modular HRMS features...",
   },
   {
     title: "Twilio Segment",
-    number: "3",
-    content:
-      "Engineered a fraud detection and validation system. Reduced manual effort by 40% and ensured better compliance.",
+    number: "03",
+    content: "Engineered fraud detection system...",
   },
   {
     title: "SHS Homeopathy",
-    number: "4",
-    content:
-      "Built an Electron app for medical records. Improved search by 30% and reduced DB size by 50% through optimization.",
+    number: "04",
+    content: "Built Electron app for medical records...",
   },
-  // {
-  //   title: "AI Interview System",
-  //   number: "05",
-  //   content:
-  //     "AI-powered platform with real-time analytics, object detection, and interview recording. Provides smart candidate feedback.",
-  // },
-  // {
-  //   title: "Quiz Reminder App",
-  //   number: "06",
-  //   content:
-  //     "Created a quiz & notification app tailored to user learning styles. Boosted engagement and retention through personalization.",
-  // },
-  // {
-  //   title: "Gamers Box",
-  //   number: "07",
-  //   content:
-  //     "Built a real-time gaming news platform with personalized feeds. Focused on responsive UI and integrated complex APIs.",
-  // },
-  // {
-  //   title: "WhatsApp Clone",
-  //   number: "08",
-  //   content:
-  //     "Real-time secure messaging app with group chats, media sharing, offline sync, and E2E encryption.",
-  // },
+  {
+    title: "AI Interview System",
+    number: "05",
+    content: "AI-powered platform with analytics...",
+  },
+  {
+    title: "Quiz Reminder App",
+    number: "06",
+    content: "Quiz & notification app with personalization...",
+  },
+  {
+    title: "Gamers Box",
+    number: "07",
+    content: "Real-time gaming news platform...",
+  },
+  {
+    title: "WhatsApp Clone",
+    number: "08",
+    content: "Secure messaging app with E2E encryption...",
+  },
+  {
+    title: "E-Shop UI",
+    number: "09",
+    content: "React UI for modern e-commerce...",
+  },
+  {
+    title: "Crypto Tracker",
+    number: "10",
+    content: "Live crypto market app with charts...",
+  },
+  {
+    title: "Portfolio V2",
+    number: "11",
+    content: "My upgraded personal dev portfolio...",
+  },
+  {
+    title: "Notes App",
+    number: "12",
+    content: "Productive note-taking app with Markdown...",
+  },
 ];
 
 export default function Gallery() {
+  const itemsPerPage = 4;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const maxIndex = galleries.length - itemsPerPage;
+  const [animation, setAnimation] = useState([
+    "left",
+    "left",
+    "right",
+    "right",
+    "none",
+  ]);
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setAnimation((prev) => ["left", ...prev.slice(0, 3)]);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < maxIndex) {
+      setCurrentIndex(currentIndex + 1);
+      setAnimation((prev) => [...prev.slice(1), "right"]);
+    }
+  };
+
+  const visibleItems = galleries.slice(
+    currentIndex,
+    currentIndex + itemsPerPage
+  );
+
   return (
     <GalleryWrapper>
-      <Subtitle>
-        Projects
-      </Subtitle>
-      <GalleryContainer>
-
-        {galleries.map((g, i) => (
-          <GalleryItem
-            key={i}
-            isWhite={i % 2 === 0}
-            data-index={g.number}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.2, duration: 0.8, ease: "easeOut" }}
-          >
-            <Line isWhite={i % 2 === 0}></Line>
-            <Title isWhite={i % 2 === 0}>{g.title}</Title>
-            {/* <Number isWhite={i % 2 === 0}>{g.number}</Number> */}
-            <Content isWhite={i % 2 === 0}>{g.content}</Content>
-          </GalleryItem>
-        ))}
-      </GalleryContainer>
+      <Subtitle>Projects</Subtitle>
+      <GallerySlider>
+        {visibleItems.map((g, i) => {
+          const isWhite = (currentIndex + i) % 2 === 0;
+          return (
+            <GalleryItem
+              key={g.number}
+              animation={animation[i]}
+              isWhite={isWhite}
+              data-index={g.number}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Line isWhite={isWhite}></Line>
+              <Title isWhite={isWhite}>{g.title}</Title>
+              <Content isWhite={isWhite}>{g.content}</Content>
+            </GalleryItem>
+          );
+        })}
+      </GallerySlider>
+      <div>
+        <NavButton onClick={handlePrev} disabled={currentIndex === 0}>
+          ◀
+        </NavButton>
+        <NavButton onClick={handleNext} disabled={currentIndex >= maxIndex}>
+          ▶
+        </NavButton>
+      </div>
     </GalleryWrapper>
   );
 }

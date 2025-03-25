@@ -103,7 +103,7 @@ const VerticalRightText = styled.div`
   right: 0;
   top: 50%;
   z-index: 10;
-    animation: ${fadeInText} 1.5s ease-out both;
+  animation: ${fadeInText} 1.5s ease-out both;
   font-size: 0.8rem;
   color: #ffffff66;
   letter-spacing: 0.2em;
@@ -111,7 +111,6 @@ const VerticalRightText = styled.div`
   white-space: nowrap;
   backdrop-filter: blur(4px);
   padding: 0.5rem;
-  pointer-events: none;
   height: 100%;
   text-align: center;
   writing-mode: vertical-rl;
@@ -120,7 +119,8 @@ const VerticalRightText = styled.div`
   margin-top: 1rem;
   letter-spacing: 0.7em;
   text-orientation: mixed;
-  `;
+  cursor: pointer;
+`;
 
 function Home() {
   const containerRef = useRef<HTMLDivElement>(null);

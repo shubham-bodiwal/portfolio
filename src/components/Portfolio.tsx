@@ -2,7 +2,18 @@ import styled from "styled-components";
 import portfolioImg from "../assets/react.svg"; // replace with actual image
 
 const PortfolioSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 4rem;
+  text-align: center;
+  background: linear-gradient(to bottom, #0f1827, #3a4965, #03050b);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
 `;
 
 const Title = styled.h2`
@@ -59,7 +70,8 @@ export default function Portfolio() {
         <Content>
           <Subtitle>Boundless Art: 3D Discovery</Subtitle>
           <Description>
-            Explore endless creative expressions in 3D environments. The future of art lies beyond dimensions.
+            Explore endless creative expressions in 3D environments. The future
+            of art lies beyond dimensions.
           </Description>
           <Button>Read More</Button>
         </Content>
