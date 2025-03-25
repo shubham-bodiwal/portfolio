@@ -9,12 +9,12 @@ import Footer from "../components/Footer";
 const fadeInText = keyframes`
   0% {
     opacity: 0;
-    transform: translateX(3rem) translateY(-50%) scale(0.98);
+    transform: translateX(3rem) translateY(-50%) rotate(180deg) scale(0.98);
     filter: blur(4px);
   }
   100% {
     opacity: 1;
-    transform: translateX(0) translateY(-50%) scale(1);
+    transform: translateX(0) translateY(-50%) rotate(180deg) scale(1);
     filter: blur(0);
   }
 `;
@@ -98,14 +98,13 @@ const VerticalLabel = styled.div`
   text-transform: uppercase;
 `;
 
-const TeaserTextWrapper = styled.div`
+const VerticalRightText = styled.div`
   position: fixed;
-  right: 0rem;
+  right: 0;
   top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
   z-index: 10;
-  animation: ${fadeInText} 1.5s ease-out both;
-  font-size: 0.85rem;
+    animation: ${fadeInText} 1.5s ease-out both;
+  font-size: 0.8rem;
   color: #ffffff66;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -120,8 +119,8 @@ const TeaserTextWrapper = styled.div`
   color: #ffffff66;
   margin-top: 1rem;
   letter-spacing: 0.7em;
-  text-transform: uppercase;
-`;
+  text-orientation: mixed;
+  `;
 
 function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -216,7 +215,7 @@ function Home() {
         <VerticalLabel>YOU'RE HERE</VerticalLabel>
       </IndicatorWrapper>
 
-      <TeaserTextWrapper>want to check out more?</TeaserTextWrapper>
+      <VerticalRightText>want to check out more?</VerticalRightText>
     </AppWrapper>
   );
 }

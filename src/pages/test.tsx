@@ -17,7 +17,7 @@ export default function TestComp(){
     <InteractiveResume/>
     <LiveComponentPlayground/>
     <PerformanceDashboard/>
-    <SkillGraph/>
+    {/* <SkillGraph/> */}
     </>
 
 }

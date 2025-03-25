@@ -3,3 +3,7 @@ body {
   scroll-behavior: smooth;
   margin: 0px;
 }
+
+body{
+  background: black;
+}
