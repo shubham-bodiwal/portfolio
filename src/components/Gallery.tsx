@@ -345,7 +345,6 @@ export default function Gallery() {
     "left",
     "right",
     "right",
-    "none",
   ]);
 
   const handlePrev = () => {
