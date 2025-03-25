@@ -5,7 +5,6 @@ import GridLayout from "../components/Gridlayout";
 import InteractiveResume from "../components/InteractiveResume";
 import LiveComponentPlayground from "../components/LiveComponentPlayground";
 import PerformanceDashboard from "../components/PerformanceDashboard";
-import SkillGraph from "../components/SkillGraph";
 
 export default function TestComp(){
 

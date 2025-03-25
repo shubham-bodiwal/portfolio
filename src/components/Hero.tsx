@@ -39,20 +39,20 @@ const fadeInHeader = keyframes`
   }
 `;
 
-const fadeInCornerTag = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateX(10rem) skewX(-20deg); scale(0.98);
-    filter: blur(4px);
+// const fadeInCornerTag = keyframes`
+//   0% {
+//     opacity: 0;
+//     transform: translateX(10rem) skewX(-20deg); scale(0.98);
+//     filter: blur(4px);
 
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) skewX(-20deg); scale(1);
-    filter: blur(0);
+//   }
+//   100% {
+//     opacity: 1;
+//     transform: translateX(0) skewX(-20deg); scale(1);
+//     filter: blur(0);
     
-  }
-`;
+//   }
+// `;
 
 const BlurInVideo = keyframes`
   0% {

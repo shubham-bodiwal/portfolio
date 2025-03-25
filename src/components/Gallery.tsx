@@ -176,20 +176,20 @@ const Title = styled.h3<GalleryItemProps>`
     z-index:1;
 `;
 
-const Number = styled.span<GalleryItemProps>`
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
-  display: block;
-  margin-top: 0.5rem;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index:1;
+// const Number = styled.span<GalleryItemProps>`
+//   font-size: 0.875rem;
+//   font-weight: 600;
+//   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
+//   display: block;
+//   margin-top: 0.5rem;
+//   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+//     z-index:1;
 
-  ${GalleryItem}:hover & {
-    transform: translateY(-5px);
-    letter-spacing: 0.2rem;
-  }
-`;
+//   ${GalleryItem}:hover & {
+//     transform: translateY(-5px);
+//     letter-spacing: 0.2rem;
+//   }
+// `;
 
 const Subtitle = styled.p`
   color: #ffaa33;

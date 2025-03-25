@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Section = styled.section`
@@ -55,12 +55,14 @@ const steps = [
   {
     title: "1. Component Structure",
     desc: "Broke down UI into atomic components – Header, Hero, Gallery, etc. Each component is in its own file with proper prop types.",
-    code: `<Hero title=\"Simon Sparks\" subtitle=\"Generative Design\" />`
+    code: `<Hero title="Simon Sparks" subtitle="Generative Design" />`
   },
   {
     title: "2. Styling Decisions",
     desc: "Used styled-components for scoped, maintainable styles. Enabled theme customizations.",
-    code: `const Title = styled.h1\n  font-size: 4rem;\n  color: #fff;`
+    code: `const Title = styled.h1
+  font-size: 4rem;
+  color: #fff;`
   },
   {
     title: "3. State Management",
@@ -70,7 +72,7 @@ const steps = [
   {
     title: "4. Reusability",
     desc: "Built flexible cards & button components reused across Gallery, Portfolio, and Projects.",
-    code: `<Card title=\"Cube 2.0\" image={cubeImg} />`
+    code: `<Card title="Cube 2.0" image={cubeImg} />`
   },
 ];
 

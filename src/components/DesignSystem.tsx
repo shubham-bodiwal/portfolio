@@ -36,8 +36,16 @@ const StyledButton = styled.button<{
   }
 `;
 
-const Button = ({ children, ...props }: any) => {
-  return <StyledButton {...props}>{children}</StyledButton>;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "outline" | "ghost";
+}
+
+const Button = ({ children, variant, ...props }: ButtonProps) => {
+  return (
+    <StyledButton variant={variant} {...props}>
+      {children}
+    </StyledButton>
+  );
 };
 
 // ================= Card =================

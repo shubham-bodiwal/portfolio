@@ -32,7 +32,9 @@ const GlobalStyle = createGlobalStyle`
 
 const ThemeSwitcherContext = createContext({
   theme: themes.dark,
-  setTheme: (name: keyof typeof themes) => {}
+  setTheme: (name: keyof typeof themes) => {
+    localStorage.setItem("app-theme", name);
+  }
 });
 
 export const useTheme = () => useContext(ThemeSwitcherContext);

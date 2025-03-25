@@ -52,8 +52,8 @@ const Label = styled.p`
 export default function PerformanceDashboard() {
   const [fps, setFps] = useState(60);
   const [hydrationTime, setHydrationTime] = useState(200);
-  const [bundleSize, setBundleSize] = useState("~180kb");
-  const [lazyComponents, setLazyComponents] = useState(6);
+  const [bundleSize] = useState("~180kb");
+  const [lazyComponents] = useState(6);
   const [fpsHistory, setFpsHistory] = useState<{ time: number; fps: number }[]>(
     []
   );

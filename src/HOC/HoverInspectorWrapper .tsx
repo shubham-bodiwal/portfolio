@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode, useRef } from "react";
+import { useState, useEffect, ReactNode, useRef, useCallback } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -111,21 +111,21 @@ export default function HoverInspectorWrapper({ children }: Props) {
   };
 
   const formatHtml = (html: string) => {
-    let pretty = html.replace(/>\s*</g, ">\n<");
+    const pretty = html.replace(/>\s*</g, ">\n<");
     let pad = 0;
     return pretty
       .split("\n")
       .map((line) => {
         if (/^<\/\w/.test(line)) pad = Math.max(pad - 1, 0);
         const indent = "  ".repeat(pad);
-        if (/^<\w[^>]*[^\/]>$/.test(line) && !line.match(/<\w+.*?\/>/)) pad++;
+        if (/^<\w[^>]*[^/]?>$/.test(line) && !line.match(/<\w+.*?\/>/)) pad++;
         return indent + line;
       })
       .join("\n")
       .trim();
   };
 
-  const getElementDetails = (el: HTMLElement) => {
+  const getElementDetails = useCallback((el: HTMLElement) => {
     if (!el) return null;
     const attributes: Record<string, string> = {};
     Array.from(el.attributes).forEach((attr) => (attributes[attr.name] = attr.value));
@@ -136,16 +136,17 @@ export default function HoverInspectorWrapper({ children }: Props) {
       outerHTML: formatHtml(el.outerHTML),
       children: el.children.length,
     };
-  };
+  }, []);
 
   useEffect(() => {
     const handleMouseOver = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
       setDetails(getElementDetails(el));
     };
-    pageContentRef.current?.addEventListener("mouseover", handleMouseOver);
-    return () => pageContentRef.current?.removeEventListener("mouseover", handleMouseOver);
-  }, []);
+    const currentRef = pageContentRef.current;
+    currentRef?.addEventListener("mouseover", handleMouseOver);
+    return () => currentRef?.removeEventListener("mouseover", handleMouseOver);
+  }, [getElementDetails]);
 
   return (
     <Wrapper>
