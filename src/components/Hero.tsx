@@ -15,14 +15,11 @@ const gradientFlow = keyframes`
 // === Animations ===
 const fadeInHero = keyframes`
   0% {
-    opacity: 0;
+
     transform: translateY(5rem) scale(0.98);
-    filter: blur(4px);
   }
   100% {
-    opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
   }
 `;
 
@@ -50,22 +47,13 @@ const fadeInHeader = keyframes`
 //     opacity: 1;
 //     transform: translateX(0) skewX(-20deg); scale(1);
 //     filter: blur(0);
-    
+
 //   }
 // `;
 
-const BlurInVideo = keyframes`
-  0% {
-    filter: blur(4px);
-  }
-  100% {
-    filter: blur(0);
-  }
-`;
-
 const overlayFade = keyframes`
   0% {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
   }
   100% {
     background: rgba(0, 0, 0, 0.3);
@@ -95,7 +83,6 @@ const BackgroundVideo = styled.video`
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  animation: ${BlurInVideo} 1.5s ease-out forwards;
 `;
 
 const Overlay = styled.div`
@@ -124,7 +111,6 @@ const Content = styled.div`
   padding: 1rem 5rem;
   animation: ${fadeInHero} 1.5s ease-out both;
   backdrop-filter: blur(3px);
-  background: #19223849;
   border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 

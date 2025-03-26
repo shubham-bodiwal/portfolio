@@ -145,7 +145,7 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
   aspect-ratio: 1/1;
   flex-direction: column;
   justify-content: space-around;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   box-shadow: 0 0 0 transparent;
@@ -176,7 +176,7 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
     background-color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
     opacity: 0.6;
     border-radius: 1px;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   &:hover {
@@ -208,7 +208,7 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
     pointer-events: none;
     z-index: 0;
     user-select: none;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 `;
 
@@ -217,7 +217,7 @@ const Title = styled.h3<GalleryItemProps>`
   font-weight: 600;
   letter-spacing: 1rem;
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
 
   ${GalleryItem}:hover & {
@@ -232,11 +232,12 @@ const Subtitle = styled.p`
   animation: ${headerAnimation} 2s ease 0s 1 normal forwards;
   z-index: 1;
   margin-bottom: 0;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 800;
-  letter-spacing: 3rem;
+  letter-spacing: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-left: 4.5rem;
+  line-height: 1.5;
   @media (max-width: 768px) {
     font-size: 3rem;
   }
@@ -257,15 +258,21 @@ const Content = styled.span<GalleryItemProps>`
   }
 `;
 
-const Line = styled.span<{ isWhite: boolean }>`
-  position: absolute;
-  width: 100%;
-  height: 3rem;
-  background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-`;
+// const Line = styled.span<{ isWhite: boolean }>`
+//   position: absolute;
+//   width: 100%;
+//   height: 3rem;
+//   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
+//   left: 0;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   opacity: 1;
+//   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+
+//   ${GalleryItem}:hover & {
+//     opacity: 0;
+//   }
+// `;
 
 const NavButton = styled.button`
   color: #ffaa33;
@@ -382,7 +389,7 @@ export default function Gallery() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Line isWhite={isWhite}></Line>
+              {/* <Line isWhite={isWhite}></Line> */}
               <Title isWhite={isWhite}>{g.title}</Title>
               <Content isWhite={isWhite}>{g.content}</Content>
             </GalleryItem>

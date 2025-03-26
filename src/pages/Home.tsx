@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Hero from "../components/Hero";
 import Gallery from "../components/Gallery";
 import Portfolio from "../components/Portfolio";
@@ -33,13 +33,14 @@ const fadeInIndicator = keyframes`
 `;
 
 const AppWrapper = styled.div`
-  background-color: #030307;
+  background-color: #03050b;
   color: #fff;
   font-family: "Inter", sans-serif;
   overflow: hidden;
   height: calc(var(--vh, 1vh) * 100);
   position: relative;
 `;
+// cursor: url(${Cursor}) 4 4, auto;
 
 const Section = styled.section<{ $active?: boolean }>`
   position: absolute;
@@ -50,17 +51,12 @@ const Section = styled.section<{ $active?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 1s ease, opacity 1s ease;
-  opacity: 0;
-  transform: translateY(-100%) scale(0.9);
-  background-color: #030307;
-  ${(p) =>
-    p.$active &&
-    css`
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      z-index: 2;
-    `}
+  background-color: #03050b;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: ${(p) =>
+    p.$active ? "translateY(0) scale(1)" : "translateY(5%) scale(0.98)"};
+  z-index: ${(p) => (p.$active ? 2 : 1)};
+  pointer-events: ${(p) => (p.$active ? "auto" : "none")};
 `;
 
 const IndicatorWrapper = styled.div`
