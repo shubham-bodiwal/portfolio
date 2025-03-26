@@ -70,10 +70,18 @@ const IndicatorWrapper = styled.div`
   justify-content: center;
   gap: 1rem;
   z-index: 10;
+  font-size: 0.9rem;
   animation: ${fadeInIndicator} 1.5s ease-out both;
   backdrop-filter: blur(4px);
   height: 100%;
   padding: 0.5rem;
+  background: transparent;
+  transition: font-size 0.4s, background 0.4s;
+
+  &:hover {
+    background: #ffffff11;
+    font-size: 1.1rem;
+  }
 `;
 
 const Dot = styled.div<{ active?: boolean }>`
@@ -81,13 +89,17 @@ const Dot = styled.div<{ active?: boolean }>`
   height: 10px;
   border-radius: 50%;
   background-color: ${(p) => (p.active ? "#ffaa33" : "#ffffff88")};
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, width 0.4s, height 0.4s;
+
+  ${IndicatorWrapper}:hover & {
+    width: 12px;
+    height: 12px;
+  }
 `;
 
 const VerticalLabel = styled.div`
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  font-size: 0.9rem;
   color: #ffffff66;
   margin-top: 1rem;
   letter-spacing: 0.7em;
@@ -116,6 +128,13 @@ const VerticalRightText = styled.div`
   letter-spacing: 0.7em;
   text-orientation: mixed;
   cursor: pointer;
+  transition: font-size 0.4s, background 0.4s;
+  background: transparent;
+
+  &:hover {
+    background: #ffffff11;
+    font-size: 1.1rem;
+  }
 `;
 
 function Home() {

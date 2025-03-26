@@ -16,7 +16,7 @@ const gradientFlow = keyframes`
 const fadeInHero = keyframes`
   0% {
 
-    transform: translateY(5rem) scale(0.98);
+    transform: translateY(5rem) scale(0.98) ;
   }
   100% {
     transform: translateY(0) scale(1);
@@ -112,6 +112,11 @@ const Content = styled.div`
   animation: ${fadeInHero} 1.5s ease-out both;
   backdrop-filter: blur(3px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: color 2s;
+
+  &:hover {
+    transform: ;
+  }
 `;
 
 const Title = styled.h1`

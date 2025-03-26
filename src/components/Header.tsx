@@ -15,7 +15,14 @@ const HeaderWrapper = styled.header`
 const Logo = styled.img`
   height: 6rem;
   width: auto;
-  opacity: 0.8;
+  opacity: 1;
+  transition: height 0.3s ease, margin-bottom 0.3s ease;
+  display: inline-block;
+
+  &:hover {
+    height: 7rem;
+    margin-bottom: -1rem;
+  }
 `;
 
 const NavLink = styled.a`
@@ -26,6 +33,7 @@ const NavLink = styled.a`
   font-weight: 700;
   font-size: 1.125rem;
   transition: transform 0.3s ease, color 0.3s ease;
+  letter-spacing: 0.3rem;
   display: inline-block; /* ensures scale animation doesn't affect layout */
 
   span {
@@ -39,39 +47,39 @@ const NavLink = styled.a`
   }
 
   &.active {
-    color: #ffaa33;
+    color: white;
   }
   &.active::before,
   &.active::after,
-  &.active span::after {
-    content: "";
-    position: absolute;
-    height: 1px;
-    background: #ffaa33;
-  }
+  `;
+// &.active span::after {
+//   content: "";
+//   position: absolute;
+//   height: 1px;
+//   background: #ffaa33;
+// }
 
-  &.active::before {
-    width: 50px;
-    bottom: -15px;
-    left: -49px;
-    transform: rotate(60deg);
-    transform-origin: right top;
-  }
+// &.active::before {
+//   width: 50px;
+//   bottom: -15px;
+//   left: -49px;
+//   transform: rotate(60deg);
+//   transform-origin: right top;
+// }
 
-  &.active::after {
-    width: 50px;
-    bottom: -15px;
-    right: -49px;
-    transform: rotate(-60deg);
-    transform-origin: left top;
-  }
+// &.active::after {
+//   width: 50px;
+//   bottom: -15px;
+//   right: -49px;
+//   transform: rotate(-60deg);
+//   transform-origin: left top;
+// }
 
-  &.active span::after {
-    width: 100%;
-    left: 0;
-    top: calc(100% + 14px);
-  }
-`;
+// &.active span::after {
+//   width: 100%;
+//   left: 0;
+//   top: calc(100% + 14px);
+// }
 
 export default function Header() {
   return (

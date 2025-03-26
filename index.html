@@ -8,6 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <script>
+      document.addEventListener("visibilitychange", () => {
+        console.log("Visibility state changed:", document.visibilityState);
+      });
+      window.addEventListener('blur', () => {
+  console.log('Tab or window lost focus');
+});
+
+window.addEventListener('focus', () => {
+  console.log('Tab or window is focused again');
+});
+    </script>
   </head>
   <body>
     <div id="root"></div>
