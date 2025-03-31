@@ -54,7 +54,7 @@ const CursorAnimation: React.FC = () => {
       this.angleY = Math.PI * 2 * Math.random();
     }
 
-    draw(delta: number) {
+    draw() {
       if (!idleRef.current || this.index <= sineDots) {
         TweenMax.set(this.element, { x: this.x, y: this.y });
       } else {
@@ -109,14 +109,14 @@ const CursorAnimation: React.FC = () => {
 
     startIdleTimer();
 
-    const positionCursor = (delta: number) => {
+    const positionCursor = () => {
       let x = mousePosition.current.x;
       let y = mousePosition.current.y;
       dotsRef.current.forEach((dot, index, dots) => {
         const nextDot = dots[index + 1] || dots[0];
         dot.x = x;
         dot.y = y;
-        dot.draw(delta);
+        dot.draw();
         if (!idleRef.current || index <= sineDots) {
           const dx = (nextDot.x - dot.x) * followFactor;
           const dy = (nextDot.y - dot.y) * followFactor;
@@ -128,8 +128,7 @@ const CursorAnimation: React.FC = () => {
 
     const render = (timestamp: number) => {
       if (!lastFrameRef.current) lastFrameRef.current = timestamp;
-      const delta = timestamp - lastFrameRef.current;
-      positionCursor(delta);
+      positionCursor();
       lastFrameRef.current = timestamp;
       requestAnimationFrame(render);
     };
