@@ -1,12 +1,18 @@
 import styled from "styled-components";
+import CursorAnimation from "./CursorAnimation";
+// import ColorChangingAnimation from "./ColorChangingAnimation";
 // import tnqImg from "../assets/react.svg";
 // import dreamsImg from "../assets/react.svg";
 // import escapeImg from "../assets/react.svg";
 // import InfiniteScroll from "./InfiniteScroll";
-import CardWithGridEffect from "./CardWithGridEffect";
+// import CardWithGridEffect from "./CardWithGridEffect";
+
 
 const ProjectsWrapper = styled.section`
   padding: 4rem;
+  height: 100dvh;
+  width: 100dvw;
+  background: white;
 `;
 
 // const Title = styled.h2`
@@ -45,7 +51,7 @@ const ProjectsWrapper = styled.section`
 export default function Projects() {
   return (
     <ProjectsWrapper>
-      <CardWithGridEffect />
+      <CursorAnimation />
     </ProjectsWrapper>
   );
 }

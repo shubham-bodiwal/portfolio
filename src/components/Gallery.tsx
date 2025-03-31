@@ -258,22 +258,6 @@ const Content = styled.span<GalleryItemProps>`
   }
 `;
 
-// const Line = styled.span<{ isWhite: boolean }>`
-//   position: absolute;
-//   width: 100%;
-//   height: 3rem;
-//   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
-//   left: 0;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   opacity: 1;
-//   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-
-//   ${GalleryItem}:hover & {
-//     opacity: 0;
-//   }
-// `;
-
 const NavButton = styled.button`
   color: #ffaa33;
   background: transparent;
@@ -284,64 +268,60 @@ const galleries: GalleryData[] = [
   {
     title: "Resume.io",
     number: "01",
-    content: "Built ATS-friendly resume templates...",
+    content: "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
   },
   {
     title: "Gulf-HR",
     number: "02",
-    content: "Developed modular HRMS features...",
+    content: "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
   },
   {
     title: "Twilio Segment",
     number: "03",
-    content: "Engineered fraud detection system...",
+    content: "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
   },
   {
     title: "SHS Homeopathy",
     number: "04",
-    content: "Built Electron app for medical records...",
+    content: "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
   },
   {
     title: "AI Interview System",
     number: "05",
-    content: "AI-powered platform with analytics...",
+    content: "AI platform for interview assessment via video, analyzing eye contact, posture, and voice. Real-time cheat alerts and performance analytics.",
   },
   {
     title: "Quiz Reminder App",
     number: "06",
-    content: "Quiz & notification app with personalization...",
+    content: "Mobile app delivering personalized quiz reminders with gamified MCQs directly in the notification tray. Adaptive scheduling based on user habits.",
+  },
+  {
+    title: "AI QA Crawler",
+    number: "07",
+    content: "Smart crawler that inspects codebases and UIs to detect bugs and usability issues. Automates QA by mimicking expected interactions.",
+  },
+  {
+    title: "AI Code Refactor Extension",
+    number: "08",
+    content: "VS Code extension that uses AI to refactor code for readability and maintainability. Features include variable renaming, logic simplification, and structure enhancement.",
   },
   {
     title: "Gamers Box",
-    number: "07",
-    content: "Real-time gaming news platform...",
+    number: "09",
+    content: "Gaming platform with live streams, esports news, and gear updates. Includes an admin dashboard for tournament management and content moderation.",
   },
   {
     title: "WhatsApp Clone",
-    number: "08",
-    content: "Secure messaging app with E2E encryption...",
-  },
-  {
-    title: "E-Shop UI",
-    number: "09",
-    content: "React UI for modern e-commerce...",
-  },
-  {
-    title: "Crypto Tracker",
     number: "10",
-    content: "Live crypto market app with charts...",
+    content: "Real-time messaging app with group chat, media sharing, and secure socket.io communication. Built to explore WebSocket architecture.",
   },
   {
-    title: "Portfolio V2",
+    title: "Smart Home Automation",
     number: "11",
-    content: "My upgraded personal dev portfolio...",
-  },
-  {
-    title: "Notes App",
-    number: "12",
-    content: "Productive note-taking app with Markdown...",
+    content: "End-to-end IoT smart home ecosystem using Arduino. Includes automation for lighting, gas, climate, and curtains with energy efficiency insights.",
   },
 ];
+
 
 export default function Gallery() {
   const itemsPerPage = 4;
