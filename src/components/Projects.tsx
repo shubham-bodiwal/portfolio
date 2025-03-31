@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import CursorAnimation from "./CursorAnimation";
+import NeonCursorComponent from "./NeonCursor";
+// import CursorAnimation from "./CursorAnimation";
 // import ColorChangingAnimation from "./ColorChangingAnimation";
 // import tnqImg from "../assets/react.svg";
 // import dreamsImg from "../assets/react.svg";
@@ -51,7 +52,7 @@ const ProjectsWrapper = styled.section`
 export default function Projects() {
   return (
     <ProjectsWrapper>
-      <CursorAnimation />
+      <NeonCursorComponent />
     </ProjectsWrapper>
   );
 }

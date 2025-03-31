@@ -20,6 +20,8 @@
     "reactflow": "^11.11.4",
     "recharts": "^2.15.1",
     "styled-components": "^6.1.16",
+    "three": "^0.175.0",
+    "threejs-toys": "^0.0.8",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
