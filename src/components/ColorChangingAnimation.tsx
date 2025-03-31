@@ -153,7 +153,7 @@ const ColorChangingAnimation: React.FC = () => {
           ripple.r = eased * rippleSize;
           ripple.opacity = 1 - eased;
         },
-        complete: () => {}
+        complete: () => { }
       };
 
       // --- Particles Animation ---
@@ -191,7 +191,7 @@ const ColorChangingAnimation: React.FC = () => {
             particle.r = initR * (1 - eased);
           });
         },
-        complete: () => {}
+        complete: () => { }
       };
 
       animations.push(fillAnimation, rippleAnimation, particlesAnimation);
@@ -216,9 +216,7 @@ const ColorChangingAnimation: React.FC = () => {
     const fauxClick = (x: number, y: number) => {
       const evt = new MouseEvent("mousedown", {
         clientX: x,
-        clientY: y,
-        pageX: x,
-        pageY: y
+        clientY: y
       });
       document.dispatchEvent(evt);
     };
