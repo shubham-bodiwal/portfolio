@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import ReactDOM from "react-dom";
 import styled from "styled-components";
 
 // Menu Wrapper with Apple-style gradient
@@ -18,7 +19,7 @@ const MenuWrapper = styled.div`
   transform: scale(0.95);
   transform-origin: top left;
   transition: opacity 0.1s ease, transform 0.1s ease;
-  z-index: 1000;
+  z-index: 10000; /* Increased z-index to appear above all other elements */
 
   &.visible {
     opacity: 1;
@@ -58,8 +59,7 @@ const MenuItem = styled.div<MenuItemProps>`
       : "#fff"};
 
   &:hover {
-    background-color: ${(props) => !props.disabled && "#00f5d4"};
-    color: ${(props) => !props.disabled && "#000"};
+    background-color: ${(props) => !props.disabled && "#ffffff11"};
   }
 
   ${(props) =>
@@ -125,12 +125,23 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
     };
   }, [visible, onClose]);
 
-  const handleShutDown = () => {
+  const handleShutDown = (e: React.MouseEvent) => {
+    // Stop propagation to prevent parent handlers from catching this event
+    e.stopPropagation();
+
+    // Close the menu
     setIsVisible(false);
-    if (onShutDown) onShutDown();
+    if (onClose) onClose();
+
+    // Execute shutdown handler with a small delay to ensure menu closes first
+    setTimeout(() => {
+      if (onShutDown) onShutDown();
+    }, 100);
   };
 
-  return (
+  // Create a menu that renders directly into the body using a portal
+  // This ensures it's always on top of everything
+  const menuElement = (
     <MenuWrapper
       ref={menuRef}
       className={isVisible ? "visible" : ""}
@@ -168,6 +179,10 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
       </MenuItem>
     </MenuWrapper>
   );
+
+  // Create a portal that renders the menu directly into the document body
+  // This ensures it's outside of any stacking context issues
+  return ReactDOM.createPortal(menuElement, document.body);
 };
 
 export default MacOSMenu;
