@@ -2,26 +2,37 @@ import { useEffect, useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-// Import your wallpaper & sounds
+// Import wallpaper & sounds
 import OsWallpaper from "../assets/os-wallpaper2.jpg";
 import bootSound from "../assets/start-sound.wav";
 
-// Import your Dock icons
-import resumeIcon from "../assets/Launchpad.svg";
-import skillsIcon from "../assets/Folder.svg";
-import projectsIcon from "../assets/Mail.svg";
-import settingsIcon from "../assets/Settings.svg";
-import trashIcon from "../assets/Trash Full.svg";
-
-import ImageReveal from "./ImageReveal";
+// Import MacHeader and MacWindow components
 import MacHeader from "./MacHeader";
 import MacWindow from "./MacWindow";
+import ImageReveal from "./ImageReveal";
 
+// Import dock icons
+import finderIcon from "../assets/Finder.svg";
+import launchpadIcon from "../assets/Launchpad.svg";
+import safariIcon from "../assets/Safari.svg";
+import mailIcon from "../assets/Mail.svg";
+import photosIcon from "../assets/Photos.svg";
+import messagesIcon from "../assets/Messages.svg";
+import musicIcon from "../assets/Music.svg";
+import appStoreIcon from "../assets/App Store.svg";
+import settingsIcon from "../assets/Settings.svg";
+// import downloadsIcon from "../assets/Downloads.svg";
+// import applicationsIcon from "../assets/Applications.svg";
+import dictionaryIcon from "../assets/Dictionary.svg";
+import trashIcon from "../assets/Trash Full.svg";
+
+// Animation keyframes
 const fillBar = keyframes`
   from { width: 0%; }
   to { width: 100%; }
 `;
 
+// Styled components
 const DesktopContainer = styled.div`
   width: 100vw;
   height: 100dvh;
@@ -105,24 +116,38 @@ const Dock = styled.div<{ visible: boolean }>`
   border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
+const DockItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const DockSeparator = styled.div`
+  width: 1px;
+  height: 2.5rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 0.4rem;
+`;
+
 const DockItem = styled.div`
   position: relative;
   margin: 0 0.4rem;
 `;
 
-// background-color: rgba(255, 255, 255, 0.6);
 const AppIcon = styled.div`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 
   &:hover {
     transform: scale(1.2);
+    filter: brightness(1.1);
+    margin-bottom: 0.5rem;
+    margin-top: -0.5rem;
   }
 
   img {
@@ -138,12 +163,13 @@ const StatusDot = styled.div<{ status: "open" | "minimized" }>`
   bottom: -3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 6px;
+  width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: ${(props) => (props.status === "open" ? "black" : "black")};
+  background-color: ${(props) => (props.status === "open" ? "white" : "#aaa")};
 `;
 
+// Define app window type
 type AppWindow = {
   id: string;
   appName: string;
@@ -152,7 +178,8 @@ type AppWindow = {
   active: boolean;
 };
 
-export default function MacOSPortfolioUI() {
+// Main component
+export default function EnhancedMacOSDesktop() {
   const [booted, setBooted] = useState(false);
   const [openWindows, setOpenWindows] = useState<AppWindow[]>([]);
   const [dockVisible, setDockVisible] = useState(false);
@@ -162,44 +189,52 @@ export default function MacOSPortfolioUI() {
   );
   const [headerVisible, setHeaderVisible] = useState(true);
 
-  // Array of dock items (name + icon). If you have more icons, add them here:
+  // Define dock items with proper macOS app order and imported icons
   const dockItems = [
-    { name: "Resume", icon: resumeIcon },
-    { name: "Skills", icon: skillsIcon },
-    { name: "Projects", icon: projectsIcon },
-    { name: "Settings", icon: settingsIcon },
-    // Mark Trash separately if you don't want it to open a window:
-    { name: "Trash", icon: trashIcon, isTrash: true },
+    // Favorite apps section (left side)
+    { name: "Finder", icon: finderIcon, section: "favorites" },
+    { name: "Launchpad", icon: launchpadIcon, section: "favorites" },
+    { name: "Safari", icon: safariIcon, section: "favorites" },
+    { name: "Mail", icon: mailIcon, section: "favorites" },
+    { name: "Photos", icon: photosIcon, section: "favorites" },
+    { name: "Messages", icon: messagesIcon, section: "favorites" },
+    { name: "Music", icon: musicIcon, section: "favorites" },
+    { name: "App Store", icon: appStoreIcon, section: "favorites" },
+    { name: "System Settings", icon: settingsIcon, section: "favorites" },
+
+    // Folders and Trash section (right side)
+    // { name: "Downloads", icon: downloadsIcon, section: "folders" },
+    // { name: "Applications", icon: applicationsIcon, section: "folders" },
+    { name: "Dictionary", icon: dictionaryIcon, section: "folders" },
+    { name: "Trash", icon: trashIcon, section: "folders", isTrash: true },
   ];
 
   // Request browser fullscreen on mount
   useEffect(() => {
     const element = document.documentElement;
     if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if ((element as any).mozRequestFullScreen) {
-      (element as any).mozRequestFullScreen();
-    } else if ((element as any).webkitRequestFullscreen) {
-      (element as any).webkitRequestFullscreen();
-    } else if ((element as any).msRequestFullscreen) {
-      (element as any).msRequestFullscreen();
+      element
+        .requestFullscreen()
+        .catch((e) => console.error("Fullscreen request failed:", e));
     }
   }, []);
 
   // Boot sequence with sound
   useEffect(() => {
     const audio = new Audio(bootSound);
-    audio.play();
+    audio.play().catch((e) => console.error("Audio playback failed:", e));
+
     setTimeout(() => {
       setBooted(true);
       setDockVisible(true);
     }, 2500);
+
     setTimeout(() => {
       setDockVisible(false);
-    }, 3000);
+    }, 4000);
   }, []);
 
-  // Show/hide Dock based on mouse near bottom
+  // Show/hide Dock based on mouse position
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY > window.innerHeight - 100) {
@@ -210,11 +245,12 @@ export default function MacOSPortfolioUI() {
         inactivityTimer.current = setTimeout(() => setDockVisible(false), 500);
       }
     };
+
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Show/hide header if in fullscreen mode
+  // Show/hide header based on mouse position when in fullscreen
   useEffect(() => {
     const handleMouseMoveForHeader = (e: MouseEvent) => {
       if (fullscreenWindows.size > 0) {
@@ -227,12 +263,13 @@ export default function MacOSPortfolioUI() {
         setHeaderVisible(true);
       }
     };
+
     window.addEventListener("mousemove", handleMouseMoveForHeader);
     return () =>
       window.removeEventListener("mousemove", handleMouseMoveForHeader);
   }, [fullscreenWindows]);
 
-  // Handle changes to fullscreen windows
+  // Handle window fullscreen state changes
   const handleFullscreenChange = (id: string, isFullscreen: boolean) => {
     setFullscreenWindows((prev) => {
       const newSet = new Set(prev);
@@ -252,6 +289,7 @@ export default function MacOSPortfolioUI() {
       const highestZ = Math.max(...prev.map((w) => w.zIndex || 10), 10);
       const newZIndex = highestZ + 1;
 
+      // Check if window already exists
       const existing = prev.find((win) => win.appName === appName);
       if (existing) {
         // If minimized, restore it and make it active
@@ -269,6 +307,7 @@ export default function MacOSPortfolioUI() {
             : { ...win, active: false }
         );
       }
+
       // Create a new window
       return [
         ...prev.map((win) => ({ ...win, active: false })),
@@ -303,9 +342,8 @@ export default function MacOSPortfolioUI() {
   // Handle window activation
   const activateWindow = (id: string) => {
     setOpenWindows((prev) => {
-      // Always set a new highest z-index for the active window
       const highestZ = Math.max(...prev.map((w) => w.zIndex || 10), 10);
-      const newZIndex = highestZ + 1; // Increment by 10 to ensure it's always on top
+      const newZIndex = highestZ + 1;
 
       return prev.map((win) =>
         win.id === id
@@ -315,26 +353,28 @@ export default function MacOSPortfolioUI() {
     });
   };
 
-  // Get status for dot
+  // Get status for dock indicator dot
   const getAppStatus = (appName: string) => {
     const win = openWindows.find((w) => w.appName === appName);
     if (!win) return null;
     return win.minimized ? "minimized" : "open";
   };
 
-  // Which app is active?
+  // Get active app name
   const activeApp = openWindows.find((w) => !w.minimized && w.active);
   const activeAppName = activeApp ? activeApp.appName : "";
 
-  // Handle click for dock item
+  // Handle dock item click
   const handleDockItemClick = (item: { name: string; isTrash?: boolean }) => {
     if (item.isTrash) {
-      console.log("Trash clicked!");
+      // Special handling for Trash
+      launchApp("Trash");
     } else {
       launchApp(item.name);
     }
   };
 
+  // Render boot screen while booting
   if (!booted) {
     return (
       <BootScreen>
@@ -346,9 +386,13 @@ export default function MacOSPortfolioUI() {
     );
   }
 
+  // Group dock items by section
+  const favoriteApps = dockItems.filter((item) => item.section === "favorites");
+  const folderApps = dockItems.filter((item) => item.section === "folders");
+
   return (
     <DesktopContainer id="desktop-container">
-      {/* Header */}
+      {/* Header Bar */}
       <HeaderBackground isFullscreen={fullscreenWindows.size > 0}>
         <HeaderWrapper
           isVisible={headerVisible}
@@ -379,18 +423,38 @@ export default function MacOSPortfolioUI() {
 
       {/* Dock */}
       <Dock visible={dockVisible}>
-        {dockItems.map((item) => (
-          <DockItem key={item.name}>
-            <AppIcon onClick={() => handleDockItemClick(item)}>
-              <img src={item.icon} alt={item.name} />
-            </AppIcon>
-            {getAppStatus(item.name) && (
-              <StatusDot
-                status={getAppStatus(item.name) as "open" | "minimized"}
-              />
-            )}
-          </DockItem>
-        ))}
+        <DockItemContainer>
+          {/* Favorite Apps */}
+          {favoriteApps.map((item) => (
+            <DockItem key={item.name}>
+              <AppIcon onClick={() => handleDockItemClick(item)}>
+                <img src={item.icon} alt={item.name} />
+              </AppIcon>
+              {getAppStatus(item.name) && (
+                <StatusDot
+                  status={getAppStatus(item.name) as "open" | "minimized"}
+                />
+              )}
+            </DockItem>
+          ))}
+
+          {/* Separator */}
+          <DockSeparator />
+
+          {/* Folders and Trash */}
+          {folderApps.map((item) => (
+            <DockItem key={item.name}>
+              <AppIcon onClick={() => handleDockItemClick(item)}>
+                <img src={item.icon} alt={item.name} />
+              </AppIcon>
+              {getAppStatus(item.name) && (
+                <StatusDot
+                  status={getAppStatus(item.name) as "open" | "minimized"}
+                />
+              )}
+            </DockItem>
+          ))}
+        </DockItemContainer>
       </Dock>
     </DesktopContainer>
   );

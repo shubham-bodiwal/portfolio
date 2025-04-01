@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import AppleLogoBG from '../assets/apple-logo 1 (1).png';
-import BatterySvg from '../assets/Battery.svg';
-import ControlCenterSvg from '../assets/Control Center.svg';
-import SpotlightSvg from '../assets/Search.svg';
-import WifiSvg from '../assets/WiFi.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import AppleLogoBG from "../assets/apple-logo 1 (1).png";
+import BatterySvg from "../assets/Battery.svg";
+import ControlCenterSvg from "../assets/Control Center.svg";
+import SpotlightSvg from "../assets/Search.svg";
+import WifiSvg from "../assets/WiFi.svg";
+import MacOSMenu from "./MacOsMenu";
 
 const HeaderContainer = styled.div`
   height: 1.6rem;
@@ -67,6 +68,7 @@ const BackgroundImage = styled.img`
   height: 1rem;
   margin-right: 1rem;
   margin-left: 0.5rem;
+  cursor: pointer;
 `;
 
 interface MacHeaderProps {
@@ -74,28 +76,70 @@ interface MacHeaderProps {
 }
 
 const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName }) => {
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+  const handleAppleLogoClick = (event: React.MouseEvent) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setMenuPosition({
+      x: rect.left,
+      y: rect.bottom + 5, // Add a small offset
+    });
+    setMenuVisible(!menuVisible);
+  };
+
+  const handleShutDown = () => {
+    // Handle shutdown logic
+    // This could exit fullscreen, redirect, or trigger application close
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if ((document as any).webkitExitFullscreen) {
+      (document as any).webkitExitFullscreen();
+    } else if ((document as any).mozCancelFullScreen) {
+      (document as any).mozCancelFullScreen();
+    } else if ((document as any).msExitFullscreen) {
+      (document as any).msExitFullscreen();
+    }
+
+    // You could also redirect to another page or close the app
+    // window.location.href = "/exit";
+  };
+
   return (
-    <HeaderContainer>
-      <LeftSection>
-        <BackgroundImage src={AppleLogoBG} alt="Apple Logo" />
-        <MenuList>
-          <MenuItem>{activeAppName || "Finder"}</MenuItem>
-          <MenuItem>File</MenuItem>
-          <MenuItem>Edit</MenuItem>
-          <MenuItem>View</MenuItem>
-          <MenuItem>Go</MenuItem>
-          <MenuItem>Window</MenuItem>
-          <MenuItem>Help</MenuItem>
-        </MenuList>
-      </LeftSection>
-      <RightSection>
-        <IconImg src={SpotlightSvg} alt="Spotlight" />
-        <IconImg src={ControlCenterSvg} alt="Control Center" />
-        <IconImg src={WifiSvg} alt="Wi-Fi" />
-        <IconImg src={BatterySvg} alt="Battery" />
-        <TimeDisplay>3:58 PM</TimeDisplay>
-      </RightSection>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <LeftSection>
+          <BackgroundImage
+            src={AppleLogoBG}
+            alt="Apple Logo"
+            onClick={handleAppleLogoClick}
+          />
+          <MenuList>
+            <MenuItem>{activeAppName || "Finder"}</MenuItem>
+            <MenuItem>File</MenuItem>
+            <MenuItem>Edit</MenuItem>
+            <MenuItem>View</MenuItem>
+            <MenuItem>Go</MenuItem>
+            <MenuItem>Window</MenuItem>
+            <MenuItem>Help</MenuItem>
+          </MenuList>
+        </LeftSection>
+        <RightSection>
+          <IconImg src={SpotlightSvg} alt="Spotlight" />
+          <IconImg src={ControlCenterSvg} alt="Control Center" />
+          <IconImg src={WifiSvg} alt="Wi-Fi" />
+          <IconImg src={BatterySvg} alt="Battery" />
+          <TimeDisplay>3:58 PM</TimeDisplay>
+        </RightSection>
+      </HeaderContainer>
+
+      <MacOSMenu
+        position={menuPosition}
+        visible={menuVisible}
+        onClose={() => setMenuVisible(false)}
+        onShutDown={handleShutDown}
+      />
+    </>
   );
 };
 
