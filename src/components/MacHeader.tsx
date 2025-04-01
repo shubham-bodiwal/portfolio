@@ -8,12 +8,10 @@ import WifiSvg from '../assets/WiFi.svg';
 
 const HeaderContainer = styled.div`
   height: 1.6rem;
-  background: #00000022;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
-  backdrop-filter: blur(2px);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -33,7 +31,7 @@ const MenuList = styled.ul`
 
 const MenuItem = styled.li`
   margin-right: 1rem;
-  font-size:0.9rem;
+  font-size: 0.9rem;
   color: #ffffff;
   cursor: default;
   user-select: none;
@@ -71,13 +69,17 @@ const BackgroundImage = styled.img`
   margin-left: 0.5rem;
 `;
 
-const MacHeader: React.FC = () => {
+interface MacHeaderProps {
+  activeAppName?: string;
+}
+
+const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName }) => {
   return (
     <HeaderContainer>
       <LeftSection>
         <BackgroundImage src={AppleLogoBG} alt="Apple Logo" />
         <MenuList>
-          <MenuItem>Finder</MenuItem>
+          <MenuItem>{activeAppName || "Finder"}</MenuItem>
           <MenuItem>File</MenuItem>
           <MenuItem>Edit</MenuItem>
           <MenuItem>View</MenuItem>
@@ -88,7 +90,7 @@ const MacHeader: React.FC = () => {
       </LeftSection>
       <RightSection>
         <IconImg src={SpotlightSvg} alt="Spotlight" />
-        <IconImg src={ControlCenterSvg} alt="ControlCenter" />
+        <IconImg src={ControlCenterSvg} alt="Control Center" />
         <IconImg src={WifiSvg} alt="Wi-Fi" />
         <IconImg src={BatterySvg} alt="Battery" />
         <TimeDisplay>3:58 PM</TimeDisplay>
