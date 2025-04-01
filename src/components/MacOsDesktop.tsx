@@ -3,8 +3,18 @@ import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import { Rnd } from "react-rnd";
 import { v4 as uuidv4 } from "uuid";
+
+// Import your wallpaper & sounds
 import OsWallpaper from "../assets/os-wallpaper2.jpg";
 import bootSound from "../assets/start-sound.wav";
+
+// Import your Dock icons
+import resumeIcon from "../assets/Launchpad.svg";
+import skillsIcon from "../assets/Folder.svg";
+import projectsIcon from "../assets/Mail.svg";
+import settingsIcon from "../assets/Settings.svg";
+import trashIcon from "../assets/Trash Full.svg";
+
 import ImageReveal from "./ImageReveal";
 import MacHeader from "./MacHeader";
 
@@ -14,15 +24,11 @@ const fadeIn = keyframes`
 `;
 
 const fillBar = keyframes`
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
+  from { width: 0%; }
+  to { width: 100%; }
 `;
 
-// Outer container for the entire desktop
+
 const DesktopContainer = styled.div`
   width: 100vw;
   height: 100dvh;
@@ -32,8 +38,6 @@ const DesktopContainer = styled.div`
   border-radius: 0.5rem;
 `;
 
-// Header wrapper with dynamic styling.
-// When any window is fullscreen, the header's background is black and it slides up (hidden) unless the mouse hovers near the top.
 const HeaderWrapper = styled.div<{ isVisible: boolean; isFullscreen: boolean }>`
   position: absolute;
   top: 0;
@@ -45,24 +49,22 @@ const HeaderWrapper = styled.div<{ isVisible: boolean; isFullscreen: boolean }>`
   transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
 `;
 
-const HeaderBackground = styled.div<{isFullscreen: boolean}>`
-background-color: ${props => props.isFullscreen ? "#00000066" : "#00000022"};
+const HeaderBackground = styled.div<{ isFullscreen: boolean }>`
+  background-color: ${(props) => (props.isFullscreen ? "#00000066" : "#00000022")};
   height: 1.6rem;
-width: 100%;
-backdrop-filter: ${props => props.isFullscreen ? "blur(10px)" : "blur(2px)"};
-`;  
+  width: 100%;
+  backdrop-filter: ${(props) => (props.isFullscreen ? "blur(10px)" : "blur(2px)")};
+`;
 
-// Area below header where non-fullscreen windows appear
 const WindowsArea = styled.div`
   position: absolute;
-  top: 1.6rem; /* Adjust based on your MacHeader height */
+  top: 1.6rem;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: hidden;
 `;
 
-// Boot screen during boot sequence
 const BootScreen = styled.div`
   width: 100vw;
   height: 100vh;
@@ -92,7 +94,6 @@ const ProgressBarFill = styled.div`
   animation: ${fillBar} 2.5s ease-in-out forwards;
 `;
 
-// Dock component at the bottom
 const Dock = styled.div<{ visible: boolean }>`
   position: absolute;
   bottom: ${({ visible }) => (visible ? "0.5rem" : "-100px")};
@@ -109,31 +110,34 @@ const Dock = styled.div<{ visible: boolean }>`
   border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
-// Each item in the Dock
 const DockItem = styled.div`
   position: relative;
-  margin: 0 0.7rem;
+  margin: 0 0.4rem;
 `;
 
-// Style for each app icon
+// background-color: rgba(255, 255, 255, 0.6);
 const AppIcon = styled.div`
   width: 2.5rem;
   height: 2.5rem;
-  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 0.5rem;
-  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease-in-out;
+
   &:hover {
     transform: scale(1.2);
   }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
-// Status dot below each Dock item
+// Status dot
 const StatusDot = styled.div<{ status: "open" | "minimized" }>`
   position: absolute;
   bottom: -3px;
@@ -146,8 +150,7 @@ const StatusDot = styled.div<{ status: "open" | "minimized" }>`
     props.status === "open" ? "green" : "yellow"};
 `;
 
-// Window styling with dynamic border radius when fullscreen.
-// When fullscreen, the top-left and top-right border radius become 0.
+// Window styling
 const WindowWrapper = styled.div<{ isFullscreen: boolean }>`
   animation: ${fadeIn} 0.3s ease-in-out;
   background: #2c2c2e;
@@ -191,6 +194,8 @@ const CircleButton = styled.div<{ color: string }>`
   cursor: pointer;
 `;
 
+// ============ Types & Components ============
+
 type AppWindow = {
   id: string;
   appName: string;
@@ -214,11 +219,8 @@ function MacWindow({
 }: MacWindowProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const portalTarget = 
-  // isFullscreen
-  //   ? document.getElementById("desktop-container")
-  //   :
-     document.getElementById("windows-area");
+  // Decide where the portal should attach
+  const portalTarget = document.getElementById("windows-area");
 
   return ReactDOM.createPortal(
     <Rnd
@@ -262,6 +264,8 @@ function MacWindow({
   );
 }
 
+// ============ Main App ============
+
 export default function MacOSPortfolioUI() {
   const [booted, setBooted] = useState(false);
   const [openWindows, setOpenWindows] = useState<AppWindow[]>([]);
@@ -270,7 +274,17 @@ export default function MacOSPortfolioUI() {
   const [fullscreenWindows, setFullscreenWindows] = useState<Set<string>>(new Set());
   const [headerVisible, setHeaderVisible] = useState(true);
 
-  // Request fullscreen on mount (for the browser's fullscreen mode)
+  // Array of dock items (name + icon). If you have more icons, add them here:
+  const dockItems = [
+    { name: "Resume", icon: resumeIcon },
+    { name: "Skills", icon: skillsIcon },
+    { name: "Projects", icon: projectsIcon },
+    { name: "Settings", icon: settingsIcon },
+    // Mark Trash separately if you don't want it to open a window:
+    { name: "Trash", icon: trashIcon, isTrash: true },
+  ];
+
+  // Request browser fullscreen on mount
   useEffect(() => {
     const element = document.documentElement;
     if (element.requestFullscreen) {
@@ -284,7 +298,7 @@ export default function MacOSPortfolioUI() {
     }
   }, []);
 
-  // Boot sequence with sound and progress bar
+  // Boot sequence with sound
   useEffect(() => {
     const audio = new Audio(bootSound);
     audio.play();
@@ -297,7 +311,7 @@ export default function MacOSPortfolioUI() {
     }, 3000);
   }, []);
 
-  // Show/hide Dock based on mouse position
+  // Show/hide Dock based on mouse near bottom
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY > window.innerHeight - 100) {
@@ -312,8 +326,7 @@ export default function MacOSPortfolioUI() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // When any window is fullscreen, hide header by default.
-  // Show the header if mouse is near the top (within 30px).
+  // Show/hide header if in fullscreen mode
   useEffect(() => {
     const handleMouseMoveForHeader = (e: MouseEvent) => {
       if (fullscreenWindows.size > 0) {
@@ -330,7 +343,7 @@ export default function MacOSPortfolioUI() {
     return () => window.removeEventListener("mousemove", handleMouseMoveForHeader);
   }, [fullscreenWindows]);
 
-  // Update fullscreen window tracking from each MacWindow
+  // Handle changes to fullscreen windows
   const handleFullscreenChange = (id: string, isFullscreen: boolean) => {
     setFullscreenWindows((prev) => {
       const newSet = new Set(prev);
@@ -348,13 +361,16 @@ export default function MacOSPortfolioUI() {
     setOpenWindows((prev) => {
       const existing = prev.find((win) => win.appName === appName);
       if (existing) {
+        // If minimized, restore it
         if (existing.minimized) {
           return prev.map((win) =>
             win.appName === appName ? { ...win, minimized: false } : win
           );
         }
+        // Otherwise do nothing if already open
         return prev;
       }
+      // Create a new window
       return [...prev, { id: uuidv4(), appName, minimized: false }];
     });
   };
@@ -376,16 +392,25 @@ export default function MacOSPortfolioUI() {
     );
   };
 
-  // Get status for status dot (open or minimized)
+  // Get status for dot
   const getAppStatus = (appName: string) => {
     const win = openWindows.find((w) => w.appName === appName);
     if (!win) return null;
     return win.minimized ? "minimized" : "open";
   };
 
-  // Determine active app (the one currently open) to display in header.
+  // Which app is active?
   const activeApp = openWindows.find((w) => !w.minimized);
   const activeAppName = activeApp ? activeApp.appName : "";
+
+  // Handle click for dock item
+  const handleDockItemClick = (item: { name: string; isTrash?: boolean }) => {
+    if (item.isTrash) {
+      console.log("Trash clicked!");
+    } else {
+      launchApp(item.name);
+    }
+  };
 
   if (!booted) {
     return (
@@ -400,15 +425,14 @@ export default function MacOSPortfolioUI() {
 
   return (
     <DesktopContainer id="desktop-container">
-      {/* Header always on top; when a fullscreen window exists the header is black and hidden unless hovered */}
-      
+      {/* Header */}
       <HeaderBackground isFullscreen={fullscreenWindows.size > 0}>
         <HeaderWrapper isVisible={headerVisible} isFullscreen={fullscreenWindows.size > 0}>
-        <MacHeader activeAppName={activeAppName} />
-      </HeaderWrapper>
-        </HeaderBackground>
+          <MacHeader activeAppName={activeAppName} />
+        </HeaderWrapper>
+      </HeaderBackground>
 
-      {/* Windows render area for non-fullscreen windows */}
+      {/* Windows area */}
       <WindowsArea id="windows-area">
         {openWindows.map(
           (win) =>
@@ -425,35 +449,18 @@ export default function MacOSPortfolioUI() {
         )}
       </WindowsArea>
 
-      {/* Dock with Resume, Skills, Projects, Settings, and Trash */}
+      {/* Dock */}
       <Dock visible={dockVisible}>
-        <DockItem>
-          <AppIcon onClick={() => launchApp("Resume")}>📄</AppIcon>
-          {getAppStatus("Resume") && (
-            <StatusDot status={getAppStatus("Resume") as "open" | "minimized"} />
-          )}
-        </DockItem>
-        <DockItem>
-          <AppIcon onClick={() => launchApp("Skills")}>🛠️</AppIcon>
-          {getAppStatus("Skills") && (
-            <StatusDot status={getAppStatus("Skills") as "open" | "minimized"} />
-          )}
-        </DockItem>
-        <DockItem>
-          <AppIcon onClick={() => launchApp("Projects")}>💼</AppIcon>
-          {getAppStatus("Projects") && (
-            <StatusDot status={getAppStatus("Projects") as "open" | "minimized"} />
-          )}
-        </DockItem>
-        <DockItem>
-          <AppIcon onClick={() => launchApp("Settings")}>⚙️</AppIcon>
-          {getAppStatus("Settings") && (
-            <StatusDot status={getAppStatus("Settings") as "open" | "minimized"} />
-          )}
-        </DockItem>
-        <DockItem>
-          <AppIcon onClick={() => console.log("Trash clicked!")}>🗑️</AppIcon>
-        </DockItem>
+        {dockItems.map((item) => (
+          <DockItem key={item.name}>
+            <AppIcon onClick={() => handleDockItemClick(item)}>
+              <img src={item.icon} alt={item.name} />
+            </AppIcon>
+            {getAppStatus(item.name) && (
+              <StatusDot status={getAppStatus(item.name) as "open" | "minimized"} />
+            )}
+          </DockItem>
+        ))}
       </Dock>
     </DesktopContainer>
   );
