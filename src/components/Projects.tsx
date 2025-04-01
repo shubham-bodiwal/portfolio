@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MovieCards from "./MovieCard";
+import MacOSPortfolioUI from "./MacOsDesktop";
 // import CursorAnimation from "./CursorAnimation";
 // import ColorChangingAnimation from "./ColorChangingAnimation";
 // import tnqImg from "../assets/react.svg";
@@ -13,7 +13,6 @@ const ProjectsWrapper = styled.section`
   padding: 4rem;
   height: 100dvh;
   width: 100dvw;
-  background: white;
 `;
 
 // const Title = styled.h2`
@@ -52,7 +51,8 @@ const ProjectsWrapper = styled.section`
 export default function Projects() {
   return (
     <ProjectsWrapper>
-      <MovieCards />
+      {/* <CursorAnimation/> */}
+      <MacOSPortfolioUI/>
     </ProjectsWrapper>
   );
 }

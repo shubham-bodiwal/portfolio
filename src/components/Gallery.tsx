@@ -141,7 +141,6 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
   border-radius: 0.2rem;
   margin: 7.5rem 2.5rem;
   height: 15rem;
-  width: 15rem;
   aspect-ratio: 1/1;
   flex-direction: column;
   justify-content: space-around;
@@ -185,6 +184,7 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     margin-top: 0rem;
     margin-bottom: 0rem;
+    width: 15rem;
 
     &::after {
       width: 50%;
@@ -215,7 +215,7 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
 const Title = styled.h3<GalleryItemProps>`
   font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: 1rem;
+  letter-spacing: 0.5rem;
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
@@ -254,7 +254,6 @@ const Content = styled.span<GalleryItemProps>`
 
   ${GalleryItem}:hover & {
     display: block;
-    transform: scale(1) translateY(-10px);
   }
 `;
 
