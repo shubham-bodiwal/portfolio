@@ -6,12 +6,12 @@ import { v4 as uuidv4 } from "uuid";
 import OsWallpaper from "../assets/os-wallpaper2.jpg";
 import bootSound from "../assets/start-sound.wav"; // Add a boot sound file
 import ImageReveal from "./ImageReveal";
+import MacHeader from "./MacHeader";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 `;
-
 
 const fillBar = keyframes`
   from {
@@ -28,6 +28,13 @@ const Desktop = styled.div`
   background: url(${OsWallpaper}) center/cover no-repeat;
   position: relative;
   overflow: hidden;
+  border-radius: 1rem;
+
+  &:before {
+    background: black;
+    z-index: -1;
+    content: "";
+  }
 `;
 
 const BootScreen = styled.div`
@@ -42,7 +49,7 @@ const BootScreen = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
-  `;
+`;
 
 const ProgressBarWrapper = styled.div`
   width: 200px;
@@ -75,11 +82,11 @@ const Dock = styled.div<{ visible: boolean }>`
 `;
 
 const AppIcon = styled.div`
-  width: 60px;
-  height: 60px;
-  margin: 0 8px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 14px;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0.5rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 0.5rem;
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
@@ -160,6 +167,7 @@ function MacWindow({ id, appName, onClose, onMinimize }: MacWindowProps) {
       }}
       minWidth={300}
       minHeight={200}
+      
       bounds="parent"
       enableResizing={!isFullscreen}
       disableDragging={isFullscreen}
@@ -193,16 +201,30 @@ export default function MacOSPortfolioUI() {
   const [openWindows, setOpenWindows] = useState<AppWindow[]>([]);
   const [dockVisible, setDockVisible] = useState(false);
   const inactivityTimer = useRef<any | null>(null);
+  useEffect(() => {
+    // Function to request full screen mode
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if ((element as any).mozRequestFullScreen) {
+      (element as any).mozRequestFullScreen(); // Firefox
+    } else if ((element as any).webkitRequestFullscreen) {
+      (element as any).webkitRequestFullscreen(); // Chrome, Safari and Opera
+    } else if ((element as any).msRequestFullscreen) {
+      (element as any).msRequestFullscreen(); // IE/Edge
+    }
+  }, []);
 
   useEffect(() => {
     const audio = new Audio(bootSound);
-    audio.play(); 
-    setTimeout(() => {setBooted(true);
+    audio.play();
+    setTimeout(() => {
+      setBooted(true);
       setDockVisible(true);
     }, 2500);
     setTimeout(() => {
-      setDockVisible(false)
-    },3000)
+      setDockVisible(false);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -251,6 +273,7 @@ export default function MacOSPortfolioUI() {
 
   return (
     <Desktop>
+      <MacHeader />
       {openWindows.map(
         (win) =>
           !win.minimized && (
