@@ -24,6 +24,8 @@ import settingsIcon from "../assets/Settings.svg";
 import dictionaryIcon from "../assets/Dictionary.svg";
 import trashIcon from "../assets/Trash Full.svg";
 import ShutdownScreen from "./ShutDownScreen";
+import MacNotification from "./MacOsNotification";
+import portfolioIcon from "../assets/Logo.svg";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -200,6 +202,9 @@ type AppWindow = {
   active: boolean;
 };
 
+// Permission types
+type Permission = "authorized" | "unauthorized";
+
 // Store macOS state in localStorage
 const saveState = (state: any) => {
   localStorage.setItem("macOsState", JSON.stringify(state));
@@ -226,22 +231,98 @@ export default function EnhancedMacOSDesktop() {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [showShutdownScreen, setShowShutdownScreen] = useState(false);
 
-  // Define dock items with proper macOS app order and imported icons
+  // Notification state
+  const [notification, setNotification] = useState<{
+    visible: boolean;
+    appName: string;
+    appIcon: string;
+    message: string;
+  }>({
+    visible: false,
+    appName: "",
+    appIcon: "",
+    message: "",
+  });
+
+  // Define dock items with proper macOS app order, imported icons, and permissions
   const dockItems = [
-    // Favorite apps section (left side)
-    { name: "Finder", icon: finderIcon, section: "favorites" },
-    { name: "Launchpad", icon: launchpadIcon, section: "favorites" },
-    { name: "Safari", icon: safariIcon, section: "favorites" },
-    { name: "Mail", icon: mailIcon, section: "favorites" },
-    { name: "Photos", icon: photosIcon, section: "favorites" },
-    { name: "Messages", icon: messagesIcon, section: "favorites" },
-    { name: "Music", icon: musicIcon, section: "favorites" },
-    { name: "App Store", icon: appStoreIcon, section: "favorites" },
-    { name: "System Settings", icon: settingsIcon, section: "favorites" },
+    // Favorite apps section (left side) - Only Finder is authorized by default
+    {
+      name: "Finder",
+      icon: finderIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "Launchpad",
+      icon: launchpadIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "Safari",
+      icon: safariIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "Mail",
+      icon: mailIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "Photos",
+      icon: photosIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "Messages",
+      icon: messagesIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "Music",
+      icon: musicIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "App Store",
+      icon: appStoreIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+    {
+      name: "System Settings",
+      icon: settingsIcon,
+      section: "normal",
+      permission: "unauthorized",
+    },
+
+    {
+      name: "Portfolio",
+      icon: portfolioIcon,
+      section: "favorites",
+      permission: "authorized" as Permission,
+    },
 
     // Folders and Trash section (right side)
-    { name: "Dictionary", icon: dictionaryIcon, section: "folders" },
-    { name: "Trash", icon: trashIcon, section: "folders", isTrash: true },
+    {
+      name: "Dictionary",
+      icon: dictionaryIcon,
+      section: "folders",
+      permission: "unauthorized",
+    },
+    {
+      name: "Trash",
+      icon: trashIcon,
+      section: "folders",
+      isTrash: true,
+      permission: "unauthorized",
+    },
   ];
 
   // Request browser fullscreen on mount
@@ -361,6 +442,24 @@ export default function EnhancedMacOSDesktop() {
     }
   };
 
+  // Show notification for unauthorized apps
+  const showPermissionDeniedNotification = (
+    appName: string,
+    appIcon: string
+  ) => {
+    setNotification({
+      visible: true,
+      appName,
+      appIcon,
+      message: `You do not have permission to use ${appName}.`,
+    });
+  };
+
+  // Close notification
+  const closeNotification = () => {
+    setNotification((prev) => ({ ...prev, visible: false }));
+  };
+
   // Handle window fullscreen state changes
   const handleFullscreenChange = (id: string, isFullscreen: boolean) => {
     setFullscreenWindows((prev) => {
@@ -374,8 +473,18 @@ export default function EnhancedMacOSDesktop() {
     });
   };
 
-  // Launch or restore an app window
+  // Launch or restore an app window based on permissions
   const launchApp = (appName: string) => {
+    // Find the app in dock items
+    const app = dockItems.find((item) => item.name === appName);
+
+    // Check permission
+    if (app && app.permission === "unauthorized") {
+      // Show notification for unauthorized app
+      showPermissionDeniedNotification(appName, app.icon);
+      return;
+    }
+
     setOpenWindows((prev) => {
       // Find highest zIndex
       const highestZ = Math.max(...prev.map((w) => w.zIndex || 10), 10);
@@ -457,7 +566,18 @@ export default function EnhancedMacOSDesktop() {
   const activeAppName = activeApp ? activeApp.appName : "";
 
   // Handle dock item click
-  const handleDockItemClick = (item: { name: string; isTrash?: boolean }) => {
+  const handleDockItemClick = (item: {
+    name: string;
+    icon: string;
+    permission: string;
+    section: string;
+    isTrash?: boolean;
+  }) => {
+    if (item.permission === "unauthorized") {
+      showPermissionDeniedNotification(item.name, item.icon);
+      return;
+    }
+
     if (item.isTrash) {
       // Special handling for Trash
       launchApp("Trash");
@@ -485,6 +605,7 @@ export default function EnhancedMacOSDesktop() {
   }
 
   // Group dock items by section
+  const normalApps = dockItems.filter((item) => item.section === "normal");
   const favoriteApps = dockItems.filter((item) => item.section === "favorites");
   const folderApps = dockItems.filter((item) => item.section === "folders");
 
@@ -525,6 +646,21 @@ export default function EnhancedMacOSDesktop() {
       {/* Dock */}
       <Dock visible={dockVisible}>
         <DockItemContainer>
+          {normalApps.map((item) => (
+            <DockItem key={item.name}>
+              <AppIcon onClick={() => handleDockItemClick(item)}>
+                <img src={item.icon} alt={item.name} />
+              </AppIcon>
+              {getAppStatus(item.name) && (
+                <StatusDot
+                  status={getAppStatus(item.name) as "open" | "minimized"}
+                />
+              )}
+            </DockItem>
+          ))}
+
+          {!!favoriteApps?.length && <DockSeparator />}
+
           {/* Favorite Apps */}
           {favoriteApps.map((item) => (
             <DockItem key={item.name}>
@@ -540,7 +676,7 @@ export default function EnhancedMacOSDesktop() {
           ))}
 
           {/* Separator */}
-          <DockSeparator />
+          {!!folderApps?.length && <DockSeparator />}
 
           {/* Folders and Trash */}
           {folderApps.map((item) => (
@@ -557,6 +693,17 @@ export default function EnhancedMacOSDesktop() {
           ))}
         </DockItemContainer>
       </Dock>
+
+      {/* Permission Notification */}
+      <MacNotification
+        isVisible={notification.visible}
+        appName={notification.appName}
+        appIcon={notification.appIcon}
+        message={notification.message}
+        onClose={closeNotification}
+        autoClose={true}
+        autoCloseTime={5000}
+      />
 
       {/* Shutdown overlay */}
       <DesktopFadeOut isShuttingDown={systemState === "shuttingDown"} />
