@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
-import { Rnd } from "react-rnd";
 import { v4 as uuidv4 } from "uuid";
 
 // Import your wallpaper & sounds
@@ -17,17 +15,12 @@ import trashIcon from "../assets/Trash Full.svg";
 
 import ImageReveal from "./ImageReveal";
 import MacHeader from "./MacHeader";
-
-const fadeIn = keyframes`
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-`;
+import MacWindow from "./MacWindow";
 
 const fillBar = keyframes`
   from { width: 0%; }
   to { width: 100%; }
 `;
-
 
 const DesktopContainer = styled.div`
   width: 100vw;
@@ -50,10 +43,12 @@ const HeaderWrapper = styled.div<{ isVisible: boolean; isFullscreen: boolean }>`
 `;
 
 const HeaderBackground = styled.div<{ isFullscreen: boolean }>`
-  background-color: ${(props) => (props.isFullscreen ? "#00000066" : "#00000022")};
+  background-color: ${(props) =>
+    props.isFullscreen ? "#00000066" : "#00000022"};
   height: 1.6rem;
   width: 100%;
-  backdrop-filter: ${(props) => (props.isFullscreen ? "blur(10px)" : "blur(2px)")};
+  backdrop-filter: ${(props) =>
+    props.isFullscreen ? "blur(10px)" : "blur(2px)"};
 `;
 
 const WindowsArea = styled.div`
@@ -150,128 +145,20 @@ const StatusDot = styled.div<{ status: "open" | "minimized" }>`
     props.status === "open" ? "green" : "yellow"};
 `;
 
-// Window styling
-const WindowWrapper = styled.div<{ isFullscreen: boolean }>`
-  animation: ${fadeIn} 0.3s ease-in-out;
-  background: #2c2c2e;
-  backdrop-filter: blur(20px);
-  border-radius: ${(props) =>
-    props.isFullscreen ? "0 0 0.5rem 0.5rem" : "0.5rem"};
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const WindowHeader = styled.div`
-  height: 36px;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  border-bottom: 1px solid #48484a;
-  background: #3a3a3c;
-`;
-
-const Title = styled.div`
-  flex: 1;
-  font-weight: 500;
-  color: #ebebf5;
-  margin-left: 0.5rem;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 6px;
-`;
-
-const CircleButton = styled.div<{ color: string }>`
-  width: 12px;
-  height: 12px;
-  background-color: ${(props) => props.color};
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
-// ============ Types & Components ============
-
 type AppWindow = {
   id: string;
   appName: string;
   minimized: boolean;
 };
 
-type MacWindowProps = {
-  id: string;
-  appName: string;
-  onClose: (id: string) => void;
-  onMinimize: (id: string) => void;
-  onFullscreenChange: (id: string, isFullscreen: boolean) => void;
-};
-
-function MacWindow({
-  id,
-  appName,
-  onClose,
-  onMinimize,
-  onFullscreenChange,
-}: MacWindowProps) {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  // Decide where the portal should attach
-  const portalTarget = document.getElementById("windows-area");
-
-  return ReactDOM.createPortal(
-    <Rnd
-      default={{
-        x: 100 + Math.random() * 100,
-        y: 100 + Math.random() * 100,
-        width: 600,
-        height: 400,
-      }}
-      minWidth={300}
-      minHeight={200}
-      bounds="parent"
-      enableResizing={!isFullscreen}
-      disableDragging={isFullscreen}
-      size={isFullscreen ? { width: "100%", height: "100%" } : undefined}
-      position={isFullscreen ? { x: 0, y: 0 } : undefined}
-      style={{ zIndex: 10 }}
-    >
-      <WindowWrapper isFullscreen={isFullscreen}>
-        <WindowHeader>
-          <ButtonGroup>
-            <CircleButton color="#ff5f57" onClick={() => onClose(id)} />
-            <CircleButton color="#ffbd2e" onClick={() => onMinimize(id)} />
-            <CircleButton
-              color="#28c840"
-              onClick={() => {
-                const newState = !isFullscreen;
-                setIsFullscreen(newState);
-                onFullscreenChange(id, newState);
-              }}
-            />
-          </ButtonGroup>
-          <Title>{appName}</Title>
-        </WindowHeader>
-        <div style={{ padding: "1rem", flex: 1, color: "#fff" }}>
-          This is the {appName} content.
-        </div>
-      </WindowWrapper>
-    </Rnd>,
-    portalTarget as HTMLElement
-  );
-}
-
-// ============ Main App ============
-
 export default function MacOSPortfolioUI() {
   const [booted, setBooted] = useState(false);
   const [openWindows, setOpenWindows] = useState<AppWindow[]>([]);
   const [dockVisible, setDockVisible] = useState(false);
   const inactivityTimer = useRef<any | null>(null);
-  const [fullscreenWindows, setFullscreenWindows] = useState<Set<string>>(new Set());
+  const [fullscreenWindows, setFullscreenWindows] = useState<Set<string>>(
+    new Set()
+  );
   const [headerVisible, setHeaderVisible] = useState(true);
 
   // Array of dock items (name + icon). If you have more icons, add them here:
@@ -340,7 +227,8 @@ export default function MacOSPortfolioUI() {
       }
     };
     window.addEventListener("mousemove", handleMouseMoveForHeader);
-    return () => window.removeEventListener("mousemove", handleMouseMoveForHeader);
+    return () =>
+      window.removeEventListener("mousemove", handleMouseMoveForHeader);
   }, [fullscreenWindows]);
 
   // Handle changes to fullscreen windows
@@ -427,7 +315,10 @@ export default function MacOSPortfolioUI() {
     <DesktopContainer id="desktop-container">
       {/* Header */}
       <HeaderBackground isFullscreen={fullscreenWindows.size > 0}>
-        <HeaderWrapper isVisible={headerVisible} isFullscreen={fullscreenWindows.size > 0}>
+        <HeaderWrapper
+          isVisible={headerVisible}
+          isFullscreen={fullscreenWindows.size > 0}
+        >
           <MacHeader activeAppName={activeAppName} />
         </HeaderWrapper>
       </HeaderBackground>
@@ -457,7 +348,9 @@ export default function MacOSPortfolioUI() {
               <img src={item.icon} alt={item.name} />
             </AppIcon>
             {getAppStatus(item.name) && (
-              <StatusDot status={getAppStatus(item.name) as "open" | "minimized"} />
+              <StatusDot
+                status={getAppStatus(item.name) as "open" | "minimized"}
+              />
             )}
           </DockItem>
         ))}

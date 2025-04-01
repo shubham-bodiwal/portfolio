@@ -2,6 +2,7 @@ html,
 body {
   scroll-behavior: smooth;
   margin: 0px;
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body{
