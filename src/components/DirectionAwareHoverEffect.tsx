@@ -4,7 +4,7 @@ import styled, { createGlobalStyle, keyframes, css } from 'styled-components';
 // --- Variables & Color Constants ---
 const duration = '300ms';
 const timingFn = 'ease';
-const turquoise = '#1ABC9C';`q`
+// const turquoise = '#1ABC9C';
 const wetAsphalt = '#34495E';
 const clouds = '#ECF0F1';
 // An approximate darkened version of clouds for the box-shadow:
