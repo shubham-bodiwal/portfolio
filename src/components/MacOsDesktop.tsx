@@ -138,11 +138,10 @@ const StatusDot = styled.div<{ status: "open" | "minimized" }>`
   bottom: -3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 4px;
   border-radius: 50%;
-  background-color: ${(props) =>
-    props.status === "open" ? "green" : "yellow"};
+  background-color: ${(props) => (props.status === "open" ? "black" : "black")};
 `;
 
 type AppWindow = {
