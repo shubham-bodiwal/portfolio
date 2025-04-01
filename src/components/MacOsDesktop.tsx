@@ -21,15 +21,19 @@ import messagesIcon from "../assets/Messages.svg";
 import musicIcon from "../assets/Music.svg";
 import appStoreIcon from "../assets/App Store.svg";
 import settingsIcon from "../assets/Settings.svg";
-// import downloadsIcon from "../assets/Downloads.svg";
-// import applicationsIcon from "../assets/Applications.svg";
 import dictionaryIcon from "../assets/Dictionary.svg";
 import trashIcon from "../assets/Trash Full.svg";
+import ShutdownScreen from "./ShutDownScreen";
 
 // Animation keyframes
 const fillBar = keyframes`
   from { width: 0%; }
   to { width: 100%; }
+`;
+
+const fadeOut = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0; }
 `;
 
 // Styled components
@@ -71,7 +75,7 @@ const WindowsArea = styled.div`
   overflow: hidden;
 `;
 
-const BootScreen = styled.div`
+const BootScreen = styled.div<{ isShuttingDown?: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: black;
@@ -83,6 +87,9 @@ const BootScreen = styled.div`
   top: 0;
   left: 0;
   z-index: 10000;
+  animation: ${(props) => (props.isShuttingDown ? fadeOut : "none")} 2s
+    ease-in-out forwards;
+  animation-delay: ${(props) => (props.isShuttingDown ? "3s" : "0s")};
 `;
 
 const ProgressBarWrapper = styled.div`
@@ -93,11 +100,12 @@ const ProgressBarWrapper = styled.div`
   overflow: hidden;
 `;
 
-const ProgressBarFill = styled.div`
+const ProgressBarFill = styled.div<{ isShuttingDown?: boolean }>`
   height: 100%;
   background-color: white;
   border-radius: 0.25rem;
-  animation: ${fillBar} 2.5s ease-in-out forwards;
+  animation: ${fillBar} ${(props) => (props.isShuttingDown ? "3s" : "2.5s")}
+    ease-in-out forwards;
 `;
 
 const Dock = styled.div<{ visible: boolean }>`
@@ -169,6 +177,20 @@ const StatusDot = styled.div<{ status: "open" | "minimized" }>`
   background-color: ${(props) => (props.status === "open" ? "white" : "#aaa")};
 `;
 
+// Desktop fade out animation for shutdown
+const DesktopFadeOut = styled.div<{ isShuttingDown: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: ${(props) => (props.isShuttingDown ? 9999 : -1)};
+  opacity: ${(props) => (props.isShuttingDown ? 1 : 0)};
+  transition: opacity 1s ease-in-out;
+  pointer-events: ${(props) => (props.isShuttingDown ? "all" : "none")};
+`;
+
 // Define app window type
 type AppWindow = {
   id: string;
@@ -178,8 +200,22 @@ type AppWindow = {
   active: boolean;
 };
 
+// Store macOS state in localStorage
+const saveState = (state: any) => {
+  localStorage.setItem("macOsState", JSON.stringify(state));
+};
+
+const loadState = () => {
+  const savedState = localStorage.getItem("macOsState");
+  return savedState ? JSON.parse(savedState) : null;
+};
+
 // Main component
 export default function EnhancedMacOSDesktop() {
+  // System state
+  const [systemState, setSystemState] = useState<
+    "booting" | "running" | "shuttingDown" | "off"
+  >("booting");
   const [booted, setBooted] = useState(false);
   const [openWindows, setOpenWindows] = useState<AppWindow[]>([]);
   const [dockVisible, setDockVisible] = useState(false);
@@ -188,6 +224,7 @@ export default function EnhancedMacOSDesktop() {
     new Set()
   );
   const [headerVisible, setHeaderVisible] = useState(true);
+  const [showShutdownScreen, setShowShutdownScreen] = useState(false);
 
   // Define dock items with proper macOS app order and imported icons
   const dockItems = [
@@ -203,8 +240,6 @@ export default function EnhancedMacOSDesktop() {
     { name: "System Settings", icon: settingsIcon, section: "favorites" },
 
     // Folders and Trash section (right side)
-    // { name: "Downloads", icon: downloadsIcon, section: "folders" },
-    // { name: "Applications", icon: applicationsIcon, section: "folders" },
     { name: "Dictionary", icon: dictionaryIcon, section: "folders" },
     { name: "Trash", icon: trashIcon, section: "folders", isTrash: true },
   ];
@@ -219,24 +254,73 @@ export default function EnhancedMacOSDesktop() {
     }
   }, []);
 
+  // Load saved state on initial mount
+  useEffect(() => {
+    const savedState = loadState();
+    if (savedState) {
+      // We could restore window state here if needed
+      console.log("Loaded saved state:", savedState);
+    }
+  }, []);
+
   // Boot sequence with sound
   useEffect(() => {
-    const audio = new Audio(bootSound);
-    audio.play().catch((e) => console.error("Audio playback failed:", e));
+    if (systemState === "booting") {
+      const audio = new Audio(bootSound);
+      audio.play().catch((e) => console.error("Audio playback failed:", e));
 
-    setTimeout(() => {
-      setBooted(true);
-      setDockVisible(true);
-    }, 2500);
+      setTimeout(() => {
+        setBooted(true);
+        setDockVisible(true);
+        setSystemState("running");
+      }, 2500);
 
-    setTimeout(() => {
+      setTimeout(() => {
+        setDockVisible(false);
+      }, 4000);
+    }
+  }, [systemState]);
+
+  // Shutdown sequence
+  useEffect(() => {
+    if (systemState === "shuttingDown") {
+      // Save current state before shutdown
+      saveState({
+        windows: openWindows,
+        lastSessionDate: new Date().toISOString(),
+      });
+
+      // Start visual shutdown sequence
       setDockVisible(false);
-    }, 4000);
-  }, []);
+
+      // Show shutdown screen with progress bar
+      setShowShutdownScreen(true);
+
+      // After shutdown animation, exit fullscreen and update state
+      setTimeout(() => {
+        setSystemState("off");
+
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          document
+            .exitFullscreen()
+            .catch((err) => console.error("Error exiting fullscreen:", err));
+        } else if ((document as any).webkitExitFullscreen) {
+          (document as any).webkitExitFullscreen();
+        } else if ((document as any).mozCancelFullScreen) {
+          (document as any).mozCancelFullScreen();
+        } else if ((document as any).msExitFullscreen) {
+          (document as any).msExitFullscreen();
+        }
+      }, 5000); // Allow time for shutdown animation
+    }
+  }, [systemState, openWindows]);
 
   // Show/hide Dock based on mouse position
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      if (systemState !== "running") return;
+
       if (e.clientY > window.innerHeight - 100) {
         setDockVisible(true);
         if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
@@ -248,11 +332,13 @@ export default function EnhancedMacOSDesktop() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [systemState]);
 
   // Show/hide header based on mouse position when in fullscreen
   useEffect(() => {
     const handleMouseMoveForHeader = (e: MouseEvent) => {
+      if (systemState !== "running") return;
+
       if (fullscreenWindows.size > 0) {
         if (e.clientY < 30) {
           setHeaderVisible(true);
@@ -267,7 +353,13 @@ export default function EnhancedMacOSDesktop() {
     window.addEventListener("mousemove", handleMouseMoveForHeader);
     return () =>
       window.removeEventListener("mousemove", handleMouseMoveForHeader);
-  }, [fullscreenWindows]);
+  }, [fullscreenWindows, systemState]);
+
+  const handleShutdown = () => {
+    if (systemState === "running") {
+      setSystemState("shuttingDown");
+    }
+  };
 
   // Handle window fullscreen state changes
   const handleFullscreenChange = (id: string, isFullscreen: boolean) => {
@@ -374,14 +466,20 @@ export default function EnhancedMacOSDesktop() {
     }
   };
 
-  // Render boot screen while booting
-  if (!booted) {
+  // Render boot screen while booting or shutdown screen while shutting down
+  if (!booted || showShutdownScreen) {
     return (
-      <BootScreen>
-        <ImageReveal />
-        <ProgressBarWrapper>
-          <ProgressBarFill />
-        </ProgressBarWrapper>
+      <BootScreen isShuttingDown={showShutdownScreen}>
+        {showShutdownScreen ? (
+          <ShutdownScreen />
+        ) : (
+          <>
+            <ImageReveal />
+            <ProgressBarWrapper>
+              <ProgressBarFill isShuttingDown={showShutdownScreen} />
+            </ProgressBarWrapper>
+          </>
+        )}
       </BootScreen>
     );
   }
@@ -398,7 +496,10 @@ export default function EnhancedMacOSDesktop() {
           isVisible={headerVisible}
           isFullscreen={fullscreenWindows.size > 0}
         >
-          <MacHeader activeAppName={activeAppName} />
+          <MacHeader
+            activeAppName={activeAppName}
+            onShutdown={handleShutdown}
+          />
         </HeaderWrapper>
       </HeaderBackground>
 
@@ -456,6 +557,9 @@ export default function EnhancedMacOSDesktop() {
           ))}
         </DockItemContainer>
       </Dock>
+
+      {/* Shutdown overlay */}
+      <DesktopFadeOut isShuttingDown={systemState === "shuttingDown"} />
     </DesktopContainer>
   );
 }

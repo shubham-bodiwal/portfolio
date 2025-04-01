@@ -174,7 +174,7 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
         <ShortcutText>⌃⌘Q</ShortcutText>
       </MenuItem>
       <MenuItem disabled>
-        Log Out Tiffany...
+        Log Out Shubham...
         <ShortcutText>⇧⌘Q</ShortcutText>
       </MenuItem>
     </MenuWrapper>

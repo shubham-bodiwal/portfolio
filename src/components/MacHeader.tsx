@@ -73,11 +73,31 @@ const BackgroundImage = styled.img`
 
 interface MacHeaderProps {
   activeAppName?: string;
+  onShutdown?: () => void;
 }
 
-const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName }) => {
+const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const [currentTime, setCurrentTime] = useState<string>(
+    new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+  );
+
+  // Update the time every minute
+  React.useEffect(() => {
+    const timerID = setInterval(() => {
+      setCurrentTime(
+        new Date().toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+        })
+      );
+    }, 60000);
+
+    return () => {
+      clearInterval(timerID);
+    };
+  }, []);
 
   const handleAppleLogoClick = (event: React.MouseEvent) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -89,20 +109,13 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName }) => {
   };
 
   const handleShutDown = () => {
-    // Handle shutdown logic
-    // This could exit fullscreen, redirect, or trigger application close
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if ((document as any).webkitExitFullscreen) {
-      (document as any).webkitExitFullscreen();
-    } else if ((document as any).mozCancelFullScreen) {
-      (document as any).mozCancelFullScreen();
-    } else if ((document as any).msExitFullscreen) {
-      (document as any).msExitFullscreen();
-    }
+    // Close the menu first
+    setMenuVisible(false);
 
-    // You could also redirect to another page or close the app
-    // window.location.href = "/exit";
+    // Call the parent's shutdown handler if provided
+    if (onShutdown) {
+      onShutdown();
+    }
   };
 
   return (
@@ -129,7 +142,7 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName }) => {
           <IconImg src={ControlCenterSvg} alt="Control Center" />
           <IconImg src={WifiSvg} alt="Wi-Fi" />
           <IconImg src={BatterySvg} alt="Battery" />
-          <TimeDisplay>3:58 PM</TimeDisplay>
+          <TimeDisplay>{currentTime}</TimeDisplay>
         </RightSection>
       </HeaderContainer>
 
