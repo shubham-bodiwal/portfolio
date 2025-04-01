@@ -149,6 +149,8 @@ type AppWindow = {
   id: string;
   appName: string;
   minimized: boolean;
+  zIndex: number;
+  active: boolean;
 };
 
 export default function MacOSPortfolioUI() {
@@ -247,19 +249,38 @@ export default function MacOSPortfolioUI() {
   // Launch or restore an app window
   const launchApp = (appName: string) => {
     setOpenWindows((prev) => {
+      // Find highest zIndex
+      const highestZ = Math.max(...prev.map((w) => w.zIndex || 10), 10);
+      const newZIndex = highestZ + 1;
+
       const existing = prev.find((win) => win.appName === appName);
       if (existing) {
-        // If minimized, restore it
+        // If minimized, restore it and make it active
         if (existing.minimized) {
           return prev.map((win) =>
-            win.appName === appName ? { ...win, minimized: false } : win
+            win.appName === appName
+              ? { ...win, minimized: false, active: true, zIndex: newZIndex }
+              : { ...win, active: false }
           );
         }
-        // Otherwise do nothing if already open
-        return prev;
+        // Otherwise just make it active
+        return prev.map((win) =>
+          win.appName === appName
+            ? { ...win, active: true, zIndex: newZIndex }
+            : { ...win, active: false }
+        );
       }
       // Create a new window
-      return [...prev, { id: uuidv4(), appName, minimized: false }];
+      return [
+        ...prev.map((win) => ({ ...win, active: false })),
+        {
+          id: uuidv4(),
+          appName,
+          minimized: false,
+          zIndex: newZIndex,
+          active: true,
+        },
+      ];
     });
   };
 
@@ -280,6 +301,21 @@ export default function MacOSPortfolioUI() {
     );
   };
 
+  // Handle window activation
+  const activateWindow = (id: string) => {
+    setOpenWindows((prev) => {
+      // Always set a new highest z-index for the active window
+      const highestZ = Math.max(...prev.map((w) => w.zIndex || 10), 10);
+      const newZIndex = highestZ + 1; // Increment by 10 to ensure it's always on top
+
+      return prev.map((win) =>
+        win.id === id
+          ? { ...win, active: true, zIndex: newZIndex }
+          : { ...win, active: false }
+      );
+    });
+  };
+
   // Get status for dot
   const getAppStatus = (appName: string) => {
     const win = openWindows.find((w) => w.appName === appName);
@@ -288,7 +324,7 @@ export default function MacOSPortfolioUI() {
   };
 
   // Which app is active?
-  const activeApp = openWindows.find((w) => !w.minimized);
+  const activeApp = openWindows.find((w) => !w.minimized && w.active);
   const activeAppName = activeApp ? activeApp.appName : "";
 
   // Handle click for dock item
@@ -335,6 +371,8 @@ export default function MacOSPortfolioUI() {
                 onClose={closeWindow}
                 onMinimize={minimizeWindow}
                 onFullscreenChange={handleFullscreenChange}
+                onActivate={activateWindow}
+                zIndex={win.zIndex}
               />
             )
         )}
