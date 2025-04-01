@@ -7,7 +7,7 @@ import SpotlightSvg from '../assets/Search.svg';
 import WifiSvg from '../assets/WiFi.svg';
 
 const HeaderContainer = styled.div`
-  height: 2rem;
+  height: 1.6rem;
   background: #00000022;
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@ const MenuList = styled.ul`
 
 const MenuItem = styled.li`
   margin-right: 1rem;
-  font-size: 1rem;
+  font-size:0.9rem;
   color: #ffffff;
   cursor: default;
   user-select: none;
@@ -51,22 +51,22 @@ const RightSection = styled.div`
 `;
 
 const IconImg = styled.img`
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.6rem;
+  height: 1.6rem;
   margin-right: 10px;
   cursor: pointer;
 `;
 
 const TimeDisplay = styled.div`
-  font-size: 1rem;
+  font-size: 0.8rem;
   user-select: none;
   color: #ffffff;
 `;
 
 const BackgroundImage = styled.img`
   display: block;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1rem;
+  height: 1rem;
   margin-right: 1rem;
   margin-left: 0.5rem;
 `;

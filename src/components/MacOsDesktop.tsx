@@ -68,24 +68,25 @@ const ProgressBarFill = styled.div`
 
 const Dock = styled.div<{ visible: boolean }>`
   position: fixed;
-  bottom: ${({ visible }) => (visible ? "10px" : "-100px")};
+  bottom: ${({ visible }) => (visible ? "0.5rem" : "-100px")};
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(1);
-  padding: 10px 15px;
-  border-radius: 20px;
+  padding: 0.5rem 0.8rem;
+  border-radius: 1rem;
   display: flex;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(1rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: bottom 0.3s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const AppIcon = styled.div`
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin: 0 0.5rem;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 0.5rem;
   backdrop-filter: blur(10px);
   display: flex;
