@@ -26,6 +26,7 @@ import trashIcon from "../assets/Trash Full.svg";
 import ShutdownScreen from "./ShutDownScreen";
 import MacNotification from "./MacOsNotification";
 import portfolioIcon from "../assets/Logo.svg";
+import ResumeIcon from "../assets/LogoR.svg";
 import PortfolioPage from "../pages/PortfolioPage";
 import InteractiveResume from "./ResumeComponent";
 
@@ -318,7 +319,7 @@ export default function EnhancedMacOSDesktop() {
     },
     {
       name: "Resume",
-      icon: portfolioIcon,
+      icon: ResumeIcon,
       section: "favorites",
       permission: "authorized",
       children: <InteractiveResume/>

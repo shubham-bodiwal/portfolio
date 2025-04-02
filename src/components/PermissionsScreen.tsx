@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
+import StartImageAnimation from "./StartImageAnimation";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -76,6 +77,7 @@ const PermissionScreen: React.FC<Props> = ({
 
   return (
     <Screen>
+      <StartImageAnimation/>
       <PortfolioTitle>Shubham Bhodiwal's Portfolio</PortfolioTitle>
 
       {shutdownMode ? (
