@@ -64,6 +64,7 @@ const Title = styled.div<{ isActive: boolean }>`
   text-align: center;
   font-weight: ${(props) => (props.isActive ? "500" : "400")};
   color: ${(props) => (props.isActive ? "#ffffff" : "#aaaaaa")};
+  letter-spacing: 0.1rem;
 `;
 
 const ButtonGroup = styled.div`
@@ -78,22 +79,18 @@ const CircleButton = styled.div<{
   icon?: string;
   isActive: boolean;
 }>`
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   background-color: ${(props) => (props.isActive ? props.color : "#8e8e8e")};
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: transparent;
   font-size: 8px;
   border: 0.5px solid rgba(0, 0, 0, 0.2);
   transition: color 0.1s ease;
 
-  &:hover {
-    color: ${(props) => (props.isActive ? "#555" : "transparent")};
-  }
 `;
 
 const WindowContent = styled.div`
@@ -291,7 +288,6 @@ export default function MacWindow({
               isActive={isActive}
               onClick={handleClose}
             >
-              ×
             </CircleButton>
             <CircleButton
               color="#ffbd2e"
@@ -299,7 +295,6 @@ export default function MacWindow({
               isActive={isActive}
               onClick={handleMinimize}
             >
-              −
             </CircleButton>
             <CircleButton
               color="#28c840"
@@ -307,7 +302,6 @@ export default function MacWindow({
               isActive={isActive}
               onClick={handleFullscreenToggle}
             >
-              +
             </CircleButton>
           </ButtonGroup>
           <Title isActive={isActive}>{appName}</Title>

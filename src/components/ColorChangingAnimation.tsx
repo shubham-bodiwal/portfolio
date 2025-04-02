@@ -1,4 +1,11 @@
 import React, { useRef, useEffect } from 'react';
+import styled from 'styled-components';
+
+
+const MainContainer = styled.div`
+  height: 100%;
+  width: 100%;`
+
 
 const ColorChangingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -282,7 +289,7 @@ const ColorChangingAnimation: React.FC = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} style={{ display: "block", width: "100vw", height: "100vh" }} />;
+  return <MainContainer> <canvas ref={canvasRef} style={{ display: "block", width: "100vw", height: "100vh" }} /></MainContainer>;
 };
 
 export default ColorChangingAnimation;

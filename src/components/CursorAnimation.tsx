@@ -1,6 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { TweenMax } from 'gsap';
+import React, { useEffect, useRef } from "react";
+import { TweenMax } from "gsap";
+import styled from "styled-components";
 
+const MainContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, #0f1827, #3a4965, #03050b);
+`;
 const CursorAnimation: React.FC = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const mousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -13,7 +19,7 @@ const CursorAnimation: React.FC = () => {
   const sineDots = Math.floor(amount * 0.3);
   const dotWidth = 30; // width/height of each dot in px
   const idleTimeout = 150; // ms before "idle" behavior kicks in
-  const followFactor = 0.40; // larger factor makes dots follow more tightly
+  const followFactor = 0.4; // larger factor makes dots follow more tightly
 
   // Dot class – each dot follows the mouse and then locks into a subtle oscillation when idle.
   class Dot {
@@ -70,8 +76,10 @@ const CursorAnimation: React.FC = () => {
   useEffect(() => {
     if (!cursorRef.current) return;
     const cursorEl = cursorRef.current;
-    const dotElements = cursorEl.querySelectorAll('span');
-    dotsRef.current = Array.from(dotElements).map((el, i) => new Dot(i, el as HTMLElement));
+    const dotElements = cursorEl.querySelectorAll("span");
+    dotsRef.current = Array.from(dotElements).map(
+      (el, i) => new Dot(i, el as HTMLElement)
+    );
 
     const onMouseMove = (e: MouseEvent) => {
       mousePosition.current = {
@@ -89,8 +97,8 @@ const CursorAnimation: React.FC = () => {
       resetIdleTimer();
     };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('touchmove', onTouchMove);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("touchmove", onTouchMove);
 
     const goInactive = () => {
       idleRef.current = true;
@@ -136,17 +144,17 @@ const CursorAnimation: React.FC = () => {
     const animationId = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("touchmove", onTouchMove);
       if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
       cancelAnimationFrame(animationId);
     };
   }, []);
 
   return (
-    <>
+    <MainContainer>
       {/* Inline SVG with goo filter definition */}
-      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+      <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <defs>
           <filter id="goo">
             <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
@@ -164,9 +172,9 @@ const CursorAnimation: React.FC = () => {
       <div
         ref={cursorRef}
         style={{
-          filter: 'url(#goo)',
-          pointerEvents: 'none',
-          position: 'fixed',
+          filter: "url(#goo)",
+          pointerEvents: "none",
+          position: "fixed",
           top: 0,
           left: 0,
           zIndex: 1000,
@@ -176,19 +184,19 @@ const CursorAnimation: React.FC = () => {
           <span
             key={i}
             style={{
-              position: 'absolute',
-              display: 'block',
+              position: "absolute",
+              display: "block",
               width: `${dotWidth}px`,
               height: `${dotWidth}px`,
               // Using clip-path to create a more droplet‐like shape instead of a perfect circle
-              clipPath: 'ellipse(50% 70% at 50% 50%)',
-              backgroundColor: 'black',
-              transform: 'translate(-50%, -50%)',
+              clipPath: "ellipse(50% 70% at 50% 50%)",
+              backgroundColor: "black",
+              transform: "translate(-50%, -50%)",
             }}
           />
         ))}
       </div>
-    </>
+    </MainContainer>
   );
 };
 

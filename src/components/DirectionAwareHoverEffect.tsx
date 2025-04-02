@@ -191,6 +191,10 @@ const Info = styled.div<InfoProps>`
   }
 `;
 
+const MainContainer = styled.div`
+  height: 100%;
+  width: 100%;`
+
 // --- React Component for a Single Hover Item ---
 const HoverItem: React.FC = () => {
   const itemRef = useRef<HTMLLIElement>(null);
@@ -240,7 +244,7 @@ const HoverItem: React.FC = () => {
 // --- Main Component ---
 export const DirectionAwareHoverEffect: React.FC = () => {
   return (
-    <>
+    <MainContainer>
       <GlobalStyle />
       <Header>
         <Container>
@@ -255,6 +259,6 @@ export const DirectionAwareHoverEffect: React.FC = () => {
           ))}
         </List>
       </Container>
-    </>
+    </MainContainer>
   );
 };

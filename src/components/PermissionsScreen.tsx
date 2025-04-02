@@ -87,8 +87,8 @@ const PermissionScreen: React.FC<Props> = ({
       ) : (
         <>
           <Message>
-            This portfolio requires <strong>Fullscreen</strong> access to launch
-            the macOS experience.
+            This portfolio requires <strong>Fullscreen Desktop</strong> access to launch
+            the immersive experience.
           </Message>
           <Button onClick={onClick}>Enter Fullscreen</Button>
         </>

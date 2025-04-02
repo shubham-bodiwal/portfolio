@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Hero from "../components/Hero";
 import Gallery from "../components/Gallery";
-import Portfolio from "../components/Portfolio";
-// import Projects from "../components/Projects";
 import Footer from "../components/Footer";
+import { DirectionAwareHoverEffect } from "../components/DirectionAwareHoverEffect";
+import ColorChangingAnimation from "../components/ColorChangingAnimation";
+import CursorAnimation from "../components/CursorAnimation";
 
 const fadeInText = keyframes`
   0% {
@@ -141,7 +142,7 @@ function PortfolioPage() {
   const currentIndex = useRef(0);
   const isScrolling = useRef(false);
   const [active, setActive] = useState(0);
-  const totalSections = 5;
+  const totalSections = 6;
 
   useEffect(() => {
     // Use client height of the container instead of window
@@ -227,9 +228,10 @@ function PortfolioPage() {
     <AppWrapper ref={containerRef}>
       <Section $active={active === 0}>{active === 0 && <Hero />}</Section>
       <Section $active={active === 1}>{active === 1 && <Gallery />}</Section>
-      <Section $active={active === 2}>{active === 2 && <Portfolio />}</Section>
-      {/* <Section $active={active === 3}>{active === 3 && <Projects />}</Section> */}
-      <Section $active={active === 4}>{active === 4 && <Footer />}</Section>
+      <Section $active={active === 2}>{active === 2 && <DirectionAwareHoverEffect />}</Section>
+      <Section $active={active === 3}>{active === 3 && <ColorChangingAnimation />}</Section>
+      <Section $active={active === 4}>{active === 4 && <CursorAnimation />}</Section>
+      <Section $active={active === 5}>{active === 5 && <Footer />}</Section>
 
       <IndicatorWrapper>
         <VerticalLabel>are you Lost?</VerticalLabel>
