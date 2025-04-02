@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AppleLogoBG from "../assets/apple-logo 1 (1).png";
 import BatterySvg from "../assets/Battery.svg";
@@ -80,19 +80,24 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [currentTime, setCurrentTime] = useState<string>(
-    new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+    new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+    })
   );
 
-  // Update the time every minute
-  React.useEffect(() => {
+  // Update the time every second to show seconds
+  useEffect(() => {
     const timerID = setInterval(() => {
       setCurrentTime(
         new Date().toLocaleTimeString([], {
           hour: "numeric",
           minute: "2-digit",
+          second: "2-digit",
         })
       );
-    }, 60000);
+    }, 1000); // Update every second instead of every minute
 
     return () => {
       clearInterval(timerID);
