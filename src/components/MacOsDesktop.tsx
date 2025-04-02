@@ -26,6 +26,7 @@ import trashIcon from "../assets/Trash Full.svg";
 import ShutdownScreen from "./ShutDownScreen";
 import MacNotification from "./MacOsNotification";
 import portfolioIcon from "../assets/Logo.svg";
+import PortfolioPage from "../pages/Portfolio";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -200,6 +201,7 @@ type AppWindow = {
   minimized: boolean;
   zIndex: number;
   active: boolean;
+  children?: React.ReactNode;
 };
 
 // Permission types
@@ -245,7 +247,14 @@ export default function EnhancedMacOSDesktop() {
   });
 
   // Define dock items with proper macOS app order, imported icons, and permissions
-  const dockItems = [
+  const dockItems:{
+    name: string;
+    icon: string;
+    permission: string;
+    children?: React.ReactNode;
+    section: string;
+    isTrash?: boolean;
+  }[] = [
     // Favorite apps section (left side) - Only Finder is authorized by default
     {
       name: "Finder",
@@ -307,6 +316,7 @@ export default function EnhancedMacOSDesktop() {
       icon: portfolioIcon,
       section: "favorites",
       permission: "authorized" as Permission,
+      children: <PortfolioPage/>
     },
 
     // Folders and Trash section (right side)
@@ -474,7 +484,7 @@ export default function EnhancedMacOSDesktop() {
   };
 
   // Launch or restore an app window based on permissions
-  const launchApp = (appName: string) => {
+  const launchApp = (appName: string, children?: React.ReactNode) => {
     // Find the app in dock items
     const app = dockItems.find((item) => item.name === appName);
 
@@ -518,6 +528,7 @@ export default function EnhancedMacOSDesktop() {
           minimized: false,
           zIndex: newZIndex,
           active: true,
+          children
         },
       ];
     });
@@ -570,6 +581,7 @@ export default function EnhancedMacOSDesktop() {
     name: string;
     icon: string;
     permission: string;
+    children?: React.ReactNode;
     section: string;
     isTrash?: boolean;
   }) => {
@@ -582,7 +594,7 @@ export default function EnhancedMacOSDesktop() {
       // Special handling for Trash
       launchApp("Trash");
     } else {
-      launchApp(item.name);
+      launchApp(item.name, item.children);
     }
   };
 
@@ -638,7 +650,9 @@ export default function EnhancedMacOSDesktop() {
                 onFullscreenChange={handleFullscreenChange}
                 onActivate={activateWindow}
                 zIndex={win.zIndex}
-              />
+              >{win?.children}
+
+              </MacWindow>
             )
         )}
       </WindowsArea>

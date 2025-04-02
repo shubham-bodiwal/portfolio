@@ -137,7 +137,7 @@ const VerticalRightText = styled.div`
   }
 `;
 
-function Home() {
+function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
   const isScrolling = useRef(false);
@@ -235,4 +235,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default PortfolioPage;

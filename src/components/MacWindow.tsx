@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes, css } from "styled-components";
 import { Rnd } from "react-rnd";
@@ -128,6 +128,7 @@ type MacWindowProps = {
   onFullscreenChange: (id: string, isFullscreen: boolean) => void;
   onActivate?: (id: string) => void;
   zIndex?: number;
+  children: React.ReactNode;
 };
 
 export default function MacWindow({
@@ -138,6 +139,7 @@ export default function MacWindow({
   onFullscreenChange,
   onActivate,
   zIndex = 10,
+  children
 }: MacWindowProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isActive, setIsActive] = useState(true);
@@ -313,8 +315,8 @@ export default function MacWindow({
         {/* <ToolbarSection
           className="window-drag-handle"
           isFullscreen={isFullscreen}
-        /> */}
-        <WindowContent>This is the {appName} content.</WindowContent>
+        /> */}{children ? children:
+        <WindowContent>This is the {appName} content.</WindowContent>}
       </WindowWrapper>
     </Rnd>,
     portalTarget as HTMLElement
