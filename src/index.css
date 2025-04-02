@@ -8,3 +8,10 @@ body {
 body{
   background: black;
 }
+*{
+  scrollbar-width: none;
+
+}
+*::-webkit-scrollbar{
+  display: none; /* Chrome, Safari */
+}

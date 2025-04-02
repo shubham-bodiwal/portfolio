@@ -27,6 +27,7 @@ import ShutdownScreen from "./ShutDownScreen";
 import MacNotification from "./MacOsNotification";
 import portfolioIcon from "../assets/Logo.svg";
 import PortfolioPage from "../pages/PortfolioPage";
+import InteractiveResume from "./ResumeComponent";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -204,9 +205,6 @@ type AppWindow = {
   children?: React.ReactNode;
 };
 
-// Permission types
-type Permission = "authorized" | "unauthorized";
-
 // Store macOS state in localStorage
 const saveState = (state: any) => {
   localStorage.setItem("macOsState", JSON.stringify(state));
@@ -315,10 +313,16 @@ export default function EnhancedMacOSDesktop() {
       name: "Portfolio",
       icon: portfolioIcon,
       section: "favorites",
-      permission: "authorized" as Permission,
+      permission: "authorized" ,
       children: <PortfolioPage/>
     },
-
+    {
+      name: "Resume",
+      icon: portfolioIcon,
+      section: "favorites",
+      permission: "authorized",
+      children: <InteractiveResume/>
+    },
     // Folders and Trash section (right side)
     {
       name: "Dictionary",
