@@ -28,8 +28,8 @@ const NotificationContainer = styled.div<{ isExiting: boolean }>`
   top: 50px;
   right: 20px;
   width: 300px;
-  background: rgba(28, 28, 30, 0.85);
-  backdrop-filter: blur(10px);
+  background: rgba(28, 28, 30, 0.3);
+  backdrop-filter: blur(6px);
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
