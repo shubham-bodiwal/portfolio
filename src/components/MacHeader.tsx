@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import AppleLogoBG from "../assets/apple-logo 1 (1).png";
 import BatterySvg from "../assets/Battery.svg";
@@ -87,20 +87,48 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
     })
   );
 
-  // Update the time every second to show seconds
+  // useRef to store and clear timeouts
+  const timeoutRef = useRef<any | null>(null);
+
+  // Accurate time update function with sync to seconds
   useEffect(() => {
-    const timerID = setInterval(() => {
+    const updateTimeWithPrecision = () => {
+      const now = new Date();
+
+      // Update the display time
       setCurrentTime(
-        new Date().toLocaleTimeString([], {
+        now.toLocaleTimeString([], {
           hour: "numeric",
           minute: "2-digit",
           second: "2-digit",
         })
       );
-    }, 1000); // Update every second instead of every minute
 
+      // Calculate delay until next second
+      const millisToNextSecond = 1000 - now.getMilliseconds();
+
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      // Schedule next update precisely at the next second
+      timeoutRef.current = setTimeout(
+        () => {
+          updateTimeWithPrecision();
+        },
+        Math.max(millisToNextSecond, 0)
+      );
+    };
+
+    // Start the precision updates
+    updateTimeWithPrecision();
+
+    // Cleanup on unmount
     return () => {
-      clearInterval(timerID);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
   }, []);
 
