@@ -141,6 +141,7 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
   border-radius: 0.2rem;
   margin: 7.5rem 2.5rem;
   height: 15rem;
+   width: 15rem;
   aspect-ratio: 1/1;
   flex-direction: column;
   justify-content: space-around;

@@ -26,7 +26,7 @@ import trashIcon from "../assets/Trash Full.svg";
 import ShutdownScreen from "./ShutDownScreen";
 import MacNotification from "./MacOsNotification";
 import portfolioIcon from "../assets/Logo.svg";
-import PortfolioPage from "../pages/Portfolio";
+import PortfolioPage from "../pages/PortfolioPage";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -626,7 +626,7 @@ export default function EnhancedMacOSDesktop() {
       {/* Header Bar */}
       <HeaderBackground isFullscreen={fullscreenWindows.size > 0}>
         <HeaderWrapper
-          isVisible={headerVisible}
+          isVisible={ headerVisible || true}
           isFullscreen={fullscreenWindows.size > 0}
         >
           <MacHeader

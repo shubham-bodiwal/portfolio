@@ -37,17 +37,16 @@ const AppWrapper = styled.div`
   color: #fff;
   font-family: "Inter", sans-serif;
   overflow: hidden;
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100%;
   position: relative;
 `;
-// cursor: url(${Cursor}) 4 4, auto;
 
 const Section = styled.section<{ $active?: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,7 +59,7 @@ const Section = styled.section<{ $active?: boolean }>`
 `;
 
 const IndicatorWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   left: 0rem;
   top: 50%;
   transform: translateY(-50%);
@@ -107,7 +106,7 @@ const VerticalLabel = styled.div`
 `;
 
 const VerticalRightText = styled.div`
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 50%;
   z-index: 10;
@@ -145,15 +144,20 @@ function PortfolioPage() {
   const totalSections = 5;
 
   useEffect(() => {
-    const setVh = () => {
-      document.documentElement.style.setProperty(
-        "--vh",
-        `${window.innerHeight * 0.01}px`
-      );
+    // Use client height of the container instead of window
+    const setHeight = () => {
+      if (containerRef.current) {
+        const height = containerRef.current.clientHeight;
+        document.documentElement.style.setProperty(
+          "--container-height",
+          `${height}px`
+        );
+      }
     };
-    setVh();
-    window.addEventListener("resize", setVh);
-    return () => window.removeEventListener("resize", setVh);
+    
+    setHeight();
+    window.addEventListener("resize", setHeight);
+    return () => window.removeEventListener("resize", setHeight);
   }, []);
 
   useEffect(() => {
@@ -166,6 +170,7 @@ function PortfolioPage() {
     };
 
     const handleWheel = (e: WheelEvent) => {
+      e.preventDefault(); // Prevent default to avoid scrolling the parent
       if (isScrolling.current) return;
 
       if (e.deltaY > 0 && currentIndex.current < totalSections - 1) {
@@ -199,18 +204,22 @@ function PortfolioPage() {
     };
 
     const container = containerRef.current;
-    container?.addEventListener("wheel", handleWheel, { passive: true });
-    container?.addEventListener("touchstart", handleTouchStart, {
-      passive: true,
-    });
-    container?.addEventListener("touchend", handleTouchEnd, {
-      passive: true,
-    });
+    if (container) {
+      container.addEventListener("wheel", handleWheel, { passive: false });
+      container.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
+      container.addEventListener("touchend", handleTouchEnd, {
+        passive: true,
+      });
+    }
 
     return () => {
-      container?.removeEventListener("wheel", handleWheel);
-      container?.removeEventListener("touchstart", handleTouchStart);
-      container?.removeEventListener("touchend", handleTouchEnd);
+      if (container) {
+        container.removeEventListener("wheel", handleWheel);
+        container.removeEventListener("touchstart", handleTouchStart);
+        container.removeEventListener("touchend", handleTouchEnd);
+      }
     };
   }, []);
 
