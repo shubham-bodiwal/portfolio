@@ -8,7 +8,7 @@ const timingFn = "ease";
 const wetAsphalt = "#34495E";
 const clouds = "#161616";
 // An approximate darkened version of clouds for the box-shadow:
-const cloudsDark = "#d0d3d7";
+// const cloudsDark = "#d0d3d7";
 
 // --- Keyframes Animations ---
 const inTop = keyframes`
