@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes, css } from "styled-components";
 import { Rnd } from "react-rnd";
+import FullscreenPrompt from "./FullScreenPrompt";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: scale(0.95); }
@@ -305,7 +306,16 @@ export default function MacWindow({
           isFullscreen={isFullscreen}
         /> */}
         {children ? (
-          children
+          appName === "Portfolio" ? (
+            <FullscreenPrompt
+              isFullscreen={isFullscreen}
+              requestFullscreen={handleFullscreenToggle}
+            >
+              {children}
+            </FullscreenPrompt>
+          ) : (
+            children
+          )
         ) : (
           <WindowContent>This is the {appName} content.</WindowContent>
         )}

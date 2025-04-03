@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const MainContainer = styled.div`
   height: 100%;
+  cursor: none !important;
   width: 100%;
   background: linear-gradient(135deg, #000000 0%, #141414 100%);
 `;
@@ -82,17 +83,19 @@ const CursorAnimation: React.FC = () => {
     );
 
     const onMouseMove = (e: MouseEvent) => {
+      // Updated position calculation - no offset adjustment needed since we handle it in the span styling
       mousePosition.current = {
-        x: e.clientX - dotWidth / 2,
-        y: e.clientY - dotWidth / 2,
+        x: e.clientX,
+        y: e.clientY,
       };
       resetIdleTimer();
     };
 
     const onTouchMove = (e: TouchEvent) => {
+      // Updated position calculation for touch events too
       mousePosition.current = {
-        x: e.touches[0].clientX - dotWidth / 2,
-        y: e.touches[0].clientY - dotWidth / 2,
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
       };
       resetIdleTimer();
     };
@@ -190,7 +193,8 @@ const CursorAnimation: React.FC = () => {
               height: `${dotWidth}px`,
               // Using clip-path to create a more droplet‐like shape instead of a perfect circle
               clipPath: "ellipse(50% 70% at 50% 50%)",
-              backgroundColor: "white",
+              background: "white",
+              // The key fix: use translate(-50%, -50%) to center each dot on the cursor
               transform: "translate(-50%, -50%)",
             }}
           />

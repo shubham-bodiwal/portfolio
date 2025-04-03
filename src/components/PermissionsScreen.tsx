@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
     padding: 0;
+    cursor: none !important;
     overflow: hidden;
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
   }
@@ -24,7 +25,7 @@ const subtleFloat = keyframes`
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-1rem);
   }
   100% {
     transform: translateY(0px);
@@ -63,14 +64,14 @@ const Screen = styled.div`
   right: 0;
 `;
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-`;
+// const Overlay = styled.div`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: 1;
+// `;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -85,7 +86,8 @@ const ContentContainer = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   max-width: 500px;
-  animation: ${subtleFloat} 6s ease-in-out infinite;
+  animation: ${
+    subtleFloat} 6s ease-in-out infinite;
 `;
 
 const PortfolioTitle = styled.h1`
@@ -281,6 +283,10 @@ const PermissionScreen: React.FC<Props> = ({
               </Message>
               <Button onClick={onClick}>Enter Fullscreen</Button>
               <StatusText>Portfolio • Version 2.0</StatusText>
+              <Message>
+                Do not forget to <strong>Shut it Down </strong>
+                 once you are done. 
+              </Message>
             </>
           )}
         </ContentContainer>

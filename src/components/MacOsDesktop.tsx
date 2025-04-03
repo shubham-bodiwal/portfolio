@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 // Import wallpaper & sounds
@@ -24,11 +24,11 @@ import settingsIcon from "../assets/Settings.svg";
 import dictionaryIcon from "../assets/Dictionary.svg";
 import trashIcon from "../assets/Trash Full.svg";
 import ShutdownScreen from "./ShutDownScreen";
-import MacNotification from "./MacOsNotification";
 import portfolioIcon from "../assets/Logo.svg";
 import ResumeIcon from "../assets/LogoR.svg";
 import PortfolioPage from "../pages/PortfolioPage";
 import InteractiveResume from "./ResumeComponent";
+import MacNotificationStack, { NotificationItem } from "./MacNotificationStack";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -243,19 +243,46 @@ export default function EnhancedMacOSDesktop() {
   );
   const [headerVisible, setHeaderVisible] = useState(true);
   const [showShutdownScreen, setShowShutdownScreen] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
-  // Notification state
-  const [notification, setNotification] = useState<{
-    visible: boolean;
-    appName: string;
-    appIcon: string;
-    message: string;
-  }>({
-    visible: false,
-    appName: "",
-    appIcon: "",
-    message: "",
-  });
+  const showPermissionDeniedNotification = (
+    appName: string,
+    appIcon: string
+  ) => {
+    const newNotification: NotificationItem = {
+      id: uuidv4(), // You already have the uuid import
+      appName,
+      appIcon,
+      message: `You do not have permission to use ${appName}.`,
+      timestamp: Date.now(),
+    };
+
+    setNotifications((prev) => [newNotification, ...prev]);
+  };
+
+  // 4. Update the closeNotification function
+  const closeNotification = (id: string) => {
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
+    );
+  };
+
+  // // 5. You can also create a function to add custom notifications
+  // const showCustomNotification = (
+  //   appName: string,
+  //   appIcon: string,
+  //   message: string
+  // ) => {
+  //   const newNotification: NotificationItem = {
+  //     id: uuidv4(),
+  //     appName,
+  //     appIcon,
+  //     message,
+  //     timestamp: Date.now(),
+  //   };
+
+  //   setNotifications((prev) => [newNotification, ...prev]);
+  // };
 
   // Define dock items with proper macOS app order, imported icons, and permissions
   const dockItems: {
@@ -327,7 +354,9 @@ export default function EnhancedMacOSDesktop() {
       icon: portfolioIcon,
       section: "favorites",
       permission: "authorized",
-      children: <PortfolioPage />,
+      children: (
+          <PortfolioPage />
+      ),
     },
     {
       name: "Resume",
@@ -464,27 +493,10 @@ export default function EnhancedMacOSDesktop() {
   }, [fullscreenWindows, systemState]);
 
   const handleShutdown = () => {
+    setOpenWindows([]);
     if (systemState === "running") {
       setSystemState("shuttingDown");
     }
-  };
-
-  // Show notification for unauthorized apps
-  const showPermissionDeniedNotification = (
-    appName: string,
-    appIcon: string
-  ) => {
-    setNotification({
-      visible: true,
-      appName,
-      appIcon,
-      message: `You do not have permission to use ${appName}.`,
-    });
-  };
-
-  // Close notification
-  const closeNotification = () => {
-    setNotification((prev) => ({ ...prev, visible: false }));
   };
 
   // Handle window fullscreen state changes
@@ -734,12 +746,8 @@ export default function EnhancedMacOSDesktop() {
         </DockItemContainer>
       </Dock>
 
-      {/* Permission Notification */}
-      <MacNotification
-        isVisible={notification.visible}
-        appName={notification.appName}
-        appIcon={notification.appIcon}
-        message={notification.message}
+      <MacNotificationStack
+        notifications={notifications}
         onClose={closeNotification}
         autoClose={true}
         autoCloseTime={5000}

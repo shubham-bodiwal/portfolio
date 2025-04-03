@@ -5,7 +5,6 @@ import Gallery from "../components/Gallery";
 import Footer from "../components/Footer";
 import { DirectionAwareHoverEffect } from "../components/DirectionAwareHoverEffect";
 import ColorChangingAnimation from "../components/ColorChangingAnimation";
-import CursorAnimation from "../components/CursorAnimation";
 
 const fadeInText = keyframes`
   0% {
@@ -225,6 +224,7 @@ function PortfolioPage() {
   }, []);
 
   return (
+
     <AppWrapper ref={containerRef}>
       <Section $active={active === 0}>{active === 0 && <Hero />}</Section>
       <Section $active={active === 1}>{active === 1 && <Gallery />}</Section>
