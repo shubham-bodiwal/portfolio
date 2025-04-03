@@ -79,18 +79,15 @@ const CircleButton = styled.div<{
   icon?: string;
   isActive: boolean;
 }>`
-  width: 10px;
-  height: 10px;
   background-color: ${(props) => (props.isActive ? props.color : "#8e8e8e")};
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
-  border: 0.5px solid rgba(0, 0, 0, 0.2);
   transition: color 0.1s ease;
-
 `;
 
 const WindowContent = styled.div`
@@ -136,7 +133,7 @@ export default function MacWindow({
   onFullscreenChange,
   onActivate,
   zIndex = 10,
-  children
+  children,
 }: MacWindowProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isActive, setIsActive] = useState(true);
@@ -287,30 +284,31 @@ export default function MacWindow({
               icon="×"
               isActive={isActive}
               onClick={handleClose}
-            >
-            </CircleButton>
+            ></CircleButton>
             <CircleButton
               color="#ffbd2e"
               icon="−"
               isActive={isActive}
               onClick={handleMinimize}
-            >
-            </CircleButton>
+            ></CircleButton>
             <CircleButton
               color="#28c840"
               icon="+"
               isActive={isActive}
               onClick={handleFullscreenToggle}
-            >
-            </CircleButton>
+            ></CircleButton>
           </ButtonGroup>
           <Title isActive={isActive}>{appName}</Title>
         </WindowHeader>
         {/* <ToolbarSection
           className="window-drag-handle"
           isFullscreen={isFullscreen}
-        /> */}{children ? children:
-        <WindowContent>This is the {appName} content.</WindowContent>}
+        /> */}
+        {children ? (
+          children
+        ) : (
+          <WindowContent>This is the {appName} content.</WindowContent>
+        )}
       </WindowWrapper>
     </Rnd>,
     portalTarget as HTMLElement

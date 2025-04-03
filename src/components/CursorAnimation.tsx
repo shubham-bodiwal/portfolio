@@ -5,7 +5,7 @@ import styled from "styled-components";
 const MainContainer = styled.div`
   height: 100%;
   width: 100%;
-  background: linear-gradient(to bottom, #0f1827, #3a4965, #03050b);
+  background: linear-gradient(135deg, #000000 0%, #141414 100%);
 `;
 const CursorAnimation: React.FC = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ const CursorAnimation: React.FC = () => {
   const sineDots = Math.floor(amount * 0.3);
   const dotWidth = 30; // width/height of each dot in px
   const idleTimeout = 150; // ms before "idle" behavior kicks in
-  const followFactor = 0.4; // larger factor makes dots follow more tightly
+  const followFactor = 0.3; // larger factor makes dots follow more tightly
 
   // Dot class – each dot follows the mouse and then locks into a subtle oscillation when idle.
   class Dot {
@@ -190,7 +190,7 @@ const CursorAnimation: React.FC = () => {
               height: `${dotWidth}px`,
               // Using clip-path to create a more droplet‐like shape instead of a perfect circle
               clipPath: "ellipse(50% 70% at 50% 50%)",
-              backgroundColor: "black",
+              backgroundColor: "white",
               transform: "translate(-50%, -50%)",
             }}
           />

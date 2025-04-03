@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 import StartImageAnimation from "./StartImageAnimation";
+import CursorAnimation from "./CursorAnimation";
 
 // Global style for clean presentation
 const GlobalStyle = createGlobalStyle`
@@ -46,15 +47,20 @@ const subtleFloat = keyframes`
 const Screen = styled.div`
   height: 100vh;
   width: 100vw;
-    background: linear-gradient(135deg, #000000 0%, #2f2f2f 100%);
+  background: linear-gradient(135deg, #000000 0%, #141414 100%);
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 0.8s ease-in-out;
-  position: relative;
   overflow: hidden;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `;
 
 const Overlay = styled.div`
@@ -63,10 +69,6 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
   z-index: 1;
 `;
 
@@ -78,7 +80,7 @@ const ContentContainer = styled.div`
   z-index: 2;
   padding: 2.5rem 3rem;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #14141422;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
@@ -93,7 +95,7 @@ const PortfolioTitle = styled.h1`
   font-weight: 600;
   text-align: center;
   letter-spacing: 0.5px;
-  
+
   span {
     color: #4d9fff;
   }
@@ -150,11 +152,11 @@ const Button = styled.button`
     transform: translateY(-2px);
     color: white;
   }
-  
+
   &:active {
     transform: translateY(1px);
   }
-  
+
   &::before {
     content: "";
     position: absolute;
@@ -170,7 +172,7 @@ const Button = styled.button`
     );
     transition: all 0.6s;
   }
-  
+
   &:hover::before {
     left: 100%;
   }
@@ -190,7 +192,7 @@ const ProgressBar = styled.div`
 
 const ProgressFill = styled.div<{ progress: number }>`
   height: 100%;
-  width: ${props => props.progress}%;
+  width: ${(props) => props.progress}%;
   background: linear-gradient(90deg, #3a7bd5, #4d9fff);
   transition: width 0.5s ease;
 `;
@@ -220,7 +222,7 @@ const PermissionScreen: React.FC<Props> = ({
       const timer = setTimeout(() => {
         window.location.reload();
       }, 5000);
-      
+
       let currentProgress = 0;
       const interval = setInterval(() => {
         currentProgress += 5;
@@ -229,7 +231,7 @@ const PermissionScreen: React.FC<Props> = ({
           return;
         }
         setProgress(currentProgress);
-        
+
         // Update status text based on progress
         if (currentProgress < 25) {
           setStatusText("Initializing...");
@@ -252,8 +254,8 @@ const PermissionScreen: React.FC<Props> = ({
   return (
     <>
       <GlobalStyle />
+      <CursorAnimation />
       <Screen>
-        <Overlay />
         <StartImageAnimation />
         <ContentContainer>
           <PortfolioTitle>
@@ -273,8 +275,9 @@ const PermissionScreen: React.FC<Props> = ({
           ) : (
             <>
               <Message>
-                This portfolio experience requires <strong>Fullscreen</strong> access
-                to properly showcase the projects and work in an optimal presentation.
+                This portfolio experience requires <strong>Fullscreen</strong>{" "}
+                access to properly showcase the projects and work in an optimal
+                presentation.
               </Message>
               <Button onClick={onClick}>Enter Fullscreen</Button>
               <StatusText>Portfolio • Version 2.0</StatusText>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 // Import wallpaper & sounds
@@ -39,6 +39,13 @@ const fillBar = keyframes`
 const fadeOut = keyframes`
   from { opacity: 1; }
   to { opacity: 0; }
+`;
+
+const gelatineKeyframes = keyframes`
+  from, to { transform: scale(1, 1); }
+  25% { transform: scale(0.9, 1.1); }
+  50% { transform: scale(1.1, 0.9); }
+  75% { transform: scale(0.95, 1.05); }
 `;
 
 // Styled components
@@ -141,9 +148,14 @@ const DockSeparator = styled.div`
   margin: 0 0.4rem;
 `;
 
-const DockItem = styled.div`
+const DockItem = styled.div<{ isAnimating?: boolean }>`
   position: relative;
   margin: 0 0.4rem;
+  animation: ${gelatineKeyframes} 0.5s infinite;
+  animation-play-state: ${(props) =>
+    props.isAnimating ? "running" : "paused"};
+
+  animation-fill-mode: forwards;
 `;
 
 const AppIcon = styled.div`
@@ -246,7 +258,7 @@ export default function EnhancedMacOSDesktop() {
   });
 
   // Define dock items with proper macOS app order, imported icons, and permissions
-  const dockItems:{
+  const dockItems: {
     name: string;
     icon: string;
     permission: string;
@@ -314,15 +326,15 @@ export default function EnhancedMacOSDesktop() {
       name: "Portfolio",
       icon: portfolioIcon,
       section: "favorites",
-      permission: "authorized" ,
-      children: <PortfolioPage/>
+      permission: "authorized",
+      children: <PortfolioPage />,
     },
     {
       name: "Resume",
       icon: ResumeIcon,
       section: "favorites",
       permission: "authorized",
-      children: <InteractiveResume/>
+      children: <InteractiveResume />,
     },
     // Folders and Trash section (right side)
     {
@@ -533,7 +545,7 @@ export default function EnhancedMacOSDesktop() {
           minimized: false,
           zIndex: newZIndex,
           active: true,
-          children
+          children,
         },
       ];
     });
@@ -631,7 +643,7 @@ export default function EnhancedMacOSDesktop() {
       {/* Header Bar */}
       <HeaderBackground isFullscreen={fullscreenWindows.size > 0}>
         <HeaderWrapper
-          isVisible={ headerVisible || true}
+          isVisible={headerVisible || true}
           isFullscreen={fullscreenWindows.size > 0}
         >
           <MacHeader
@@ -655,8 +667,8 @@ export default function EnhancedMacOSDesktop() {
                 onFullscreenChange={handleFullscreenChange}
                 onActivate={activateWindow}
                 zIndex={win.zIndex}
-              >{win?.children}
-
+              >
+                {win?.children}
               </MacWindow>
             )
         )}
@@ -666,7 +678,10 @@ export default function EnhancedMacOSDesktop() {
       <Dock visible={dockVisible}>
         <DockItemContainer>
           {normalApps.map((item) => (
-            <DockItem key={item.name}>
+            <DockItem
+              key={item.name}
+              isAnimating={item.section === "favorites"}
+            >
               <AppIcon onClick={() => handleDockItemClick(item)}>
                 <img src={item.icon} alt={item.name} />
               </AppIcon>
@@ -682,7 +697,10 @@ export default function EnhancedMacOSDesktop() {
 
           {/* Favorite Apps */}
           {favoriteApps.map((item) => (
-            <DockItem key={item.name}>
+            <DockItem
+              key={item.name}
+              isAnimating={item.section === "favorites"}
+            >
               <AppIcon onClick={() => handleDockItemClick(item)}>
                 <img src={item.icon} alt={item.name} />
               </AppIcon>
@@ -699,7 +717,10 @@ export default function EnhancedMacOSDesktop() {
 
           {/* Folders and Trash */}
           {folderApps.map((item) => (
-            <DockItem key={item.name}>
+            <DockItem
+              key={item.name}
+              isAnimating={item.section === "favorites"}
+            >
               <AppIcon onClick={() => handleDockItemClick(item)}>
                 <img src={item.icon} alt={item.name} />
               </AppIcon>

@@ -1,14 +1,14 @@
-import React, { useRef, useState } from 'react';
-import styled, { createGlobalStyle, keyframes, css } from 'styled-components';
+import React, { useRef, useState } from "react";
+import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 
 // --- Variables & Color Constants ---
-const duration = '300ms';
-const timingFn = 'ease';
+const duration = "300ms";
+const timingFn = "ease";
 // const turquoise = '#1ABC9C';
-const wetAsphalt = '#34495E';
-const clouds = '#ECF0F1';
+const wetAsphalt = "#34495E";
+const clouds = "#161616";
 // An approximate darkened version of clouds for the box-shadow:
-const cloudsDark = '#d0d3d7';
+const cloudsDark = "#d0d3d7";
 
 // --- Keyframes Animations ---
 const inTop = keyframes`
@@ -48,29 +48,44 @@ const outLeft = keyframes`
 // --- Helpers for Animation Mapping ---
 const getAnimation = (type: string) => {
   switch (type) {
-    case 'in-top': return inTop;
-    case 'in-right': return inRight;
-    case 'in-bottom': return inBottom;
-    case 'in-left': return inLeft;
-    case 'out-top': return outTop;
-    case 'out-right': return outRight;
-    case 'out-bottom': return outBottom;
-    case 'out-left': return outLeft;
-    default: return null;
+    case "in-top":
+      return inTop;
+    case "in-right":
+      return inRight;
+    case "in-bottom":
+      return inBottom;
+    case "in-left":
+      return inLeft;
+    case "out-top":
+      return outTop;
+    case "out-right":
+      return outRight;
+    case "out-bottom":
+      return outBottom;
+    case "out-left":
+      return outLeft;
+    default:
+      return null;
   }
 };
 
 const getTransformOrigin = (type: string) => {
   switch (type) {
-    case 'in-top':
-    case 'out-top': return '50% 0%';
-    case 'in-right': return '100% 0%';
-    case 'out-right': return '100% 50%';
-    case 'in-bottom':
-    case 'out-bottom': return '50% 100%';
-    case 'in-left':
-    case 'out-left': return '0% 0%';
-    default: return '50% 50%';
+    case "in-top":
+    case "out-top":
+      return "50% 0%";
+    case "in-right":
+      return "100% 0%";
+    case "out-right":
+      return "100% 50%";
+    case "in-bottom":
+    case "out-bottom":
+      return "50% 100%";
+    case "in-left":
+    case "out-left":
+      return "0% 0%";
+    default:
+      return "50% 50%";
   }
 };
 
@@ -82,7 +97,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #fff;
     margin: 0;
-    font-family: sans-serif;
   }
 `;
 
@@ -93,20 +107,21 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  font-family: 'Bree Serif', serif;
+  font-family: "Bree Serif", serif;
   text-align: center;
   margin: 50px 0 25px;
   color: ${wetAsphalt};
 
   p {
     margin: 0;
-    color: rgba(52,73,94,0.4);
+    color: rgba(52, 73, 94, 0.4);
   }
 `;
 
 const Title = styled.h1`
   margin: 0 auto 5px;
   text-align: center;
+  color: #ffaa33;
 `;
 
 const List = styled.ul`
@@ -138,8 +153,7 @@ const ItemLink = styled.a`
   width: 100%;
   height: 100%;
   background-color: ${clouds};
-  color: rgba(52,73,94,0.6);
-  box-shadow: inset 0 2px 20px ${cloudsDark};
+  color: rgba(52, 73, 94, 0.6);
   text-align: center;
   font-size: 50px;
   line-height: 200px;
@@ -147,9 +161,9 @@ const ItemLink = styled.a`
   svg {
     pointer-events: none;
     width: 50px;
-    
+
     path {
-      fill: rgba(52,73,94,0.2);
+      fill: rgba(52, 73, 94, 0.2);
     }
   }
 `;
@@ -168,12 +182,13 @@ const Info = styled.div<InfoProps>`
   left: 0;
   border-radius: 4px;
   pointer-events: none;
-  background-color: rgba(26,188,156,0.9);
+  background-color: rgba(26, 188, 156, 0.9);
 
-  ${props =>
+  ${(props) =>
     props.animationType &&
     css`
-      animation: ${getAnimation(props.animationType)} ${duration} ${timingFn} 0ms forwards;
+      animation: ${getAnimation(props.animationType)} ${duration} ${timingFn}
+        0ms forwards;
       transform-origin: ${getTransformOrigin(props.animationType)};
     `}
 
@@ -181,7 +196,6 @@ const Info = styled.div<InfoProps>`
     margin: 0;
     font-size: 16px;
     color: rgba(255, 255, 255, 0.9);
-    font-family: 'Bree Serif', serif;
   }
 
   p {
@@ -193,14 +207,15 @@ const Info = styled.div<InfoProps>`
 
 const MainContainer = styled.div`
   height: 100%;
-  width: 100%;`
+  width: 100%;
+`;
 
 // --- React Component for a Single Hover Item ---
 const HoverItem: React.FC = () => {
   const itemRef = useRef<HTMLLIElement>(null);
   const [animation, setAnimation] = useState<string | undefined>(undefined);
 
-  const handleMouse = (e: React.MouseEvent, prefix: 'in' | 'out') => {
+  const handleMouse = (e: React.MouseEvent, prefix: "in" | "out") => {
     if (itemRef.current) {
       const rect = itemRef.current.getBoundingClientRect();
       const l = e.pageX - (rect.left + window.pageXOffset);
@@ -211,7 +226,7 @@ const HoverItem: React.FC = () => {
       const angle = Math.atan2(y, x);
       // Divide the circle into 4 quadrants:
       const directionIndex = Math.round(angle / (Math.PI / 2) + 5) % 4;
-      const directions = ['top', 'right', 'bottom', 'left'];
+      const directions = ["top", "right", "bottom", "left"];
       const direction = directions[directionIndex];
       setAnimation(`${prefix}-${direction}`);
     }
@@ -220,8 +235,8 @@ const HoverItem: React.FC = () => {
   return (
     <ListItem
       ref={itemRef}
-      onMouseEnter={(e) => handleMouse(e, 'in')}
-      onMouseLeave={(e) => handleMouse(e, 'out')}
+      onMouseEnter={(e) => handleMouse(e, "in")}
+      onMouseLeave={(e) => handleMouse(e, "out")}
     >
       <ItemLink href="#">
         <svg viewBox="0 0 80 76" x="0px" y="0px">
@@ -233,8 +248,8 @@ const HoverItem: React.FC = () => {
       <Info animationType={animation}>
         <h3>Single-origin coffee whatever</h3>
         <p>
-          Williamsburg tofu polaroid, 90's Bushwick irony locavore ethnic meh messenger bag
-          Truffaut jean shorts.
+          Williamsburg tofu polaroid, 90's Bushwick irony locavore ethnic meh
+          messenger bag Truffaut jean shorts.
         </p>
       </Info>
     </ListItem>

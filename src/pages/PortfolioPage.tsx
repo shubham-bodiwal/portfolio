@@ -142,7 +142,7 @@ function PortfolioPage() {
   const currentIndex = useRef(0);
   const isScrolling = useRef(false);
   const [active, setActive] = useState(0);
-  const totalSections = 6;
+  const totalSections = 5;
 
   useEffect(() => {
     // Use client height of the container instead of window
@@ -155,7 +155,7 @@ function PortfolioPage() {
         );
       }
     };
-    
+
     setHeight();
     window.addEventListener("resize", setHeight);
     return () => window.removeEventListener("resize", setHeight);
@@ -228,10 +228,13 @@ function PortfolioPage() {
     <AppWrapper ref={containerRef}>
       <Section $active={active === 0}>{active === 0 && <Hero />}</Section>
       <Section $active={active === 1}>{active === 1 && <Gallery />}</Section>
-      <Section $active={active === 2}>{active === 2 && <DirectionAwareHoverEffect />}</Section>
-      <Section $active={active === 3}>{active === 3 && <ColorChangingAnimation />}</Section>
-      <Section $active={active === 4}>{active === 4 && <CursorAnimation />}</Section>
-      <Section $active={active === 5}>{active === 5 && <Footer />}</Section>
+      <Section $active={active === 2}>
+        {active === 2 && <DirectionAwareHoverEffect />}
+      </Section>
+      <Section $active={active === 3}>
+        {active === 3 && <ColorChangingAnimation />}
+      </Section>
+      <Section $active={active === 4}>{active === 4 && <Footer />}</Section>
 
       <IndicatorWrapper>
         <VerticalLabel>are you Lost?</VerticalLabel>
