@@ -4,11 +4,8 @@ import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 // --- Variables & Color Constants ---
 const duration = "300ms";
 const timingFn = "ease";
-// const turquoise = '#1ABC9C';
 const wetAsphalt = "#34495E";
 const clouds = "#161616";
-// An approximate darkened version of clouds for the box-shadow:
-// const cloudsDark = "#d0d3d7";
 
 // --- Keyframes Animations ---
 const inTop = keyframes`
@@ -210,8 +207,69 @@ const MainContainer = styled.div`
   width: 100%;
 `;
 
+// --- Creative texts for Hover Items ---
+interface HoverText {
+  title: string;
+  description: string;
+}
+
+const hoverTexts: HoverText[] = [
+  {
+    title: "Craftsman Mindset",
+    description: "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
+  },
+  {
+    title: "Perpetual Learner",
+    description: "My curiosity ships features. I chase problems like puzzles, not chores.",
+  },
+  {
+    title: "Engineering with Empathy",
+    description: "Code is for humans first, machines second. Accessibility isn't optional.",
+  },
+  {
+    title: "Tech Explorer",
+    description: "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
+  },
+  {
+    title: "Pixel-Perfect & Purpose-Driven",
+    description: "Design with intention. Animate with logic. Deliver with delight.",
+  },
+  {
+    title: "Web Performance Geek",
+    description: "Fast feels good. I tune every byte until it sings.",
+  },
+  {
+    title: "Creative Problem Solver",
+    description: "Give me a bottleneck—I’ll give you a blueprint and a breakthrough.",
+  },
+  {
+    title: "Detail-Oriented",
+    description: "I debug with surgical precision and review PRs like poetry.",
+  },
+  {
+    title: "System Thinker",
+    description: "I see patterns. I build systems. I make chaos modular.",
+  },
+  {
+    title: "Style Meets Substance",
+    description: "Styled-components addict. UI should look good and feel right.",
+  },
+  {
+    title: "Collaborative Energy",
+    description: "I bring code, calm, and candor to every stand-up and sprint.",
+  },
+  {
+    title: "Growth Mindset",
+    description: "Version 1 is never the end. I iterate, elevate, and never settle.",
+  },
+];
+
 // --- React Component for a Single Hover Item ---
-const HoverItem: React.FC = () => {
+interface HoverItemProps {
+  index: number;
+}
+
+const HoverItem: React.FC<HoverItemProps> = ({ index }) => {
   const itemRef = useRef<HTMLLIElement>(null);
   const [animation, setAnimation] = useState<string | undefined>(undefined);
 
@@ -232,6 +290,8 @@ const HoverItem: React.FC = () => {
     }
   };
 
+  const { title, description } = hoverTexts[index % hoverTexts.length];
+
   return (
     <ListItem
       ref={itemRef}
@@ -246,11 +306,8 @@ const HoverItem: React.FC = () => {
         </svg>
       </ItemLink>
       <Info animationType={animation}>
-        <h3>Single-origin coffee whatever</h3>
-        <p>
-          Williamsburg tofu polaroid, 90's Bushwick irony locavore ethnic meh
-          messenger bag Truffaut jean shorts.
-        </p>
+        <h3>{title}</h3>
+        <p>{description}</p>
       </Info>
     </ListItem>
   );
@@ -270,7 +327,7 @@ export const DirectionAwareHoverEffect: React.FC = () => {
       <Container>
         <List>
           {Array.from({ length: 12 }).map((_, i) => (
-            <HoverItem key={i} />
+            <HoverItem key={i} index={i} />
           ))}
         </List>
       </Container>
