@@ -458,12 +458,12 @@ export default function EnhancedMacOSDesktop() {
     const handleMouseMove = (e: MouseEvent) => {
       if (systemState !== "running") return;
 
-      if (e.clientY > window.innerHeight - 100) {
+      if (e.clientY > window.innerHeight - 50) {
         setDockVisible(true);
         if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
       } else {
         if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
-        inactivityTimer.current = setTimeout(() => setDockVisible(false), 500);
+        inactivityTimer.current = setTimeout(() => setDockVisible(false), 400);
       }
     };
 

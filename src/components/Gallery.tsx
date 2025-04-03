@@ -141,7 +141,8 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
   border-radius: 0.2rem;
   margin: 7.5rem 2.5rem;
   height: 15rem;
-   width: 15rem;
+  min-width: 12rem;
+  max-width: 12rem;
   aspect-ratio: 1/1;
   flex-direction: column;
   justify-content: space-around;
@@ -185,7 +186,8 @@ const GalleryItem = styled(motion.div)<GalleryItemProps>`
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     margin-top: 0rem;
     margin-bottom: 0rem;
-    width: 15rem;
+    min-width: 12rem;
+    max-width: 12rem;
 
     &::after {
       width: 50%;
