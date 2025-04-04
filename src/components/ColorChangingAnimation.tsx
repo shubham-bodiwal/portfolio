@@ -179,13 +179,13 @@ const gelatineKeyframes = keyframes`
 `;
 
 const ClickHere = styled.div`
- animation: ${gelatineKeyframes} 0.5s infinite;
- position: absolute;
- bottom: 8%;
- right: 11%;
- z-index: 20;
- user-select: none;
- `
+  animation: ${gelatineKeyframes} 0.5s infinite;
+  position: absolute;
+  bottom: 8%;
+  right: 11%;
+  z-index: 20;
+  user-select: none;
+`;
 
 const ColorChangingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -248,7 +248,7 @@ const ColorChangingAnimation: React.FC = () => {
 
     let cW = window.innerWidth;
     let cH = window.innerHeight;
-    let bgColor = "#FF6138";
+    let bgColor = "#2980B9";
     let animationFrameId: number;
     let inactiveTimeout: number | null = null;
 
@@ -324,7 +324,7 @@ const ColorChangingAnimation: React.FC = () => {
 
     // ----- Color Picker -----
     const colorPicker = (() => {
-      const colors = ["#FF6138", "#FFBE53", "#2980B9", "#282741"];
+      const colors = ["#2980B9", "#282741", "#FFBE53", "#FF6138"];
       let index = 0;
       return {
         next: () => {
