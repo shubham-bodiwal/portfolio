@@ -1,15 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import {
-  Github,
   Linkedin,
   Mail,
-  Globe,
   Code,
   Bookmark,
   Coffee,
   ArrowUp,
-  Twitter,
   Heart,
 } from "lucide-react";
 

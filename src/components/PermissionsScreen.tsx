@@ -32,18 +32,6 @@ const subtleFloat = keyframes`
   }
 `;
 
-// const gradientShift = keyframes`
-//   0% {
-//     background-position: 0% 50%;
-//   }
-//   50% {
-//     background-position: 100% 50%;
-//   }
-//   100% {
-//     background-position: 0% 50%;
-//   }
-// `;
-
 // Styled components with professional aesthetic
 const Screen = styled.div`
   height: 100vh;
@@ -64,15 +52,6 @@ const Screen = styled.div`
   right: 0;
 `;
 
-// const Overlay = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: 1;
-// `;
-
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -86,8 +65,12 @@ const ContentContainer = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   max-width: 500px;
-  animation: ${
-    subtleFloat} 6s ease-in-out infinite;
+  animation: ${subtleFloat} 6s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+    max-width: 90%;
+  }
 `;
 
 const PortfolioTitle = styled.h1`
@@ -100,6 +83,10 @@ const PortfolioTitle = styled.h1`
 
   span {
     color: #4d9fff;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
   }
 `;
 
@@ -119,6 +106,27 @@ const PoweredOffMessage = styled.p`
   color: #e67e22;
   font-weight: 500;
   letter-spacing: 0.5px;
+`;
+
+const DeviceWarning = styled.div`
+  background-color: rgba(220, 53, 69, 0.2);
+  border: 1px solid rgba(220, 53, 69, 0.6);
+  color: #ff6b6b;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  text-align: center;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
 `;
 
 const pulse = keyframes`
@@ -218,7 +226,27 @@ const PermissionScreen: React.FC<Props> = ({
 }) => {
   const [progress, setProgress] = useState(0);
   const [statusText, setStatusText] = useState("Initializing...");
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Detect if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobileCheck =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ) || window.innerWidth < 768;
+      setIsMobile(mobileCheck);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  // Shutdown sequence
   useEffect(() => {
     if (shutdownMode) {
       const timer = setTimeout(() => {
@@ -264,7 +292,15 @@ const PermissionScreen: React.FC<Props> = ({
             <span>Shubham Bhodiwal</span>'s Portfolio
           </PortfolioTitle>
 
-          {shutdownMode ? (
+          {isMobile ? (
+            <DeviceWarning>
+              <h3>Desktop Required</h3>
+              <p>
+                This interactive portfolio experience is optimized for desktop
+                devices. Please open it on a computer for the full experience.
+              </p>
+            </DeviceWarning>
+          ) : shutdownMode ? (
             <>
               <PoweredOffMessage>Session ended</PoweredOffMessage>
               <Message>Restarting portfolio experience. Please wait...</Message>
@@ -279,13 +315,19 @@ const PermissionScreen: React.FC<Props> = ({
               <Message>
                 This portfolio experience requires <strong>Fullscreen</strong>{" "}
                 access to properly showcase the projects and work in an optimal
-                presentation.
+                presentation.{" "}
+                {!isMobile && "It is only available on desktop devices."}
               </Message>
-              <Button onClick={onClick}>Enter Fullscreen</Button>
+              <Button onClick={onClick} disabled={isMobile}>
+                {isMobile ? "Desktop Required" : "Enter Fullscreen"}
+              </Button>
               <StatusText>Portfolio • Version 2.0</StatusText>
               <Message>
-                Do not forget to <strong>Shut it Down </strong>
-                 once you are done. 
+                {!isMobile && "Do not forget to "}
+                <strong>{!isMobile && "Shut it Down "}</strong>
+                {!isMobile
+                  ? "once you are done."
+                  : "Please visit on a desktop device."}
               </Message>
             </>
           )}

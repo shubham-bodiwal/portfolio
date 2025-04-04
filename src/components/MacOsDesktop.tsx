@@ -29,7 +29,6 @@ import ResumeIcon from "../assets/LogoR.svg";
 import PortfolioPage from "../pages/PortfolioPage";
 import InteractiveResume from "./ResumeComponent";
 import MacNotificationStack, { NotificationItem } from "./MacNotificationStack";
-import Sample from "../pages/Sample";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -365,11 +364,18 @@ export default function EnhancedMacOSDesktop() {
       children: <InteractiveResume />,
     },
     {
-      name: "Sample",
+      name: "Sample Website",
       icon: ResumeIcon,
       section: "favorites",
       permission: "authorized",
-      children: <Sample />,
+      children: (
+        <iframe
+          src="https://quiz-web-liard.vercel.app/"
+          width="100%"
+          height="100%"
+          style={{ border: "none" }}
+        ></iframe>
+      ),
     },
     // Folders and Trash section (right side)
     {

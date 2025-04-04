@@ -99,15 +99,6 @@ const WindowContent = styled.div`
   overflow: auto;
 `;
 
-// const ToolbarSection = styled.div<{ isFullscreen: boolean }>`
-//   height: 36px;
-//   display: flex;
-//   align-items: center;
-//   padding: 0 12px;
-//   background: rgba(50, 50, 54, 0.6);
-//   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-// `;
-
 type Position = {
   x: number;
   y: number;
@@ -301,12 +292,8 @@ export default function MacWindow({
           </ButtonGroup>
           <Title isActive={isActive}>{appName}</Title>
         </WindowHeader>
-        {/* <ToolbarSection
-          className="window-drag-handle"
-          isFullscreen={isFullscreen}
-        /> */}
         {children ? (
-          appName === "Portfolio" ? (
+          appName === "Portfolio" || appName === "Sample Website" ? (
             <FullscreenPrompt
               isFullscreen={isFullscreen}
               requestFullscreen={handleFullscreenToggle}
