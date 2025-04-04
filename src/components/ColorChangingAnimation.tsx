@@ -38,8 +38,9 @@ const ContentContainer = styled.div`
   position: absolute;
   z-index: 1;
   width: 80%;
+  height: 85%;
   padding: 2rem;
-  background: rgba(10, 10, 14, 0.6);
+  background: rgba(10, 10, 14, 0.4);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
@@ -54,6 +55,7 @@ const SectionTitle = styled.h2`
   color: #ffaa33;
   letter-spacing: 0.1em;
   font-weight: 700;
+  margin-top: 0px;
 `;
 
 const ContentWrapper = styled.div`
@@ -73,6 +75,7 @@ const CategoryTitle = styled.h3`
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
+  margin-top: 0px;
 
   &::before {
     content: "";
@@ -105,7 +108,7 @@ const SkillItem = styled.li<{ index: number }>`
   cursor: default;
 
   &:hover {
-    background: rgba(255, 170, 51, 0.2);
+    background: rgba(255, 170, 51, 0.6);
     transform: translateY(-2px);
     transition: all 0.2s ease;
   }
@@ -150,23 +153,23 @@ const PhilosophySection = styled.div`
   animation-fill-mode: both;
 `;
 
-const Quote = styled.blockquote`
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.8);
-  position: relative;
-  padding-left: 1rem;
+// const Quote = styled.blockquote`
+//   font-style: italic;
+//   color: rgba(255, 255, 255, 0.8);
+//   position: relative;
+//   padding-left: 1rem;
 
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: #ffaa33;
-    border-radius: 3px;
-  }
-`;
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     bottom: 0;
+//     width: 3px;
+//     background: #ffaa33;
+//     border-radius: 3px;
+//   }
+// `;
 
 const ColorChangingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -565,7 +568,7 @@ const ColorChangingAnimation: React.FC = () => {
               </SkillItem>
             </SkillsList>
 
-            <CategoryTitle style={{ marginTop: "2rem" }}>
+            {/* <CategoryTitle style={{ marginTop: "2rem" }}>
               Development Philosophy
             </CategoryTitle>
             <Quote>
@@ -574,7 +577,7 @@ const ColorChangingAnimation: React.FC = () => {
               believe in creating digital experiences that not only function
               flawlessly but also delight users with intuitive interfaces and
               responsive design."
-            </Quote>
+            </Quote> */}
           </PhilosophySection>
         </ContentWrapper>
       </ContentContainer>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 
 // Define gallery data interface
 interface GalleryData {
@@ -15,6 +15,18 @@ const transitionTime = "0.4s";
 const GlobalCoverflowStyle = createGlobalStyle`
   :root {
     --transition-time: ${transitionTime};
+  }
+`;
+
+// Animation keyframes
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 
@@ -52,6 +64,8 @@ const GalleryWrapper = styled.section`
   background-size: cover;
   height: 100%;
   width: 100%;
+    animation: ${fadeIn} 0.8s ease-out;
+
 `;
 
 const Subtitle = styled.p`

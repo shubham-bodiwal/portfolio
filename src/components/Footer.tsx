@@ -3,9 +3,6 @@ import styled, { keyframes } from "styled-components";
 import {
   Linkedin,
   Mail,
-  Code,
-  Bookmark,
-  Coffee,
   ArrowUp,
   Heart,
 } from "lucide-react";
@@ -28,11 +25,11 @@ const pulse = keyframes`
   100% { transform: scale(1); }
 `;
 
-const float = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0px); }
-`;
+// const float = keyframes`
+//   0% { transform: translateY(0px); }
+//   50% { transform: translateY(-5px); }
+//   100% { transform: translateY(0px); }
+// `;
 
 const gradientMove = keyframes`
   0% { background-position: 0% 50%; }
@@ -70,7 +67,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 3rem;
   width: 100%;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const FooterColumn = styled.div<{ index: number }>`
@@ -147,38 +144,38 @@ const SocialLink = styled.a`
   }
 `;
 
-const FooterNav = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
+// const FooterNav = styled.ul`
+//   list-style: none;
+//   padding: 0;
+//   margin: 0;
+// `;
 
-const FooterNavItem = styled.li`
-  margin-bottom: 0.8rem;
-`;
+// const FooterNavItem = styled.li`
+//   margin-bottom: 0.8rem;
+// `;
 
-const FooterNavLink = styled.a`
-  color: #ffffff;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s;
+// const FooterNavLink = styled.a`
+//   color: #ffffff;
+//   text-decoration: none;
+//   display: flex;
+//   align-items: center;
+//   transition: all 0.3s;
 
-  svg {
-    margin-right: 0.5rem;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-  }
+//   svg {
+//     margin-right: 0.5rem;
+//     opacity: 0.7;
+//     transition: opacity 0.3s;
+//   }
 
-  &:hover {
-    color: #ffaa33;
-    transform: translateX(5px);
+//   &:hover {
+//     color: #ffaa33;
+//     transform: translateX(5px);
 
-    svg {
-      opacity: 1;
-    }
-  }
-`;
+//     svg {
+//       opacity: 1;
+//     }
+//   }
+// `;
 
 const NewsletterForm = styled.form`
   width: 100%;
@@ -272,7 +269,7 @@ const SectionTitle = styled.h2`
 const QuoteCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
   max-width: 800px;
   margin: 0 auto 3rem;
@@ -280,7 +277,7 @@ const QuoteCard = styled.div`
 `;
 
 const Quote = styled.blockquote`
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: #ffffff;
   font-style: italic;
@@ -318,29 +315,29 @@ const CTAButton = styled.a`
   }
 `;
 
-const BackToTop = styled.button`
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  background: #ffaa33;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  animation: ${float} 2s infinite ease-in-out;
-  z-index: 10;
-  transition: all 0.3s;
+// const BackToTop = styled.button`
+//   position: absolute;
+//   bottom: 30px;
+//   right: 30px;
+//   width: 50px;
+//   height: 50px;
+//   background: #ffaa33;
+//   border: none;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+//   animation: ${float} 2s infinite ease-in-out;
+//   z-index: 10;
+//   transition: all 0.3s;
 
-  &:hover {
-    background: #ff9922;
-    transform: translateY(-8px);
-  }
-`;
+//   &:hover {
+//     background: #ff9922;
+//     transform: translateY(-8px);
+//   }
+// `;
 
 const BackgroundGlow = styled.div`
   position: absolute;
@@ -367,7 +364,7 @@ const ProjectsStatsSection = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
   gap: 2rem;
 `;
@@ -380,7 +377,7 @@ const StatItem = styled.div<{ index: number }>`
 `;
 
 const StatNumber = styled.div`
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #ffaa33;
   margin-bottom: 0.5rem;
@@ -407,12 +404,12 @@ export default function Footer() {
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
 
   return (
     <FooterWrapper>
@@ -472,7 +469,7 @@ export default function Footer() {
                 <Github size={20} />
               </SocialLink> */}
               <SocialLink
-                href="https://linkedin.com/in/shubham"
+                href="https://www.linkedin.com/in/shubham-bhodiwal-543a6b171/"
                 target="_blank"
               >
                 <Linkedin size={20} />
@@ -487,7 +484,7 @@ export default function Footer() {
           </FooterColumn>
 
           <FooterColumn index={1}>
-            <ColumnTitle>Key Projects</ColumnTitle>
+            {/* <ColumnTitle>Key Projects</ColumnTitle>
             <FooterNav>
               <FooterNavItem>
                 <FooterNavLink href="#">
@@ -514,11 +511,8 @@ export default function Footer() {
                   <Coffee size={16} /> AI Interview System
                 </FooterNavLink>
               </FooterNavItem>
-            </FooterNav>
-          </FooterColumn>
-
-          <FooterColumn index={2}>
-            <ColumnTitle>Stay Updated</ColumnTitle>
+            </FooterNav> */}
+             <ColumnTitle>Stay Updated</ColumnTitle>
             <p
               style={{
                 color: "rgba(255, 255, 255, 0.7)",
@@ -528,6 +522,10 @@ export default function Footer() {
               Subscribe to receive updates on my latest projects and tech
               insights.
             </p>
+          </FooterColumn>
+
+          <FooterColumn index={2}>
+           
 
             {subscribed ? (
               <p style={{ color: "#ffaa33" }}>Thanks for subscribing!</p>
@@ -565,9 +563,9 @@ export default function Footer() {
         </Copyright>
       </ContentContainer>
 
-      <BackToTop onClick={scrollToTop}>
+      {/* <BackToTop onClick={scrollToTop}>
         <ArrowUp size={24} />
-      </BackToTop>
+      </BackToTop> */}
     </FooterWrapper>
   );
 }
