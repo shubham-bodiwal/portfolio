@@ -18,10 +18,31 @@ const GlobalCoverflowStyle = createGlobalStyle`
   }
 `;
 
+const BackgroundGlow = styled.div`
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255, 170, 51, 0.05);
+  filter: blur(100px);
+  pointer-events: none;
+
+  &:first-of-type {
+    top: 10%;
+    left: 10%;
+  }
+
+  &:last-of-type {
+    bottom: 10%;
+    right: 10%;
+    background: rgba(255, 94, 125, 0.05);
+  }
+`;
+
 const GalleryWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 4rem;
   text-align: center;
@@ -41,7 +62,7 @@ const Subtitle = styled.p`
   margin-bottom: 2rem;
   font-size: 3rem;
   font-weight: 800;
-  letter-spacing: 1rem;
+  letter-spacing: 4.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-left: 4.5rem;
   line-height: 1.5;
@@ -55,8 +76,6 @@ const CoverflowContainer = styled.div`
   margin: 0 auto;
   width: 95%;
   max-width: 1200px;
-  -webkit-box-reflect: below 1rem -webkit-linear-gradient(top, rgba(0, 0, 0, 0)
-        60%, rgba(0, 0, 0, 0.1) 100%);
 `;
 
 const CoverflowList = styled.ol`
@@ -81,7 +100,7 @@ const CoverflowItem = styled.li<{
   isWhite: boolean;
 }>`
   position: relative;
-  padding: 2rem;
+  padding: 1rem 2rem 2rem;
   border-radius: 0.2rem;
   height: 15rem;
   min-width: 15rem;
@@ -89,7 +108,7 @@ const CoverflowItem = styled.li<{
   aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   border: 1px solid ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   cursor: pointer;
@@ -106,8 +125,7 @@ const CoverflowItem = styled.li<{
       : "rotateY(45deg)"};
   transition: all var(--transition-time) ease;
   z-index: ${(props) => (props.isActive ? 100 : 1)};
-
-  // Reflection effect from original component
+  overflow: hidden;
   -webkit-box-reflect: below 1rem
     linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent 20%);
 
@@ -154,6 +172,7 @@ const CoverflowItem = styled.li<{
 const Title = styled.h3<{ isWhite: boolean; isActive: boolean }>`
   font-size: 1.5rem;
   font-weight: 600;
+  margin: 1rem 0;
   letter-spacing: 0.5rem;
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -213,55 +232,55 @@ export default function Gallery() {
   const galleries: GalleryData[] = [
     {
       title: "Resume.io",
-      number: "01",
+      number: "1",
       content:
         "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
     },
     {
       title: "Gulf-HR",
-      number: "02",
+      number: "2",
       content:
         "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
     },
     {
       title: "Twilio Segment",
-      number: "03",
+      number: "3",
       content:
         "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
     },
     {
       title: "SHS Homeopathy",
-      number: "04",
+      number: "4",
       content:
         "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
     },
     {
       title: "AI Interview System",
-      number: "05",
+      number: "5",
       content:
         "AI platform for interview assessment via video, analyzing eye contact, posture, and voice. Real-time cheat alerts and performance analytics.",
     },
     {
       title: "Quiz Reminder App",
-      number: "06",
+      number: "6",
       content:
         "Mobile app delivering personalized quiz reminders with gamified MCQs directly in the notification tray. Adaptive scheduling based on user habits.",
     },
     {
       title: "AI QA Crawler",
-      number: "07",
+      number: "7",
       content:
         "Smart crawler that inspects codebases and UIs to detect bugs and usability issues. Automates QA by mimicking expected interactions.",
     },
     {
       title: "AI Code Refactor Extension",
-      number: "08",
+      number: "8",
       content:
         "VS Code extension that uses AI to refactor code for readability and maintainability. Features include variable renaming, logic simplification, and structure enhancement.",
     },
     {
       title: "Gamers Box",
-      number: "09",
+      number: "9",
       content:
         "Gaming platform with live streams, esports news, and gear updates. Includes an admin dashboard for tournament management and content moderation.",
     },
@@ -281,6 +300,8 @@ export default function Gallery() {
 
   return (
     <GalleryWrapper>
+      <BackgroundGlow />
+      <BackgroundGlow />
       <GlobalCoverflowStyle />
       <Subtitle>Projects</Subtitle>
 

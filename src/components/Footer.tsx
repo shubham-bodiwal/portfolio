@@ -438,7 +438,7 @@ export default function Footer() {
         <ProjectsStatsSection>
           <StatItem index={0}>
             <StatNumber>10+</StatNumber>
-            <StatLabel>Projects Completed</StatLabel>
+            <StatLabel>Projects</StatLabel>
           </StatItem>
           <StatItem index={1}>
             <StatNumber>5K+</StatNumber>
@@ -463,26 +463,26 @@ export default function Footer() {
                 bhodiwalshubham03@gmail.com
               </ContactLink>
             </ContactItem>
-            <ContactItem>
+            {/* <ContactItem>
               <Globe size={18} />
               <ContactLink href="https://shubhambhodiwal.com" target="_blank">
                 shubhambhodiwal.com
               </ContactLink>
-            </ContactItem>
+            </ContactItem> */}
 
             <SocialLinks>
-              <SocialLink href="https://github.com/shubham" target="_blank">
+              {/* <SocialLink href="https://github.com/shubham" target="_blank">
                 <Github size={20} />
-              </SocialLink>
+              </SocialLink> */}
               <SocialLink
                 href="https://linkedin.com/in/shubham"
                 target="_blank"
               >
                 <Linkedin size={20} />
               </SocialLink>
-              <SocialLink href="https://twitter.com/shubham" target="_blank">
+              {/* <SocialLink href="https://twitter.com/shubham" target="_blank">
                 <Twitter size={20} />
-              </SocialLink>
+              </SocialLink> */}
               <SocialLink href="mailto:bhodiwalshubham03@gmail.com">
                 <Mail size={20} />
               </SocialLink>

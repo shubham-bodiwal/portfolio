@@ -97,6 +97,27 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const BackgroundGlow = styled.div`
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255, 170, 51, 0.05);
+  filter: blur(100px);
+  pointer-events: none;
+
+  &:first-of-type {
+    top: 10%;
+    left: 10%;
+  }
+
+  &:last-of-type {
+    bottom: 10%;
+    right: 10%;
+    background: rgba(255, 94, 125, 0.05);
+  }
+`;
+
 // --- Styled Components ---
 const Container = styled.div`
   width: 840px;
@@ -206,6 +227,10 @@ const MainContainer = styled.div`
   height: 100%;
   width: 100%;
   background: linear-gradient(135deg, #0f1827 0%, #1a1a2e 50%, #03050b 100%);
+  justify-content: space-around;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 // --- Creative texts for Hover Items ---
@@ -326,6 +351,8 @@ const HoverItem: React.FC<HoverItemProps> = ({ index }) => {
 export const DirectionAwareHoverEffect: React.FC = () => {
   return (
     <MainContainer>
+      <BackgroundGlow />
+      <BackgroundGlow />
       <GlobalStyle />
       <Header>
         <Container>

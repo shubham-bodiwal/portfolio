@@ -38,15 +38,14 @@ const ContentContainer = styled.div`
   position: absolute;
   z-index: 1;
   width: 80%;
-  max-width: 700px;
   padding: 2rem;
-  background: rgba(10, 10, 14, 0.75);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 10, 14, 0.6);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   animation: ${fadeIn} 0.8s ease-out;
+  user-select: none;
 `;
 
 const SectionTitle = styled.h2`
