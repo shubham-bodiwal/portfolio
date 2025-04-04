@@ -4,7 +4,6 @@ import styled, { createGlobalStyle, keyframes } from "styled-components";
 // Define gallery data interface
 interface GalleryData {
   title: string;
-  number: string;
   content: string;
 }
 
@@ -295,68 +294,57 @@ export default function Gallery() {
   // Gallery data
   const galleries: GalleryData[] = [
     {
-      title: "Resume.io",
-      number: "1",
-      content:
-        "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
-    },
-    {
-      title: "Gulf-HR",
-      number: "2",
-      content:
-        "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
-    },
-    {
-      title: "Twilio Segment",
-      number: "3",
-      content:
-        "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
-    },
-    {
-      title: "SHS Homeopathy",
-      number: "4",
-      content:
-        "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
-    },
-    {
       title: "AI Interview System",
-      number: "5",
       content:
         "AI platform for interview assessment via video, analyzing eye contact, posture, and voice. Real-time cheat alerts and performance analytics.",
     },
     {
       title: "Quiz Reminder App",
-      number: "6",
       content:
         "Mobile app delivering personalized quiz reminders with gamified MCQs directly in the notification tray. Adaptive scheduling based on user habits.",
     },
     {
       title: "AI QA Crawler",
-      number: "7",
       content:
         "Smart crawler that inspects codebases and UIs to detect bugs and usability issues. Automates QA by mimicking expected interactions.",
     },
     {
       title: "AI Code Refactor Extension",
-      number: "8",
       content:
         "VS Code extension that uses AI to refactor code for readability and maintainability. Features include variable renaming, logic simplification, and structure enhancement.",
     },
     {
+      title: "SHS Homeopathy",
+      content:
+        "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
+    },
+    {
+      title: "Resume.io",
+      content:
+      "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
+    },
+    {
+      title: "Twilio Segment",
+      content:
+      "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
+    },
+    {
+      title: "Gulf-HR",
+      content:
+      "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
+    },
+    {
       title: "Gamers Box",
-      number: "9",
       content:
         "Gaming platform with live streams, esports news, and gear updates. Includes an admin dashboard for tournament management and content moderation.",
     },
     {
       title: "WhatsApp Clone",
-      number: "10",
       content:
         "Real-time messaging app with group chat, media sharing, and secure socket.io communication. Built to explore WebSocket architecture.",
     },
     {
       title: "Smart Home Automation",
-      number: "11",
       content:
         "End-to-end IoT smart home ecosystem using Arduino. Includes automation for lighting, gas, climate, and curtains with energy efficiency insights.",
     },
@@ -376,11 +364,11 @@ export default function Gallery() {
 
             return (
               <CoverflowItem
-                key={gallery.number}
+                key={index+1}
                 isActive={index === activeIndex}
                 isAfterActive={index > activeIndex}
                 onClick={() => setActiveIndex(index)}
-                dataIndex={gallery.number}
+                dataIndex={(index+1).toString()}
                 isWhite={isWhite}
               >
                 <Title isWhite={isWhite} isActive={index === activeIndex}>
@@ -398,12 +386,12 @@ export default function Gallery() {
       <Controls>
         {galleries.map((gallery, index) => (
           <ControlButton
-            key={gallery.number}
+            key={index+1}
             isActive={index === activeIndex}
             onClick={() => setActiveIndex(index)}
             aria-label={`View ${gallery.title}`}
           >
-            {gallery.number}
+            {index+1}
           </ControlButton>
         ))}
       </Controls>

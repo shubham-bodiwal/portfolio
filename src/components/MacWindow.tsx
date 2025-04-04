@@ -293,7 +293,7 @@ export default function MacWindow({
           <Title isActive={isActive}>{appName}</Title>
         </WindowHeader>
         {children ? (
-          appName === "Portfolio" || appName === "Sample Website" ? (
+          appName === "Portfolio" || appName === "UI Work Sample" ? (
             <FullscreenPrompt
               isFullscreen={isFullscreen}
               requestFullscreen={handleFullscreenToggle}

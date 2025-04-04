@@ -25,6 +25,8 @@ import dictionaryIcon from "../assets/Dictionary.svg";
 import trashIcon from "../assets/Trash Full.svg";
 import ShutdownScreen from "./ShutDownScreen";
 import portfolioIcon from "../assets/Logo.svg";
+import XcodeIcon from "../assets/Xcode.svg";
+import SampleIcon from "../assets/Logo3.svg";
 import ResumeIcon from "../assets/LogoR.svg";
 import PortfolioPage from "../pages/PortfolioPage";
 import InteractiveResume from "./ResumeComponent";
@@ -364,8 +366,8 @@ export default function EnhancedMacOSDesktop() {
       children: <InteractiveResume />,
     },
     {
-      name: "Sample Website",
-      icon: ResumeIcon,
+      name: "UI Work Sample",
+      icon: SampleIcon,
       section: "favorites",
       permission: "authorized",
       children: (
@@ -376,6 +378,12 @@ export default function EnhancedMacOSDesktop() {
           style={{ border: "none" }}
         ></iframe>
       ),
+    },
+    {
+      name: "Xcode",
+      icon: XcodeIcon,
+      section: "favourites",
+      permission: "unauthorized",
     },
     // Folders and Trash section (right side)
     {
