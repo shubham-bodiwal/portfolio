@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled, { keyframes, createGlobalStyle } from 'styled-components';
-import { Terminal, Github, Linkedin, Mail, Code, Award, Briefcase, BookOpen, Server, Activity, Database, Monitor, Cpu, Flame, Zap, Layout } from 'lucide-react';
+import { Terminal, Linkedin, Mail, Code, Award, Briefcase, BookOpen, Server, Activity, Database, Monitor, Cpu, Flame, Zap, Layout } from 'lucide-react';
 
 
 interface Skill {
@@ -597,7 +597,7 @@ const InteractiveResume = () => {
       <Container>
         <Header>
           <Name>Shubham Bhodiwal</Name>
-          <Title>Frontend Developer</Title>
+          <Title>Frontend Developer (3.5 Years of Experience)</Title>
           
           <ContactInfo>
             <ContactLink href="mailto:bhodiwalshubham03@gmail.com">
@@ -606,11 +606,8 @@ const InteractiveResume = () => {
             <ContactLink href="tel:+918058597167">
               +91 8058597167
             </ContactLink>
-            <ContactLink href="https://linkedin.com/in/shubham">
+            <ContactLink href="https://www.linkedin.com/in/shubham-bhodiwal-543a6b171/">
               <Linkedin size={16} /> LinkedIn
-            </ContactLink>
-            <ContactLink href="https://github.com/shubham">
-              <Github size={16} /> GitHub
             </ContactLink>
           </ContactInfo>
         </Header>

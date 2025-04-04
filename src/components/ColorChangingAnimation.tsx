@@ -171,6 +171,22 @@ const PhilosophySection = styled.div`
 //   }
 // `;
 
+const gelatineKeyframes = keyframes`
+  from, to { transform: scale(1, 1); }
+  25% { transform: scale(1, 1.4); }
+  50% { transform: scale(1.4, 1); }
+  75% { transform: scale(0.95, 1.05); }
+`;
+
+const ClickHere = styled.div`
+ animation: ${gelatineKeyframes} 0.5s infinite;
+ position: absolute;
+ bottom: 8%;
+ right: 11%;
+ z-index: 20;
+ user-select: none;
+ `
+
 const ColorChangingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [skillCategories] = useState([
@@ -520,6 +536,7 @@ const ColorChangingAnimation: React.FC = () => {
           position: "absolute",
         }}
       />
+      <ClickHere>Click Anywhere</ClickHere>
 
       <ContentContainer>
         <SectionTitle>Skills & Achievements</SectionTitle>

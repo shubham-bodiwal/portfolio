@@ -223,7 +223,7 @@ export default function Hero() {
           <br /> <span style={{ color: "white" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
-      <CornerTag>Released in november 2021 </CornerTag>
+      <CornerTag>Deployed in november 2021 </CornerTag>
     </HeroSection>
   );
 }

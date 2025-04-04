@@ -237,14 +237,14 @@ function PortfolioPage() {
       <Section $active={active === 4}>{active === 4 && <Footer />}</Section>
 
       <IndicatorWrapper>
-        <VerticalLabel>are you Lost?</VerticalLabel>
+        {/* <VerticalLabel>are you Lost?</VerticalLabel> */}
         {[...Array(totalSections)].map((_, i) => (
           <Dot key={i} active={active === i} />
         ))}
         <VerticalLabel>YOU'RE HERE</VerticalLabel>
       </IndicatorWrapper>
 
-      <VerticalRightText>want to check out more?</VerticalRightText>
+      <VerticalRightText>3.5 Years of Experience</VerticalRightText>
     </AppWrapper>
   );
 }

@@ -64,8 +64,7 @@ const GalleryWrapper = styled.section`
   background-size: cover;
   height: 100%;
   width: 100%;
-    animation: ${fadeIn} 0.8s ease-out;
-
+  animation: ${fadeIn} 0.8s ease-out;
 `;
 
 const Subtitle = styled.p`
@@ -219,22 +218,73 @@ const Controls = styled.div`
   margin: 2rem auto;
   padding: 1rem 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
 `;
 
 const ControlButton = styled.button<{ isActive: boolean }>`
-  color: #ffaa33;
-  background: ${(props) =>
-    props.isActive ? "rgba(255, 255, 255, 0.1)" : "transparent"};
-  border: ${(props) => (props.isActive ? "1px solid #ffaa33" : "none")};
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin: 0 5px;
+  font-size: 1rem;
+  font-weight: ${(props) => (props.isActive ? "700" : "500")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: all var(--transition-time) ease;
+  transition: all 0.3s ease;
+  background: ${(props) =>
+    props.isActive
+      ? "linear-gradient(135deg, #ffaa33 0%, #ff8a33 100%)"
+      : "rgba(255, 255, 255, 0.08)"};
+  color: ${(props) => (props.isActive ? "#111" : "rgba(255, 255, 255, 0.7)")};
+  border: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: ${(props) =>
+    props.isActive
+      ? "0 4px 15px rgba(255, 170, 51, 0.4)"
+      : "0 4px 6px rgba(0, 0, 0, 0.1)"};
+  transform: scale(${(props) => (props.isActive ? "1.1" : "1")});
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: ${(props) =>
+      props.isActive
+        ? "linear-gradient(135deg, #ffaa33 0%, #ff8a33 100%)"
+        : "rgba(255, 255, 255, 0.15)"};
+    transform: translateY(-3px)
+      scale(${(props) => (props.isActive ? "1.1" : "1")});
+    box-shadow: ${(props) =>
+      props.isActive
+        ? "0 6px 20px rgba(255, 170, 51, 0.5)"
+        : "0 6px 10px rgba(0, 0, 0, 0.15)"};
+    color: ${(props) => (props.isActive ? "#111" : "#ffaa33")};
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 50%
+    );
+    opacity: ${(props) => (props.isActive ? "1" : "0")};
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: ${(props) =>
+      props.isActive
+        ? "0 0 0 3px rgba(255, 170, 51, 0.5), 0 4px 15px rgba(255, 170, 51, 0.4)"
+        : "0 0 0 3px rgba(255, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1)"};
   }
 `;
 
@@ -351,6 +401,7 @@ export default function Gallery() {
             key={gallery.number}
             isActive={index === activeIndex}
             onClick={() => setActiveIndex(index)}
+            aria-label={`View ${gallery.title}`}
           >
             {gallery.number}
           </ControlButton>
