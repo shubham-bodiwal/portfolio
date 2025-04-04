@@ -29,6 +29,7 @@ import ResumeIcon from "../assets/LogoR.svg";
 import PortfolioPage from "../pages/PortfolioPage";
 import InteractiveResume from "./ResumeComponent";
 import MacNotificationStack, { NotificationItem } from "./MacNotificationStack";
+import Sample from "../pages/Sample";
 
 // Animation keyframes
 const fillBar = keyframes`
@@ -354,9 +355,7 @@ export default function EnhancedMacOSDesktop() {
       icon: portfolioIcon,
       section: "favorites",
       permission: "authorized",
-      children: (
-          <PortfolioPage />
-      ),
+      children: <PortfolioPage />,
     },
     {
       name: "Resume",
@@ -364,6 +363,13 @@ export default function EnhancedMacOSDesktop() {
       section: "favorites",
       permission: "authorized",
       children: <InteractiveResume />,
+    },
+    {
+      name: "Sample",
+      icon: ResumeIcon,
+      section: "favorites",
+      permission: "authorized",
+      children: <Sample />,
     },
     // Folders and Trash section (right side)
     {
