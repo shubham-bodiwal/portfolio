@@ -5,7 +5,7 @@ import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 const duration = "300ms";
 const timingFn = "ease";
 const wetAsphalt = "#34495E";
-const clouds = "#161616";
+const clouds = "#ffffff";
 
 // --- Keyframes Animations ---
 const inTop = keyframes`
@@ -179,7 +179,7 @@ const Info = styled.div<InfoProps>`
   left: 0;
   border-radius: 4px;
   pointer-events: none;
-  background-color: rgba(26, 188, 156, 0.9);
+  background-color: rgb(26, 102, 188);
 
   ${(props) =>
     props.animationType &&
@@ -205,6 +205,7 @@ const Info = styled.div<InfoProps>`
 const MainContainer = styled.div`
   height: 100%;
   width: 100%;
+  background: linear-gradient(135deg, #0f1827 0%, #1a1a2e 50%, #03050b 100%);
 `;
 
 // --- Creative texts for Hover Items ---
@@ -216,23 +217,28 @@ interface HoverText {
 const hoverTexts: HoverText[] = [
   {
     title: "Craftsman Mindset",
-    description: "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
+    description:
+      "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
   },
   {
     title: "Perpetual Learner",
-    description: "My curiosity ships features. I chase problems like puzzles, not chores.",
+    description:
+      "My curiosity ships features. I chase problems like puzzles, not chores.",
   },
   {
     title: "Engineering with Empathy",
-    description: "Code is for humans first, machines second. Accessibility isn't optional.",
+    description:
+      "Code is for humans first, machines second. Accessibility isn't optional.",
   },
   {
     title: "Tech Explorer",
-    description: "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
+    description:
+      "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
   },
   {
     title: "Pixel-Perfect & Purpose-Driven",
-    description: "Design with intention. Animate with logic. Deliver with delight.",
+    description:
+      "Design with intention. Animate with logic. Deliver with delight.",
   },
   {
     title: "Web Performance Geek",
@@ -240,7 +246,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Creative Problem Solver",
-    description: "Give me a bottleneck—I’ll give you a blueprint and a breakthrough.",
+    description:
+      "Give me a bottleneck—I’ll give you a blueprint and a breakthrough.",
   },
   {
     title: "Detail-Oriented",
@@ -252,7 +259,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Style Meets Substance",
-    description: "Styled-components addict. UI should look good and feel right.",
+    description:
+      "Styled-components addict. UI should look good and feel right.",
   },
   {
     title: "Collaborative Energy",
@@ -260,7 +268,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Growth Mindset",
-    description: "Version 1 is never the end. I iterate, elevate, and never settle.",
+    description:
+      "Version 1 is never the end. I iterate, elevate, and never settle.",
   },
 ];
 

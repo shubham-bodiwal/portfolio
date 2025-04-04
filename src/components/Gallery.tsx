@@ -25,7 +25,7 @@ const GalleryWrapper = styled.section`
   align-items: center;
   padding: 4rem;
   text-align: center;
-  background: linear-gradient(to bottom, #0f1827, #3a4965, #03050b);
+  background: linear-gradient(135deg, #0f1827 0%, #1a1a2e 50%, #03050b 100%);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -45,7 +45,7 @@ const Subtitle = styled.p`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-left: 4.5rem;
   line-height: 1.5;
-  
+
   @media (max-width: 768px) {
     font-size: 3rem;
   }
@@ -55,7 +55,8 @@ const CoverflowContainer = styled.div`
   margin: 0 auto;
   width: 95%;
   max-width: 1200px;
-  -webkit-box-reflect: below 1rem -webkit-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.1) 100%);
+  -webkit-box-reflect: below 1rem -webkit-linear-gradient(top, rgba(0, 0, 0, 0)
+        60%, rgba(0, 0, 0, 0.1) 100%);
 `;
 
 const CoverflowList = styled.ol`
@@ -73,9 +74,9 @@ const CoverflowList = styled.ol`
 `;
 
 // Styling from your original GalleryItem component
-const CoverflowItem = styled.li<{ 
-  isActive: boolean; 
-  isAfterActive: boolean; 
+const CoverflowItem = styled.li<{
+  isActive: boolean;
+  isAfterActive: boolean;
   dataIndex: string;
   isWhite: boolean;
 }>`
@@ -92,52 +93,55 @@ const CoverflowItem = styled.li<{
   border: 1px solid ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   cursor: pointer;
-  ${props=> props.isActive? 'height: 20rem;':''}
-  
+  ${(props) => (props.isActive ? "height: 20rem;" : "")}
+
   // Coverflow specific styles
-  margin: ${props => props.isActive ? '0 0px' : '0 -100px'};
-  box-shadow: 0 1px 8px rgba(0,0,0,0.9);
-  transform: ${props => 
-    props.isActive ? 'rotateY(0deg)' : 
-    props.isAfterActive ? 'rotateY(-45deg)' : 'rotateY(45deg)'
-  };
+  margin: ${(props) => (props.isActive ? "0 0px" : "0 -100px")};
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  transform: ${(props) =>
+    props.isActive
+      ? "rotateY(0deg)"
+      : props.isAfterActive
+      ? "rotateY(-45deg)"
+      : "rotateY(45deg)"};
   transition: all var(--transition-time) ease;
-  z-index: ${props => props.isActive ? 100 : 1};
-  
+  z-index: ${(props) => (props.isActive ? 100 : 1)};
+
   // Reflection effect from original component
   -webkit-box-reflect: below 1rem
     linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent 20%);
-    
+
   &::after {
     content: "";
     position: absolute;
     bottom: 0rem;
     left: 50%;
     transform: translateX(-50%);
-    width: ${props => props.isActive ? '50%' : '10%'};
+    width: ${(props) => (props.isActive ? "50%" : "10%")};
     height: 4px;
     background-color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
-    opacity: ${props => props.isActive ? 0.9 : 0.6};
+    opacity: ${(props) => (props.isActive ? 0.9 : 0.6)};
     border-radius: 1px;
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   &:hover {
-    transform: ${props => props.isActive 
-      ? 'rotateY(0deg)' 
-      : props.isAfterActive 
-        ? 'rotateY(-42deg) translateY(-5px)' 
-        : 'rotateY(42deg) translateY(-5px)'};
+    transform: ${(props) =>
+      props.isActive
+        ? "rotateY(0deg)"
+        : props.isAfterActive
+        ? "rotateY(-42deg) translateY(-5px)"
+        : "rotateY(42deg) translateY(-5px)"};
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
-  
+
   &::before {
     content: "${(props) => props.dataIndex}";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: ${props => props.isActive ? '26rem' : '18rem'};
+    font-size: ${(props) => (props.isActive ? "26rem" : "18rem")};
     font-weight: 900;
     color: ${(props) => (props.isWhite ? "#bdbdbd3b" : "#ffffff18")};
     pointer-events: none;
@@ -154,8 +158,8 @@ const Title = styled.h3<{ isWhite: boolean; isActive: boolean }>`
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
-  opacity: ${props => props.isActive ? 1 : 0.7};
-  
+  opacity: ${(props) => (props.isActive ? 1 : 0.7)};
+
   ${CoverflowItem}:hover & {
     transform: translateY(-5px);
   }
@@ -168,11 +172,11 @@ const Content = styled.span<{ isWhite: boolean; isActive: boolean }>`
   line-height: 1.5;
   color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   margin-top: 0.5rem;
-  display: ${props => props.isActive ? 'block' : 'none'};
-  opacity: ${props => props.isActive ? 1 : 0};
+  display: ${(props) => (props.isActive ? "block" : "none")};
+  opacity: ${(props) => (props.isActive ? 1 : 0)};
   transition: opacity var(--transition-time) ease;
   z-index: 1;
-  
+
   ${CoverflowItem}:hover & {
     display: block;
   }
@@ -186,15 +190,16 @@ const Controls = styled.div`
 
 const ControlButton = styled.button<{ isActive: boolean }>`
   color: #ffaa33;
-  background: ${props => props.isActive ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
-  border: ${props => props.isActive ? '1px solid #ffaa33' : 'none'};
+  background: ${(props) =>
+    props.isActive ? "rgba(255, 255, 255, 0.1)" : "transparent"};
+  border: ${(props) => (props.isActive ? "1px solid #ffaa33" : "none")};
   border-radius: 50%;
   width: 40px;
   height: 40px;
   margin: 0 5px;
   cursor: pointer;
   transition: all var(--transition-time) ease;
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
@@ -209,57 +214,68 @@ export default function Gallery() {
     {
       title: "Resume.io",
       number: "01",
-      content: "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
+      content:
+        "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
     },
     {
       title: "Gulf-HR",
       number: "02",
-      content: "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
+      content:
+        "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
     },
     {
       title: "Twilio Segment",
       number: "03",
-      content: "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
+      content:
+        "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
     },
     {
       title: "SHS Homeopathy",
       number: "04",
-      content: "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
+      content:
+        "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
     },
     {
       title: "AI Interview System",
       number: "05",
-      content: "AI platform for interview assessment via video, analyzing eye contact, posture, and voice. Real-time cheat alerts and performance analytics.",
+      content:
+        "AI platform for interview assessment via video, analyzing eye contact, posture, and voice. Real-time cheat alerts and performance analytics.",
     },
     {
       title: "Quiz Reminder App",
       number: "06",
-      content: "Mobile app delivering personalized quiz reminders with gamified MCQs directly in the notification tray. Adaptive scheduling based on user habits.",
+      content:
+        "Mobile app delivering personalized quiz reminders with gamified MCQs directly in the notification tray. Adaptive scheduling based on user habits.",
     },
     {
       title: "AI QA Crawler",
       number: "07",
-      content: "Smart crawler that inspects codebases and UIs to detect bugs and usability issues. Automates QA by mimicking expected interactions.",
+      content:
+        "Smart crawler that inspects codebases and UIs to detect bugs and usability issues. Automates QA by mimicking expected interactions.",
     },
     {
       title: "AI Code Refactor Extension",
       number: "08",
-      content: "VS Code extension that uses AI to refactor code for readability and maintainability. Features include variable renaming, logic simplification, and structure enhancement.",
+      content:
+        "VS Code extension that uses AI to refactor code for readability and maintainability. Features include variable renaming, logic simplification, and structure enhancement.",
     },
     {
       title: "Gamers Box",
       number: "09",
-      content: "Gaming platform with live streams, esports news, and gear updates. Includes an admin dashboard for tournament management and content moderation.",
+      content:
+        "Gaming platform with live streams, esports news, and gear updates. Includes an admin dashboard for tournament management and content moderation.",
     },
     {
       title: "WhatsApp Clone",
       number: "10",
-      content: "Real-time messaging app with group chat, media sharing, and secure socket.io communication. Built to explore WebSocket architecture.",
+      content:
+        "Real-time messaging app with group chat, media sharing, and secure socket.io communication. Built to explore WebSocket architecture.",
     },
     {
       title: "Smart Home Automation",
       number: "11",
-      content: "End-to-end IoT smart home ecosystem using Arduino. Includes automation for lighting, gas, climate, and curtains with energy efficiency insights.",
+      content:
+        "End-to-end IoT smart home ecosystem using Arduino. Includes automation for lighting, gas, climate, and curtains with energy efficiency insights.",
     },
   ];
 
@@ -267,14 +283,14 @@ export default function Gallery() {
     <GalleryWrapper>
       <GlobalCoverflowStyle />
       <Subtitle>Projects</Subtitle>
-      
+
       <CoverflowContainer>
         <CoverflowList>
           {galleries.map((gallery, index) => {
-            const isWhite = (index % 2 === 0);
-            
+            const isWhite = index % 2 === 0;
+
             return (
-              <CoverflowItem 
+              <CoverflowItem
                 key={gallery.number}
                 isActive={index === activeIndex}
                 isAfterActive={index > activeIndex}
@@ -293,10 +309,10 @@ export default function Gallery() {
           })}
         </CoverflowList>
       </CoverflowContainer>
-      
+
       <Controls>
         {galleries.map((gallery, index) => (
-          <ControlButton 
+          <ControlButton
             key={gallery.number}
             isActive={index === activeIndex}
             onClick={() => setActiveIndex(index)}

@@ -1,19 +1,231 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useRef, useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
 
+// Animation for content fade-in
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
 
 const MainContainer = styled.div`
   height: 100%;
-  width: 100%;`
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`;
 
+const ContentContainer = styled.div`
+  position: absolute;
+  z-index: 1;
+  width: 80%;
+  max-width: 700px;
+  padding: 2rem;
+  background: rgba(10, 10, 14, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: ${fadeIn} 0.8s ease-out;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #ffaa33;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+`;
+
+const ContentWrapper = styled.div`
+  margin-top: 1.5rem;
+`;
+
+const SkillCategory = styled.div<{ index: number }>`
+  margin-bottom: 1.5rem;
+  animation: ${fadeIn} 0.8s ease-out;
+  animation-fill-mode: both;
+  animation-delay: ${(props) => props.index * 0.15}s;
+`;
+
+const CategoryTitle = styled.h3`
+  font-size: 1.3rem;
+  color: white;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background-color: #ffaa33;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+`;
+
+const SkillsList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const SkillItem = styled.li<{ index: number }>`
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  animation: ${slideIn} 0.5s ease-out;
+  animation-fill-mode: both;
+  animation-delay: ${(props) => 0.3 + props.index * 0.05}s;
+  cursor: default;
+
+  &:hover {
+    background: rgba(255, 170, 51, 0.2);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+  }
+`;
+
+const EducationSection = styled.div`
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: ${fadeIn} 0.8s ease-out;
+  animation-delay: 0.6s;
+  animation-fill-mode: both;
+`;
+
+const EducationItem = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const Degree = styled.h4`
+  font-size: 1.1rem;
+  margin: 0 0 0.3rem 0;
+  color: white;
+  font-weight: 600;
+`;
+
+const School = styled.div`
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+`;
+
+const GradYear = styled.div`
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+`;
+
+const PhilosophySection = styled.div`
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: ${fadeIn} 0.8s ease-out;
+  animation-delay: 0.8s;
+  animation-fill-mode: both;
+`;
+
+const Quote = styled.blockquote`
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  padding-left: 1rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #ffaa33;
+    border-radius: 3px;
+  }
+`;
 
 const ColorChangingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [skillCategories] = useState([
+    {
+      name: "Languages & Frameworks",
+      skills: [
+        "HTML5",
+        "CSS3",
+        "JavaScript (ES6+)",
+        "TypeScript",
+        "ReactJS",
+        "Redux Toolkit",
+      ],
+    },
+    {
+      name: "Styling & UI",
+      skills: [
+        "Ant Design",
+        "Styled Components",
+        "Material UI",
+        "Web Vitals",
+        "Lighthouse",
+        "WCAG guidelines",
+      ],
+    },
+    {
+      name: "Tools & Technologies",
+      skills: [
+        "RESTful APIs",
+        "GraphQL",
+        "React Query",
+        "Axios",
+        "SWR",
+        "PWA",
+        "GitHub",
+        "Docker",
+        "Vercel",
+        "Jira",
+        "AWS basics",
+      ],
+    },
+    {
+      name: "Emerging Interests",
+      skills: [
+        "AI integrations",
+        "IoT",
+        "Arduino-based automation",
+        "Web Workers",
+        "Service Workers",
+      ],
+    },
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let cW = window.innerWidth;
@@ -80,8 +292,10 @@ const ColorChangingAnimation: React.FC = () => {
 
     // ----- Easing Functions & Random Helper -----
     const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
-    const easeOutExpo = (t: number): number => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
-    const random = (min: number, max: number): number => Math.random() * (max - min) + min;
+    const easeOutExpo = (t: number): number =>
+      t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    const random = (min: number, max: number): number =>
+      Math.random() * (max - min) + min;
 
     // ----- Utility Functions -----
     const calcPageFillRadius = (x: number, y: number): number => {
@@ -99,7 +313,7 @@ const ColorChangingAnimation: React.FC = () => {
           index = (index + 1) % colors.length;
           return colors[index];
         },
-        current: () => colors[index]
+        current: () => colors[index],
       };
     })();
 
@@ -126,7 +340,7 @@ const ColorChangingAnimation: React.FC = () => {
         x: pageX,
         y: pageY,
         r: 0,
-        fill: nextColor
+        fill: nextColor,
       });
       const fillAnimation: Animation = {
         startTime: now,
@@ -139,7 +353,7 @@ const ColorChangingAnimation: React.FC = () => {
         complete: () => {
           // Set the background color to the new color when complete.
           bgColor = pageFill.fill || bgColor;
-        }
+        },
       };
 
       // --- Ripple Animation ---
@@ -149,7 +363,7 @@ const ColorChangingAnimation: React.FC = () => {
         r: 0,
         fill: currentColor,
         stroke: { width: 3, color: currentColor },
-        opacity: 1
+        opacity: 1,
       });
       const rippleAnimation: Animation = {
         startTime: now,
@@ -160,7 +374,7 @@ const ColorChangingAnimation: React.FC = () => {
           ripple.r = eased * rippleSize;
           ripple.opacity = 1 - eased;
         },
-        complete: () => { }
+        complete: () => {},
       };
 
       // --- Particles Animation ---
@@ -171,12 +385,13 @@ const ColorChangingAnimation: React.FC = () => {
           x: pageX,
           y: pageY,
           r: random(24, 48),
-          fill: currentColor
+          fill: currentColor,
         });
         (particle as any).initialX = pageX;
         (particle as any).initialY = pageY;
         (particle as any).targetX = pageX + random(-rippleSize, rippleSize);
-        (particle as any).targetY = pageY + random(-rippleSize * 1.15, rippleSize * 1.15);
+        (particle as any).targetY =
+          pageY + random(-rippleSize * 1.15, rippleSize * 1.15);
         (particle as any).initialR = particle.r;
         particles.push(particle);
       }
@@ -187,7 +402,7 @@ const ColorChangingAnimation: React.FC = () => {
         circles: particles,
         update: (progress: number) => {
           const eased = easeOutExpo(progress);
-          particles.forEach(particle => {
+          particles.forEach((particle) => {
             const initX = (particle as any).initialX;
             const initY = (particle as any).initialY;
             const targetX = (particle as any).targetX;
@@ -198,7 +413,7 @@ const ColorChangingAnimation: React.FC = () => {
             particle.r = initR * (1 - eased);
           });
         },
-        complete: () => { }
+        complete: () => {},
       };
 
       animations.push(fillAnimation, rippleAnimation, particlesAnimation);
@@ -223,7 +438,7 @@ const ColorChangingAnimation: React.FC = () => {
     const fauxClick = (x: number, y: number) => {
       const evt = new MouseEvent("mousedown", {
         clientX: x,
-        clientY: y
+        clientY: y,
       });
       document.dispatchEvent(evt);
     };
@@ -248,10 +463,13 @@ const ColorChangingAnimation: React.FC = () => {
 
     if (/fullcpgrid/.test(window.location.pathname)) {
       const startFauxClicking = () => {
-        setTimeout(() => {
-          fauxClick(random(cW * 0.2, cW * 0.8), random(cH * 0.2, cH * 0.8));
-          startFauxClicking();
-        }, random(200, 900));
+        setTimeout(
+          () => {
+            fauxClick(random(cW * 0.2, cW * 0.8), random(cH * 0.2, cH * 0.8));
+            startFauxClicking();
+          },
+          random(200, 900)
+        );
       };
       startFauxClicking();
     }
@@ -263,16 +481,16 @@ const ColorChangingAnimation: React.FC = () => {
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, cW, cH);
 
-      animations.forEach(anim => {
+      animations.forEach((anim) => {
         const progress = Math.min((now - anim.startTime) / anim.duration, 1);
         anim.update(progress);
-        anim.circles.forEach(circle => circle.draw(ctx));
+        anim.circles.forEach((circle) => circle.draw(ctx));
         if (progress === 1 && !anim.calledComplete) {
           anim.complete();
           anim.calledComplete = true;
         }
       });
-      animations = animations.filter(anim => !anim.calledComplete);
+      animations = animations.filter((anim) => !anim.calledComplete);
       animationFrameId = requestAnimationFrame(update);
     };
     update();
@@ -289,7 +507,80 @@ const ColorChangingAnimation: React.FC = () => {
     };
   }, []);
 
-  return <MainContainer> <canvas ref={canvasRef} style={{ display: "block", width: "100vw", height: "100vh" }} /></MainContainer>;
+  return (
+    <MainContainer>
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: "block",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+        }}
+      />
+
+      <ContentContainer>
+        <SectionTitle>Skills & Achievements</SectionTitle>
+
+        <ContentWrapper>
+          {skillCategories.map((category, categoryIndex) => (
+            <SkillCategory key={category.name} index={categoryIndex}>
+              <CategoryTitle>{category.name}</CategoryTitle>
+              <SkillsList>
+                {category.skills.map((skill, skillIndex) => (
+                  <SkillItem key={skill} index={skillIndex}>
+                    {skill}
+                  </SkillItem>
+                ))}
+              </SkillsList>
+            </SkillCategory>
+          ))}
+
+          <EducationSection>
+            <CategoryTitle>Education</CategoryTitle>
+            <EducationItem>
+              <Degree>
+                Bachelor of Technology (B.Tech) in Computer Science
+              </Degree>
+              <School>
+                BK Birla Institute of Engineering and Technology, Pilani
+              </School>
+              <GradYear>2018 - 2022</GradYear>
+            </EducationItem>
+          </EducationSection>
+
+          <PhilosophySection>
+            <CategoryTitle>Awards & Recognition</CategoryTitle>
+            <SkillsList style={{ marginBottom: "1rem" }}>
+              <SkillItem
+                index={0}
+                style={{ background: "rgba(255, 170, 51, 0.2)" }}
+              >
+                "New Star on The Block" Award at Daffodil Software
+              </SkillItem>
+              <SkillItem
+                index={1}
+                style={{ background: "rgba(255, 170, 51, 0.2)" }}
+              >
+                Technical Recognition at Resume.io
+              </SkillItem>
+            </SkillsList>
+
+            <CategoryTitle style={{ marginTop: "2rem" }}>
+              Development Philosophy
+            </CategoryTitle>
+            <Quote>
+              "I'm an innovative Frontend Developer passionate about optimizing
+              solutions for performance, scalability, and accessibility. I
+              believe in creating digital experiences that not only function
+              flawlessly but also delight users with intuitive interfaces and
+              responsive design."
+            </Quote>
+          </PhilosophySection>
+        </ContentWrapper>
+      </ContentContainer>
+    </MainContainer>
+  );
 };
 
 export default ColorChangingAnimation;
