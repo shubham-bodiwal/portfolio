@@ -115,7 +115,7 @@ const CoverflowItem = styled.li<{
   ${(props) => (props.isActive ? "height: 20rem;" : "")}
 
   // Coverflow specific styles
-  margin: ${(props) => (props.isActive ? "0 0px" : "0 -100px")};
+  margin: ${(props) => (props.isActive ? "0 0" : "0 -120px")};
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
   transform: ${(props) =>
     props.isActive
@@ -308,7 +308,7 @@ export default function Gallery() {
       <CoverflowContainer>
         <CoverflowList>
           {galleries.map((gallery, index) => {
-            const isWhite = index % 2 === 0;
+            const isWhite = index % 2 !== 0;
 
             return (
               <CoverflowItem
