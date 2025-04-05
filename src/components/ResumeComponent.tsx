@@ -1,27 +1,42 @@
-import { useState, useEffect } from 'react';
-import styled, { keyframes, createGlobalStyle } from 'styled-components';
-import { Terminal, Linkedin, Mail, Code, Award, Briefcase, BookOpen, Server, Activity, Database, Monitor, Cpu, Flame, Zap, Layout } from 'lucide-react';
-
+import { useState, useEffect } from "react";
+import styled, { keyframes, createGlobalStyle } from "styled-components";
+import {
+  Terminal,
+  Linkedin,
+  Mail,
+  Code,
+  Award,
+  Briefcase,
+  BookOpen,
+  Server,
+  Activity,
+  Database,
+  Monitor,
+  Cpu,
+  Flame,
+  Zap,
+  Layout,
+} from "lucide-react";
 
 interface Skill {
-    name: string;
-    icon: any;
-    value: number;
-  }
-  
-  interface ExperienceItem {
-    title: string;
-    company: string;
-    period: string;
-    description: string[];
-  }
-  
-  interface ProjectItem {
-    title: string;
-    description: string;
-    tags: string[];
-    icon: any;
-  }
+  name: string;
+  icon: any;
+  value: number;
+}
+
+interface ExperienceItem {
+  title: string;
+  company: string;
+  period: string;
+  description: string[];
+}
+
+interface ProjectItem {
+  title: string;
+  description: string;
+  tags: string[];
+  icon: any;
+}
 // Animations
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -41,26 +56,26 @@ const slideUp = keyframes`
 
 // Theme colors
 const theme = {
-  primary: '#6C63FF', // Purple
-  secondary: '#FFA454', // Orange
-  tertiary: '#4ECDC4', // Mint
-  background: '#1E1C31', // Dark purple-blue
-  backgroundLight: '#2A2844',
-  backgroundLighter: '#343256',
-  text: '#F9F9F9',
-  textMuted: '#B3B1CD',
-  accent: '#FF5E7D', // Pink
-  success: '#6EE7B7', // Green
-  gradient: 'linear-gradient(45deg, #6C63FF, #FF5E7D)'
+  primary: "#6C63FF", // Purple
+  secondary: "#FFA454", // Orange
+  tertiary: "#4ECDC4", // Mint
+  background: "#1E1C31", // Dark purple-blue
+  backgroundLight: "#2A2844",
+  backgroundLighter: "#343256",
+  text: "#F9F9F9",
+  textMuted: "#B3B1CD",
+  accent: "#FF5E7D", // Pink
+  success: "#6EE7B7", // Green
+  gradient: "linear-gradient(45deg, #6C63FF, #FF5E7D)",
 };
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  // * {
+  //   box-sizing: border-box;
+  //   margin: 0;
+  //   padding: 0;
+  // }
 `;
 
 // Styled Components
@@ -72,7 +87,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 `;
 
 const Header = styled.header`
@@ -135,21 +150,24 @@ const NavList = styled.ul`
   list-style: none;
 `;
 
-const NavButton = styled.button<{active: boolean}>`
+const NavButton = styled.button<{ active: boolean }>`
   padding: 0.6rem 1.25rem;
-  background: ${props => props.active ? theme.gradient : theme.backgroundLight};
-  color: ${props => props.active ? theme.text : theme.textMuted};
+  background: ${(props) =>
+    props.active ? theme.gradient : theme.backgroundLight};
+  color: ${(props) => (props.active ? theme.text : theme.textMuted)};
   border-radius: 2rem;
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
   transition: all 0.3s;
   text-transform: capitalize;
-  font-weight: ${props => props.active ? '600' : '400'};
-  box-shadow: ${props => props.active ? '0 4px 15px rgba(108, 99, 255, 0.2)' : 'none'};
+  font-weight: ${(props) => (props.active ? "600" : "400")};
+  box-shadow: ${(props) =>
+    props.active ? "0 4px 15px rgba(108, 99, 255, 0.2)" : "none"};
 
   &:hover {
-    background: ${props => props.active ? theme.gradient : theme.backgroundLighter};
+    background: ${(props) =>
+      props.active ? theme.gradient : theme.backgroundLighter};
     transform: translateY(-2px);
   }
 `;
@@ -176,7 +194,7 @@ const SectionTitle = styled.h3`
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -0.5rem;
     left: 0;
@@ -210,7 +228,7 @@ const Card = styled.div`
   padding: 1.5rem;
   transition: transform 0.3s, box-shadow 0.3s;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -262,12 +280,12 @@ const SkillBar = styled.div`
   overflow: hidden;
 `;
 
-const SkillFill = styled.div<{value: string | number}>`
+const SkillFill = styled.div<{ value: string | number }>`
   height: 100%;
   border-radius: 1rem;
   background: ${theme.gradient};
   transition: width 1s ease-out;
-  width: ${props => props.value}%;
+  width: ${(props) => props.value}%;
 `;
 
 const TagsContainer = styled.div`
@@ -278,7 +296,7 @@ const TagsContainer = styled.div`
 `;
 
 const Tag = styled.span`
-   font-size: 0.85rem;
+  font-size: 0.85rem;
   background: ${theme.backgroundLighter};
   color: ${theme.textMuted};
   padding: 0.25rem 0.75rem;
@@ -288,9 +306,9 @@ const Tag = styled.span`
 const Timeline = styled.div`
   position: relative;
   padding-left: 2rem;
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -303,9 +321,9 @@ const Timeline = styled.div`
 const TimelineItem = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -2.5rem;
     top: 0;
@@ -352,9 +370,9 @@ const BulletItem = styled.li`
   color: ${theme.textMuted};
   line-height: 1.5;
   font-size: 0.95rem;
-  
+
   &::before {
-    content: '•';
+    content: "•";
     color: ${theme.primary};
     font-weight: bold;
     margin-right: 0.5rem;
@@ -372,9 +390,9 @@ const ProjectCategoryTitle = styled.h4`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  
+
   &::after {
-    content: '';
+    content: "";
     flex-grow: 1;
     height: 1px;
     background: ${theme.backgroundLighter};
@@ -385,17 +403,17 @@ const ProjectCategoryTitle = styled.h4`
 const ProjectCard = styled(Card)`
   position: relative;
   overflow: hidden;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
     width: 0.25rem;
     height: 2.5rem;
     border-radius: 0 0.75rem 0 0.75rem;
-    }
-    `;
+  }
+`;
 
 const ProjectHeader = styled.div`
   display: flex;
@@ -425,7 +443,7 @@ const ProjectTags = styled(TagsContainer)`
 `;
 
 const ProjectTag = styled(Tag)`
- font-size: 0.85rem;
+  font-size: 0.85rem;
   background: ${theme.backgroundLighter};
   color: ${theme.textMuted};
   padding: 0.25rem 0.75rem;
@@ -441,31 +459,32 @@ const Footer = styled.footer`
   font-size: 0.85rem;
 `;
 
-
-const Shield = ({ size }: {size?: string|number}) => (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width={size} 
-      height={size} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-    </svg>
-  );
+const Shield = ({ size }: { size?: string | number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+  </svg>
+);
 const InteractiveResume = () => {
-    const [activeSection, setActiveSection] = useState<string>('about');
-    const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
-    const [skillsProgress, setSkillsProgress] = useState<Record<string, number>>({});
+  const [activeSection, setActiveSection] = useState<string>("about");
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
+  const [skillsProgress, setSkillsProgress] = useState<Record<string, number>>(
+    {}
+  );
 
   useEffect(() => {
     // Initial animations
     setIsVisible({ about: true });
-    
+
     // Animate skills progress after a delay
     const timer = setTimeout(() => {
       setSkillsProgress({
@@ -481,115 +500,147 @@ const InteractiveResume = () => {
         accessibility: 75,
       });
     }, 1000);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
-    setIsVisible(prev => ({ ...prev, [section]: true }));
+    setIsVisible((prev) => ({ ...prev, [section]: true }));
   };
 
   // Resume data
   const skills: Skill[] = [
-    { name: 'React', icon: <Code size={18} />, value: skillsProgress.react || 0 },
-    { name: 'TypeScript', icon: <Terminal size={18} />, value: skillsProgress.typescript || 0 },
-    { name: 'JavaScript', icon: <Terminal size={18} />, value: skillsProgress.javascript || 0 },
-    { name: 'HTML/CSS', icon: <Monitor size={18} />, value: skillsProgress.html || 0 },
-    { name: 'Redux', icon: <Database size={18} />, value: skillsProgress.redux || 0 },
-    { name: 'REST/GraphQL', icon: <Server size={18} />, value: skillsProgress.rest || 0 },
-  ];
-
-  const experience : ExperienceItem[]= [
     {
-      title: 'Associate Software Developer',
-      company: 'Daffodil Software',
-      period: 'Nov 2021 - Present',
-      description: [
-        'Developed scalable frontend modules with React, TypeScript, and Redux, reliably serving over 5,000 concurrent users',
-        'Created reusable dynamic form and table components, substantially reducing development time',
-        'Led frontend performance optimizations, achieving a 30% reduction in app load times',
-        'Mentored junior developers, significantly improving code quality',
-        'Optimized frontend-heavy data management with IndexedDB',
-        'Improved SQL-based scripting performance, reducing execution time from over 2 hours to under 5 minutes'
-      ]
-    }
+      name: "React",
+      icon: <Code size={18} />,
+      value: skillsProgress.react || 0,
+    },
+    {
+      name: "TypeScript",
+      icon: <Terminal size={18} />,
+      value: skillsProgress.typescript || 0,
+    },
+    {
+      name: "JavaScript",
+      icon: <Terminal size={18} />,
+      value: skillsProgress.javascript || 0,
+    },
+    {
+      name: "HTML/CSS",
+      icon: <Monitor size={18} />,
+      value: skillsProgress.html || 0,
+    },
+    {
+      name: "Redux",
+      icon: <Database size={18} />,
+      value: skillsProgress.redux || 0,
+    },
+    {
+      name: "REST/GraphQL",
+      icon: <Server size={18} />,
+      value: skillsProgress.rest || 0,
+    },
   ];
 
- 
+  const experience: ExperienceItem[] = [
+    {
+      title: "Associate Software Developer",
+      company: "Daffodil Software",
+      period: "Nov 2021 - Present",
+      description: [
+        "Developed scalable frontend modules with React, TypeScript, and Redux, reliably serving over 5,000 concurrent users",
+        "Created reusable dynamic form and table components, substantially reducing development time",
+        "Led frontend performance optimizations, achieving a 30% reduction in app load times",
+        "Mentored junior developers, significantly improving code quality",
+        "Optimized frontend-heavy data management with IndexedDB",
+        "Improved SQL-based scripting performance, reducing execution time from over 2 hours to under 5 minutes",
+      ],
+    },
+  ];
+
   const mainProjects: ProjectItem[] = [
     {
-      title: 'SHS Homeopathy',
+      title: "SHS Homeopathy",
       icon: <Monitor size={18} />,
-      description: 'Led frontend efforts for an Electron-based and web-based homeopathy application managing complex medical data. Enhanced patient management, global search across 10L+ records, and remedy suggestions using data-driven clipboard features.',
-      tags: ['React', 'Electron', 'AI Chatbot', 'Multi-Window']
+      description:
+        "Led frontend efforts for an Electron-based and web-based homeopathy application managing complex medical data. Enhanced patient management, global search across 10L+ records, and remedy suggestions using data-driven clipboard features.",
+      tags: ["React", "Electron", "AI Chatbot", "Multi-Window"],
     },
     {
-      title: 'Resume.io',
+      title: "Resume.io",
       icon: <Layout size={18} />,
-      description: 'Engineered an ATS-friendly resume builder with React PDF, web workers, and Vercel Lambdas. Enabled real-time previews and high-performance PDF downloads. Developed an editable DOCX-based resume builder using docs.js.',
-      tags: ['React', 'PDF Generation', 'DOCX Editing', 'Serverless']
+      description:
+        "Engineered an ATS-friendly resume builder with React PDF, web workers, and Vercel Lambdas. Enabled real-time previews and high-performance PDF downloads. Developed an editable DOCX-based resume builder using docs.js.",
+      tags: ["React", "PDF Generation", "DOCX Editing", "Serverless"],
     },
     {
-      title: 'Gulf-HR',
+      title: "Gulf-HR",
       icon: <Briefcase size={18} />,
-      description: 'Contributed to a modular, customizable HR management platform supporting payroll, leave, attendance, onboarding, and task management. Enabled users to generate personalized HR portals with dynamic forms.',
-      tags: ['React', 'TypeScript', 'Ant Design', 'Role-based Permissions']
+      description:
+        "Contributed to a modular, customizable HR management platform supporting payroll, leave, attendance, onboarding, and task management. Enabled users to generate personalized HR portals with dynamic forms.",
+      tags: ["React", "TypeScript", "Ant Design", "Role-based Permissions"],
     },
     {
-      title: 'Twilio Segment',
+      title: "Twilio Segment",
       icon: <Shield size={18} />,
-      description: 'Engineered a robust fraud detection and validation system, significantly reducing manual interventions by 40%. Streamlined complex security compliance processes, boosting operational efficiency and user trust.',
-      tags: ['Fraud Detection', 'Performance', 'Security', 'Dashboard']
-    }
+      description:
+        "Engineered a robust fraud detection and validation system, significantly reducing manual interventions by 40%. Streamlined complex security compliance processes, boosting operational efficiency and user trust.",
+      tags: ["Fraud Detection", "Performance", "Security", "Dashboard"],
+    },
   ];
 
   const selfInitiatedProjects: ProjectItem[] = [
     {
-      title: 'Personalized Quiz & Practice Reminder App',
-      description: 'Designed a mobile app that encourages daily learning during idle time via smart notifications and quick MCQ practice directly from the notification tray. Integrated adaptive scheduling based on user behavior.',
-      tags: ['Mobile', 'Adaptive Learning', 'Notifications', 'Gamification'],
-      icon: <Layout size={18} />
+      title: "Personalized Quiz & Practice Reminder App",
+      description:
+        "Designed a mobile app that encourages daily learning during idle time via smart notifications and quick MCQ practice directly from the notification tray. Integrated adaptive scheduling based on user behavior.",
+      tags: ["Mobile", "Adaptive Learning", "Notifications", "Gamification"],
+      icon: <Layout size={18} />,
     },
     {
-      title: 'AI-Powered Interview System',
-      description: 'Created a platform using AI to assess candidates via audio/video recordings, eye contact, body posture, and voice analysis. Integrated real-time alerts for cheating detection and performance analytics.',
-      tags: ['AI', 'Video Analysis', 'Real-time', 'Analytics'],
-      icon: <Cpu size={18} />
+      title: "AI-Powered Interview System",
+      description:
+        "Created a platform using AI to assess candidates via audio/video recordings, eye contact, body posture, and voice analysis. Integrated real-time alerts for cheating detection and performance analytics.",
+      tags: ["AI", "Video Analysis", "Real-time", "Analytics"],
+      icon: <Cpu size={18} />,
     },
     {
-      title: 'AI-Based Quality Assurance',
-      description: 'Built a smart crawler for inspecting codebases and user interfaces, detecting potential issues based on predefined user stories and expected interactions. Implemented UI navigation automation and code analysis.',
-      tags: ['AI', 'QA', 'Automation', 'Testing'],
-      icon: <Flame size={18} />
+      title: "AI-Based Quality Assurance",
+      description:
+        "Built a smart crawler for inspecting codebases and user interfaces, detecting potential issues based on predefined user stories and expected interactions. Implemented UI navigation automation and code analysis.",
+      tags: ["AI", "QA", "Automation", "Testing"],
+      icon: <Flame size={18} />,
     },
     {
-      title: 'AI Code Refactor Extension',
-      description: 'Developed an AI assistant for VS Code that analyzes, optimizes, and refactors code to improve readability, maintainability, and performance. Added features for renaming variables and simplifying logic.',
-      tags: ['VS Code', 'Extension', 'AI', 'Refactoring'],
-      icon: <Zap size={18} />
+      title: "AI Code Refactor Extension",
+      description:
+        "Developed an AI assistant for VS Code that analyzes, optimizes, and refactors code to improve readability, maintainability, and performance. Added features for renaming variables and simplifying logic.",
+      tags: ["VS Code", "Extension", "AI", "Refactoring"],
+      icon: <Zap size={18} />,
     },
     {
-      title: 'Gamers Box',
-      description: 'Created a dynamic platform for live game streams, news, and tournament updates. Integrated public APIs to fetch trending streams, newsfeeds, gear updates, and esports content with admin dashboard.',
-      tags: ['React', 'Live Streams', 'Admin Dashboard', 'Content'],
-      icon: <Activity size={18} />
+      title: "Gamers Box",
+      description:
+        "Created a dynamic platform for live game streams, news, and tournament updates. Integrated public APIs to fetch trending streams, newsfeeds, gear updates, and esports content with admin dashboard.",
+      tags: ["React", "Live Streams", "Admin Dashboard", "Content"],
+      icon: <Activity size={18} />,
     },
     {
-      title: 'WhatsApp Clone',
-      description: 'Built a real-time chat application using socket.io, featuring group chats, media sharing, and secure messaging. Served as a foundational learning project for WebSocket communication and event handling.',
-      tags: ['WebSockets', 'Real-time', 'Chat', 'Media Sharing'],
-      icon: <Terminal size={18} />
+      title: "WhatsApp Clone",
+      description:
+        "Built a real-time chat application using socket.io, featuring group chats, media sharing, and secure messaging. Served as a foundational learning project for WebSocket communication and event handling.",
+      tags: ["WebSockets", "Real-time", "Chat", "Media Sharing"],
+      icon: <Terminal size={18} />,
     },
     {
-      title: 'Smart Home Automation',
-      description: 'Engineered a comprehensive smart home ecosystem using Arduino, including lighting, climate, gas, and voltage monitoring automation. Supported security sensors, curtain automation, and energy efficiency features.',
-      tags: ['Arduino', 'IoT', 'Automation', 'Hardware'],
-      icon: <Cpu size={18} />
-    }
+      title: "Smart Home Automation",
+      description:
+        "Engineered a comprehensive smart home ecosystem using Arduino, including lighting, climate, gas, and voltage monitoring automation. Supported security sensors, curtain automation, and energy efficiency features.",
+      tags: ["Arduino", "IoT", "Automation", "Hardware"],
+      icon: <Cpu size={18} />,
+    },
   ];
-
-  
 
   return (
     <>
@@ -598,14 +649,12 @@ const InteractiveResume = () => {
         <Header>
           <Name>Shubham Bhodiwal</Name>
           <Title>Frontend Developer (3.5 Years of Experience)</Title>
-          
+
           <ContactInfo>
             <ContactLink href="mailto:bhodiwalshubham03@gmail.com">
               <Mail size={16} /> bhodiwalshubham03@gmail.com
             </ContactLink>
-            <ContactLink href="tel:+918058597167">
-              +91 8058597167
-            </ContactLink>
+            <ContactLink href="tel:+918058597167">+91 8058597167</ContactLink>
             <ContactLink href="https://www.linkedin.com/in/shubham-bhodiwal-543a6b171/">
               <Linkedin size={16} /> LinkedIn
             </ContactLink>
@@ -614,57 +663,80 @@ const InteractiveResume = () => {
 
         <Nav>
           <NavList>
-            {['about', 'skills', 'experience', 'projects', 'education'].map(section => (
-              <li key={section}>
-                <NavButton 
-                  active={activeSection === section}
-                  onClick={() => handleSectionChange(section)}
-                >
-                  {section}
-                </NavButton>
-              </li>
-            ))}
+            {["about", "skills", "experience", "projects", "education"].map(
+              (section) => (
+                <li key={section}>
+                  <NavButton
+                    active={activeSection === section}
+                    onClick={() => handleSectionChange(section)}
+                  >
+                    {section}
+                  </NavButton>
+                </li>
+              )
+            )}
           </NavList>
         </Nav>
 
         <Main>
           {/* About Section */}
-          {activeSection === 'about' && isVisible.about && (
+          {activeSection === "about" && isVisible.about && (
             <Section>
               <SectionTitle>
-                <IconWrapper><Terminal size={22} /></IconWrapper> About Me
+                <IconWrapper>
+                  <Terminal size={22} />
+                </IconWrapper>{" "}
+                About Me
               </SectionTitle>
-              
+
               <AboutText>
-                Innovative Frontend Developer skilled in React, TypeScript, and modern web technologies. Proven experience in optimizing frontend solutions for performance, scalability, and accessibility across complex applications including HR management systems and automation solutions. Passionate learner dedicated to enhancing user experiences and streamlining development processes.
+                Innovative Frontend Developer skilled in React, TypeScript, and
+                modern web technologies. Proven experience in optimizing
+                frontend solutions for performance, scalability, and
+                accessibility across complex applications including HR
+                management systems and automation solutions. Passionate learner
+                dedicated to enhancing user experiences and streamlining
+                development processes.
               </AboutText>
-              
+
               <CardGrid>
                 <Card>
                   <CardTitle>Frontend Focus</CardTitle>
-                  <CardText>Specialized in building responsive, performant React applications with clean, maintainable code.</CardText>
+                  <CardText>
+                    Specialized in building responsive, performant React
+                    applications with clean, maintainable code.
+                  </CardText>
                 </Card>
-                
+
                 <Card>
                   <CardTitle>Problem Solver</CardTitle>
-                  <CardText>Reduced application load times by 30% through strategic optimization and performance tuning.</CardText>
+                  <CardText>
+                    Reduced application load times by 30% through strategic
+                    optimization and performance tuning.
+                  </CardText>
                 </Card>
-                
+
                 <Card>
                   <CardTitle>Continuous Learner</CardTitle>
-                  <CardText>Always exploring new technologies and methodologies to enhance development workflows.</CardText>
+                  <CardText>
+                    Always exploring new technologies and methodologies to
+                    enhance development workflows.
+                  </CardText>
                 </Card>
               </CardGrid>
             </Section>
           )}
 
           {/* Skills Section */}
-          {activeSection === 'skills' && isVisible.skills && (
+          {activeSection === "skills" && isVisible.skills && (
             <Section>
               <SectionTitle>
-                <IconWrapper><Code size={22} /></IconWrapper> Technical Skills
+                <IconWrapper>
+                  <Code size={22} />
+                </IconWrapper>{" "}
+                Technical Skills
               </SectionTitle>
-              
+
               <CardGrid>
                 {skills.map((skill) => (
                   <SkillCard key={skill.name}>
@@ -681,14 +753,31 @@ const InteractiveResume = () => {
                   </SkillCard>
                 ))}
               </CardGrid>
-              
-              <SectionTitle style={{ fontSize: '1.25rem', marginTop: '2rem' }}>
-                <IconWrapper><Server size={18} /></IconWrapper> Additional Expertise
+
+              <SectionTitle style={{ fontSize: "1.25rem", marginTop: "2rem" }}>
+                <IconWrapper>
+                  <Server size={18} />
+                </IconWrapper>{" "}
+                Additional Expertise
               </SectionTitle>
-              
+
               <TagsContainer>
-                {['Redux Toolkit', 'Styled Components', 'Ant Design', 'Material UI', 'Web Vitals', 'Accessibility',
-                  'PWA', 'Service Workers', 'GraphQL', 'React Query', 'Git', 'Docker', 'Vercel', 'AWS basics'].map(tag => (
+                {[
+                  "Redux Toolkit",
+                  "Styled Components",
+                  "Ant Design",
+                  "Material UI",
+                  "Web Vitals",
+                  "Accessibility",
+                  "PWA",
+                  "Service Workers",
+                  "GraphQL",
+                  "React Query",
+                  "Git",
+                  "Docker",
+                  "Vercel",
+                  "AWS basics",
+                ].map((tag) => (
                   <Tag key={tag}>{tag}</Tag>
                 ))}
               </TagsContainer>
@@ -696,12 +785,15 @@ const InteractiveResume = () => {
           )}
 
           {/* Experience Section */}
-          {activeSection === 'experience' && isVisible.experience && (
+          {activeSection === "experience" && isVisible.experience && (
             <Section>
               <SectionTitle>
-                <IconWrapper><Briefcase size={22} /></IconWrapper> Work Experience
+                <IconWrapper>
+                  <Briefcase size={22} />
+                </IconWrapper>{" "}
+                Work Experience
               </SectionTitle>
-              
+
               <Timeline>
                 {experience.map((job, index) => (
                   <TimelineItem key={index}>
@@ -724,24 +816,29 @@ const InteractiveResume = () => {
           )}
 
           {/* Projects Section */}
-          {activeSection === 'projects' && isVisible.projects && (
+          {activeSection === "projects" && isVisible.projects && (
             <Section>
               <SectionTitle>
-                <IconWrapper><Activity size={22} /></IconWrapper> Projects
+                <IconWrapper>
+                  <Activity size={22} />
+                </IconWrapper>{" "}
+                Projects
               </SectionTitle>
-              
+
               <ProjectsContainer>
                 <ProjectCategoryTitle>
-                  <IconWrapper style={{ color: theme.primary }}><Briefcase size={18} /></IconWrapper> 
+                  <IconWrapper style={{ color: theme.primary }}>
+                    <Briefcase size={18} />
+                  </IconWrapper>
                   Professional Projects
                 </ProjectCategoryTitle>
-                
+
                 <CardGrid>
                   {mainProjects.map((project, index) => (
                     <ProjectCard key={index}>
                       <ProjectHeader>
-                        <ProjectIcon >{project.icon}</ProjectIcon>
-                        <ProjectTitle >{project.title}</ProjectTitle>
+                        <ProjectIcon>{project.icon}</ProjectIcon>
+                        <ProjectTitle>{project.title}</ProjectTitle>
                       </ProjectHeader>
                       <CardText>{project.description}</CardText>
                       <ProjectTags>
@@ -752,23 +849,25 @@ const InteractiveResume = () => {
                     </ProjectCard>
                   ))}
                 </CardGrid>
-                
-                <ProjectCategoryTitle style={{ marginTop: '3rem' }}>
-                  <IconWrapper style={{ color: theme.secondary }}><Flame size={18} /></IconWrapper> 
+
+                <ProjectCategoryTitle style={{ marginTop: "3rem" }}>
+                  <IconWrapper style={{ color: theme.secondary }}>
+                    <Flame size={18} />
+                  </IconWrapper>
                   Self-Initiated Projects
                 </ProjectCategoryTitle>
-                
+
                 <CardGrid>
                   {selfInitiatedProjects.map((project, index) => (
-                    <ProjectCard key={index} >
+                    <ProjectCard key={index}>
                       <ProjectHeader>
-                        <ProjectIcon >{project.icon}</ProjectIcon>
-                        <ProjectTitle >{project.title}</ProjectTitle>
+                        <ProjectIcon>{project.icon}</ProjectIcon>
+                        <ProjectTitle>{project.title}</ProjectTitle>
                       </ProjectHeader>
                       <CardText>{project.description}</CardText>
                       <ProjectTags>
                         {project.tags.map((tag, i) => (
-                          <ProjectTag key={i} >{tag}</ProjectTag>
+                          <ProjectTag key={i}>{tag}</ProjectTag>
                         ))}
                       </ProjectTags>
                     </ProjectCard>
@@ -779,33 +878,49 @@ const InteractiveResume = () => {
           )}
 
           {/* Education Section */}
-          {activeSection === 'education' && isVisible.education && (
+          {activeSection === "education" && isVisible.education && (
             <Section>
               <SectionTitle>
-                <IconWrapper><BookOpen size={22} /></IconWrapper> Education & Awards
+                <IconWrapper>
+                  <BookOpen size={22} />
+                </IconWrapper>{" "}
+                Education & Awards
               </SectionTitle>
-              
-              <Card style={{ marginBottom: '2rem' }}>
-                <CardTitle>Bachelor of Technology (B.Tech) in Computer Science</CardTitle>
+
+              <Card style={{ marginBottom: "2rem" }}>
+                <CardTitle>
+                  Bachelor of Technology (B.Tech) in Computer Science
+                </CardTitle>
                 <TimelineHeader>
-                  <TimelineCompany>BK Birla Institute of Engineering and Technology, Pilani</TimelineCompany>
+                  <TimelineCompany>
+                    BK Birla Institute of Engineering and Technology, Pilani
+                  </TimelineCompany>
                   <TimelineDate>2018 - 2022</TimelineDate>
                 </TimelineHeader>
               </Card>
-              
-              <SectionTitle style={{ fontSize: '1.25rem' }}>
-                <IconWrapper><Award size={18} /></IconWrapper> Awards & Recognition
+
+              <SectionTitle style={{ fontSize: "1.25rem" }}>
+                <IconWrapper>
+                  <Award size={18} />
+                </IconWrapper>{" "}
+                Awards & Recognition
               </SectionTitle>
-              
+
               <CardGrid>
                 <HighlightCard>
                   <CardTitle>New Star on The Block</CardTitle>
-                  <CardText>Awarded for impactful contributions to mission-critical projects at Daffodil Software.</CardText>
+                  <CardText>
+                    Awarded for impactful contributions to mission-critical
+                    projects at Daffodil Software.
+                  </CardText>
                 </HighlightCard>
-                
+
                 <HighlightCard>
                   <CardTitle>Technical Excellence Award</CardTitle>
-                  <CardText>Recognized by Resume.io for technical interventions that accelerated project improvements.</CardText>
+                  <CardText>
+                    Recognized by Resume.io for technical interventions that
+                    accelerated project improvements.
+                  </CardText>
                 </HighlightCard>
               </CardGrid>
             </Section>

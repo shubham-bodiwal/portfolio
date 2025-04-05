@@ -113,10 +113,6 @@ const Content = styled.div`
   backdrop-filter: blur(3px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: color 2s;
-
-  &:hover {
-    transform: ;
-  }
 `;
 
 const Title = styled.h1`
@@ -223,7 +219,7 @@ export default function Hero() {
           <br /> <span style={{ color: "white" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
-      <CornerTag>Deployed in november 2021 </CornerTag>
+      <CornerTag>Developer from november 2021 </CornerTag>
     </HeroSection>
   );
 }
