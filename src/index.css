@@ -3,7 +3,7 @@ body {
   scroll-behavior: smooth;
   margin: 0rem;
   font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: calc(100vw / 75) !important;
+  font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
 }
 
 body{

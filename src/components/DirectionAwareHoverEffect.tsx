@@ -126,7 +126,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   html {
-    font-size: calc(100vw / 100) !important;
+    font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
   }
   body {
     background-color: #fff;

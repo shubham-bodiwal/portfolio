@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: none !important;
     overflow: hidden;
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
-    font-size: calc(100vw / 100) !important;
+    font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
   }
 `;
 
@@ -65,7 +65,7 @@ const ContentContainer = styled.div`
   border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(0.625rem);
-  max-width: 31.25rem;
+  max-width: 40rem;
   animation: ${subtleFloat} 6s ease-in-out infinite;
 
   @media (max-width: 48rem) {
@@ -75,7 +75,7 @@ const ContentContainer = styled.div`
 `;
 
 const PortfolioTitle = styled.h1`
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   margin-bottom: 1.5rem;
   color: white;
   font-weight: 600;
@@ -92,7 +92,7 @@ const PortfolioTitle = styled.h1`
 `;
 
 const Message = styled.p`
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin-bottom: 1.75rem;
   text-align: center;
   max-width: 40rem;
@@ -102,7 +102,7 @@ const Message = styled.p`
 `;
 
 const PoweredOffMessage = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin: 1.25rem 0;
   color: #e67e22;
   font-weight: 500;
@@ -121,12 +121,12 @@ const DeviceWarning = styled.div`
 
   h3 {
     margin-top: 0;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
 
   p {
     margin-bottom: 0;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 `;
 
@@ -143,8 +143,8 @@ const pulse = keyframes`
 `;
 
 const Button = styled.button`
-  padding: 0.75rem 1.75rem;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   background: rgba(30, 50, 100, 0.2);
   color: #4d9fff;
@@ -157,6 +157,7 @@ const Button = styled.button`
   font-weight: 500;
   letter-spacing: 0.0313rem;
   animation: ${pulse} 2s infinite;
+  cursor: none;
 
   &:hover {
     background: rgba(61, 139, 255, 0.2);
@@ -209,7 +210,7 @@ const ProgressFill = styled.div<{ progress: number }>`
 `;
 
 const StatusText = styled.div`
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.6);
   margin-top: 0.5rem;
   text-align: center;

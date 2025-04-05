@@ -20,6 +20,7 @@ const ImagesWrapper = styled.div`
   justify-content: center;
   animation: ${rotate360} 0.8s linear 1;
   animation-delay: 0.8s;
+  margin-bottom: 6rem;
 `;
 
 const slideLeftFade = keyframes`
@@ -64,9 +65,9 @@ const AnimatedImage = styled.div<{
   z-index: ${({ direction }) => (direction === "center" ? 20 : 1)};
 `;
 
-const StyledImage = styled.img<{direction: string}>`
+const StyledImage = styled.img<{ direction: string }>`
   object-fit: cover;
-  height: ${({direction})=>direction === "center" ? "13rem" : "8rem"};
+  height: ${({ direction }) => (direction === "center" ? "13rem" : "8rem")};
 `;
 
 const StartImageAnimation: React.FC = () => {
