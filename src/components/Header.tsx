@@ -55,22 +55,22 @@ const NavLink = styled.a`
 // &.active span::after {
 //   content: "";
 //   position: absolute;
-//   height: 1px;
+//   height: 0.0625rem;
 //   background: #ffaa33;
 // }
 
 // &.active::before {
-//   width: 50px;
-//   bottom: -15px;
-//   left: -49px;
+//   width: 3.125rem;
+//   bottom: -0.9375rem;
+//   left: -3.0625rem;
 //   transform: rotate(60deg);
 //   transform-origin: right top;
 // }
 
 // &.active::after {
-//   width: 50px;
-//   bottom: -15px;
-//   right: -49px;
+//   width: 3.125rem;
+//   bottom: -0.9375rem;
+//   right: -3.0625rem;
 //   transform: rotate(-60deg);
 //   transform-origin: left top;
 // }
@@ -78,7 +78,7 @@ const NavLink = styled.a`
 // &.active span::after {
 //   width: 100%;
 //   left: 0;
-//   top: calc(100% + 14px);
+//   top: calc(100% + 0.875rem);
 // }
 
 export default function Header() {

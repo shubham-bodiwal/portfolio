@@ -15,13 +15,16 @@ const GlobalCoverflowStyle = createGlobalStyle`
   :root {
     --transition-time: ${transitionTime};
   }
+    html {
+    font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
+  }
 `;
 
 // Animation keyframes
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
   }
   to {
     opacity: 1;
@@ -31,11 +34,11 @@ const fadeIn = keyframes`
 
 const BackgroundGlow = styled.div`
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 18.75rem;
+  height: 18.75rem;
   border-radius: 50%;
   background: rgba(255, 170, 51, 0.05);
-  filter: blur(100px);
+  filter: blur(6.25rem);
   pointer-events: none;
 
   &:first-of-type {
@@ -75,11 +78,11 @@ const Subtitle = styled.p`
   font-size: 3rem;
   font-weight: 800;
   letter-spacing: 4.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.1);
   padding-left: 4.5rem;
   line-height: 1.5;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     font-size: 3rem;
   }
 `;
@@ -87,7 +90,7 @@ const Subtitle = styled.p`
 const CoverflowContainer = styled.div`
   margin: 0 auto;
   width: 95%;
-  max-width: 1200px;
+  max-width: 75rem;
 `;
 
 const CoverflowList = styled.ol`
@@ -96,7 +99,7 @@ const CoverflowList = styled.ol`
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: perspective(900px);
+  transform: perspective(56.25rem);
   transform-style: preserve-3d;
   perspective-origin: 50% 30%;
   list-style: none;
@@ -121,14 +124,14 @@ const CoverflowItem = styled.li<{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
+  border: 0.0625rem solid ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   cursor: pointer;
   ${(props) => (props.isActive ? "height: 20rem;" : "")}
 
   // Coverflow specific styles
-  margin: ${(props) => (props.isActive ? "0 0" : "0 -120px")};
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  margin: ${(props) => (props.isActive ? "0 0" : "0 -7.5rem")};
+  box-shadow: 0 0.0625rem 0.5rem rgba(0, 0, 0, 0.9);
   transform: ${(props) =>
     props.isActive
       ? "rotateY(0deg)"
@@ -148,10 +151,10 @@ const CoverflowItem = styled.li<{
     left: 50%;
     transform: translateX(-50%);
     width: ${(props) => (props.isActive ? "50%" : "10%")};
-    height: 4px;
+    height: 0.25rem;
     background-color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
     opacity: ${(props) => (props.isActive ? 0.9 : 0.6)};
-    border-radius: 1px;
+    border-radius: 0.0625rem;
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -160,9 +163,9 @@ const CoverflowItem = styled.li<{
       props.isActive
         ? "rotateY(0deg)"
         : props.isAfterActive
-        ? "rotateY(-42deg) translateY(-5px)"
-        : "rotateY(42deg) translateY(-5px)"};
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        ? "rotateY(-42deg) translateY(-0.3125rem)"
+        : "rotateY(42deg) translateY(-0.3125rem)"};
+    box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.3);
   }
 
   &::before {
@@ -192,7 +195,7 @@ const Title = styled.h3<{ isWhite: boolean; isActive: boolean }>`
   opacity: ${(props) => (props.isActive ? 1 : 0.7)};
 
   ${CoverflowItem}:hover & {
-    transform: translateY(-5px);
+    transform: translateY(-0.3125rem);
   }
 `;
 
@@ -224,8 +227,8 @@ const Controls = styled.div`
 `;
 
 const ControlButton = styled.button<{ isActive: boolean }>`
-  width: 45px;
-  height: 45px;
+  width: 2.8125rem;
+  height: 2.8125rem;
   border-radius: 50%;
   font-size: 1rem;
   font-weight: ${(props) => (props.isActive ? "700" : "500")};
@@ -244,8 +247,8 @@ const ControlButton = styled.button<{ isActive: boolean }>`
   overflow: hidden;
   box-shadow: ${(props) =>
     props.isActive
-      ? "0 4px 15px rgba(255, 170, 51, 0.4)"
-      : "0 4px 6px rgba(0, 0, 0, 0.1)"};
+      ? "0 0.25rem 0.9375rem rgba(255, 170, 51, 0.4)"
+      : "0 0.25rem 0.375rem rgba(0, 0, 0, 0.1)"};
   transform: scale(${(props) => (props.isActive ? "1.1" : "1")});
 
   &:hover {
@@ -253,12 +256,12 @@ const ControlButton = styled.button<{ isActive: boolean }>`
       props.isActive
         ? "linear-gradient(135deg, #ffaa33 0%, #ff8a33 100%)"
         : "rgba(255, 255, 255, 0.15)"};
-    transform: translateY(-3px)
+    transform: translateY(-0.1875rem)
       scale(${(props) => (props.isActive ? "1.1" : "1")});
     box-shadow: ${(props) =>
       props.isActive
-        ? "0 6px 20px rgba(255, 170, 51, 0.5)"
-        : "0 6px 10px rgba(0, 0, 0, 0.15)"};
+        ? "0 0.375rem 1.25rem rgba(255, 170, 51, 0.5)"
+        : "0 0.375rem 0.625rem rgba(0, 0, 0, 0.15)"};
     color: ${(props) => (props.isActive ? "#111" : "#ffaa33")};
   }
 
@@ -282,8 +285,8 @@ const ControlButton = styled.button<{ isActive: boolean }>`
     outline: none;
     box-shadow: ${(props) =>
       props.isActive
-        ? "0 0 0 3px rgba(255, 170, 51, 0.5), 0 4px 15px rgba(255, 170, 51, 0.4)"
-        : "0 0 0 3px rgba(255, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1)"};
+        ? "0 0 0 0.1875rem rgba(255, 170, 51, 0.5), 0 0.25rem 0.9375rem rgba(255, 170, 51, 0.4)"
+        : "0 0 0 0.1875rem rgba(255, 255, 255, 0.3), 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1)"};
   }
 `;
 

@@ -25,18 +25,18 @@ const slideOut = keyframes`
 
 const NotificationContainer = styled.div<{ isExiting: boolean }>`
   position: fixed;
-  top: 50px;
-  right: 20px;
-  width: 300px;
+  top: 3.125rem;
+  right: 1.25rem;
+  width: 18.75rem;
   background: rgba(28, 28, 30, 0.3);
-  backdrop-filter: blur(6px);
-  border-radius: 10px;
+  backdrop-filter: blur(0.375rem);
+  border-radius: 0.625rem;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.4);
   z-index: 10001;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   animation: ${(props) => (props.isExiting ? slideOut : slideIn)} 0.4s
     ease-in-out forwards;
 `;
@@ -44,18 +44,18 @@ const NotificationContainer = styled.div<{ isExiting: boolean }>`
 const NotificationHeader = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.625rem 0.9375rem;
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05);
 `;
 
 const AppIcon = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.625rem;
 `;
 
 const AppName = styled.div`
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: white;
 `;
@@ -66,7 +66,7 @@ const CloseButton = styled.button`
   border: none;
   color: #aaa;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   padding: 0;
 
   &:hover {
@@ -75,9 +75,9 @@ const CloseButton = styled.button`
 `;
 
 const NotificationBody = styled.div`
-  padding: 15px;
+  padding: 0.9375rem;
   color: #eee;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.4;
 `;
 

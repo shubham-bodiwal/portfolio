@@ -10,7 +10,7 @@ const fadeInText = keyframes`
   0% {
     opacity: 0;
     transform: translateX(3rem) translateY(-50%) rotate(180deg) scale(0.98);
-    filter: blur(4px);
+    filter: blur(0.25rem);
   }
   100% {
     opacity: 1;
@@ -23,7 +23,7 @@ const fadeInIndicator = keyframes`
   0% {
     opacity: 0;
     transform: translateX(-3rem) translateY(-50%) scale(0.98);
-    filter: blur(4px);
+    filter: blur(0.25rem);
   }
   100% {
     opacity: 1;
@@ -71,7 +71,7 @@ const IndicatorWrapper = styled.div`
   z-index: 10;
   font-size: 0.9rem;
   animation: ${fadeInIndicator} 1.5s ease-out both;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   height: 100%;
   padding: 0.5rem;
   background: transparent;
@@ -84,15 +84,15 @@ const IndicatorWrapper = styled.div`
 `;
 
 const Dot = styled.div<{ active?: boolean }>`
-  width: 10px;
-  height: 10px;
+  width: 0.625rem;
+  height: 0.625rem;
   border-radius: 50%;
   background-color: ${(p) => (p.active ? "#ffaa33" : "#ffffff88")};
   transition: background-color 0.3s, width 0.4s, height 0.4s;
 
   ${IndicatorWrapper}:hover & {
-    width: 12px;
-    height: 12px;
+    width: 0.75rem;
+    height: 0.75rem;
   }
 `;
 
@@ -116,7 +116,7 @@ const VerticalRightText = styled.div`
   letter-spacing: 0.2em;
   text-transform: uppercase;
   white-space: nowrap;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   padding: 0.5rem;
   height: 100%;
   text-align: center;
@@ -150,7 +150,7 @@ function PortfolioPage() {
         const height = containerRef.current.clientHeight;
         document.documentElement.style.setProperty(
           "--container-height",
-          `${height}px`
+          `${height/16}rem`
         );
       }
     };

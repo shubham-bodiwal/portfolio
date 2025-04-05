@@ -27,7 +27,7 @@ const fadeInHeader = keyframes`
   0% {
     opacity: 0;
     transform: translateY(-5rem) scale(0.98);
-    filter: blur(4px);
+    filter: blur(0.25rem);
   }
   100% {
     opacity: 1;
@@ -40,7 +40,7 @@ const fadeInHeader = keyframes`
 //   0% {
 //     opacity: 0;
 //     transform: translateX(10rem) skewX(-20deg); scale(0.98);
-//     filter: blur(4px);
+//     filter: blur(0.25rem);
 
 //   }
 //   100% {
@@ -110,8 +110,8 @@ const Content = styled.div`
   max-width: 85%;
   padding: 1rem 5rem;
   animation: ${fadeInHero} 1.5s ease-out both;
-  backdrop-filter: blur(3px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.1875rem);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   transition: color 2s;
 `;
 
@@ -119,11 +119,11 @@ const Title = styled.h1`
   font-size: 4.5rem;
   font-weight: 800;
   letter-spacing: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.1);
   margin-top: 2rem;
   margin-bottom: 2rem;
   padding-left: 1.5rem;
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     font-size: 3rem;
   }
 `;
@@ -180,7 +180,7 @@ const Description = styled.div`
   position: absolute;
   top: 0.1rem;
   z-index: 10;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   background: linear-gradient(
     to left,
     #ffaa33,

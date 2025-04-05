@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -77,7 +77,7 @@ const HeaderBackground = styled.div<{ isFullscreen: boolean }>`
   height: 1.6rem;
   width: 100%;
   backdrop-filter: ${(props) =>
-    props.isFullscreen ? "blur(10px)" : "blur(2px)"};
+    props.isFullscreen ? "blur(0.625rem)" : "blur(0.125rem)"};
 `;
 
 const WindowsArea = styled.div`
@@ -107,7 +107,7 @@ const BootScreen = styled.div<{ isShuttingDown?: boolean }>`
 `;
 
 const ProgressBarWrapper = styled.div`
-  width: 200px;
+  width: 12.5rem;
   height: 0.5rem;
   border-radius: 0.25rem;
   background-color: #555;
@@ -124,18 +124,18 @@ const ProgressBarFill = styled.div<{ isShuttingDown?: boolean }>`
 
 const Dock = styled.div<{ visible: boolean }>`
   position: absolute;
-  bottom: ${({ visible }) => (visible ? "0.5rem" : "-100px")};
+  bottom: ${({ visible }) => (visible ? "0.5rem" : "-6.25rem")};
   left: 50%;
   transform: translateX(-50%);
   z-index: 9998;
   background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(0.625rem);
   padding: 0.5rem 0.8rem;
   border-radius: 1rem;
   display: flex;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.3);
   transition: bottom 0.3s ease-in-out;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
 `;
 
 const DockItemContainer = styled.div`
@@ -144,7 +144,7 @@ const DockItemContainer = styled.div`
 `;
 
 const DockSeparator = styled.div`
-  width: 1px;
+  width: 0.0625rem;
   height: 2.5rem;
   background-color: rgba(255, 255, 255, 0.3);
   margin: 0 0.4rem;
@@ -187,11 +187,11 @@ const AppIcon = styled.div`
 // Status dot
 const StatusDot = styled.div<{ status: "open" | "minimized" }>`
   position: absolute;
-  bottom: -3px;
+  bottom: -0.1875rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: 0.25rem;
+  height: 0.25rem;
   border-radius: 50%;
   background-color: ${(props) => (props.status === "open" ? "white" : "#aaa")};
 `;
@@ -229,6 +229,121 @@ const loadState = () => {
   const savedState = localStorage.getItem("macOsState");
   return savedState ? JSON.parse(savedState) : null;
 };
+
+ // Define dock items with proper macOS app order, imported icons, and permissions
+ const dockItems: {
+  name: string;
+  icon: string;
+  permission: string;
+  children?: React.ReactNode;
+  section: string;
+  isTrash?: boolean;
+}[] = [
+  // Favorite apps section (left side) - Only Finder is authorized by default
+  {
+    name: "Finder",
+    icon: finderIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Launchpad",
+    icon: launchpadIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Safari",
+    icon: safariIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Mail",
+    icon: mailIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Photos",
+    icon: photosIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Messages",
+    icon: messagesIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Music",
+    icon: musicIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "App Store",
+    icon: appStoreIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "System Settings",
+    icon: settingsIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+
+  {
+    name: "Portfolio",
+    icon: portfolioIcon,
+    section: "favorites",
+    permission: "authorized",
+    children: <PortfolioPage />,
+  },
+  {
+    name: "Resume",
+    icon: ResumeIcon,
+    section: "favorites",
+    permission: "authorized",
+    children: <InteractiveResume />,
+  },
+  {
+    name: "UI Work Sample",
+    icon: SampleIcon,
+    section: "favorites",
+    permission: "authorized",
+    children: (
+      <iframe
+        src="https://quiz-web-liard.vercel.app/"
+        width="100%"
+        height="100%"
+        style={{ border: "none" }}
+      ></iframe>
+    ),
+  },
+  {
+    name: "Xcode",
+    icon: XcodeIcon,
+    section: "favourites",
+    permission: "unauthorized",
+  },
+  // Folders and Trash section (right side)
+  {
+    name: "Dictionary",
+    icon: dictionaryIcon,
+    section: "folders",
+    permission: "unauthorized",
+  },
+  {
+    name: "Trash",
+    icon: trashIcon,
+    section: "folders",
+    isTrash: true,
+    permission: "unauthorized",
+  },
+];
 
 // Main component
 export default function EnhancedMacOSDesktop() {
@@ -286,120 +401,6 @@ export default function EnhancedMacOSDesktop() {
   //   setNotifications((prev) => [newNotification, ...prev]);
   // };
 
-  // Define dock items with proper macOS app order, imported icons, and permissions
-  const dockItems: {
-    name: string;
-    icon: string;
-    permission: string;
-    children?: React.ReactNode;
-    section: string;
-    isTrash?: boolean;
-  }[] = [
-    // Favorite apps section (left side) - Only Finder is authorized by default
-    {
-      name: "Finder",
-      icon: finderIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Launchpad",
-      icon: launchpadIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Safari",
-      icon: safariIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Mail",
-      icon: mailIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Photos",
-      icon: photosIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Messages",
-      icon: messagesIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Music",
-      icon: musicIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "App Store",
-      icon: appStoreIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "System Settings",
-      icon: settingsIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-
-    {
-      name: "Portfolio",
-      icon: portfolioIcon,
-      section: "favorites",
-      permission: "authorized",
-      children: <PortfolioPage />,
-    },
-    {
-      name: "Resume",
-      icon: ResumeIcon,
-      section: "favorites",
-      permission: "authorized",
-      children: <InteractiveResume />,
-    },
-    {
-      name: "UI Work Sample",
-      icon: SampleIcon,
-      section: "favorites",
-      permission: "authorized",
-      children: (
-        <iframe
-          src="https://quiz-web-liard.vercel.app/"
-          width="100%"
-          height="100%"
-          style={{ border: "none" }}
-        ></iframe>
-      ),
-    },
-    {
-      name: "Xcode",
-      icon: XcodeIcon,
-      section: "favourites",
-      permission: "unauthorized",
-    },
-    // Folders and Trash section (right side)
-    {
-      name: "Dictionary",
-      icon: dictionaryIcon,
-      section: "folders",
-      permission: "unauthorized",
-    },
-    {
-      name: "Trash",
-      icon: trashIcon,
-      section: "folders",
-      isTrash: true,
-      permission: "unauthorized",
-    },
-  ];
 
   // Request browser fullscreen on mount
   useEffect(() => {
@@ -533,7 +534,7 @@ export default function EnhancedMacOSDesktop() {
   };
 
   // Launch or restore an app window based on permissions
-  const launchApp = (appName: string, children?: React.ReactNode) => {
+  const launchApp = useCallback((appName: string, children?: React.ReactNode) => {
     // Find the app in dock items
     const app = dockItems.find((item) => item.name === appName);
 
@@ -581,31 +582,23 @@ export default function EnhancedMacOSDesktop() {
         },
       ];
     });
-  };
+  },[dockItems]);
 
   useEffect(() => {
     if (systemState === "running" && booted) {
-      setTimeout(() => {
-        launchApp(
-          "UI Work Sample",
-          <iframe
-            src="https://quiz-web-liard.vercel.app/"
-            width="100%"
-            height="100%"
-            style={{ border: "none" }}
-          ></iframe>
-        );
-      }, 100);
-
-      setTimeout(() => {
-        launchApp("Resume", <InteractiveResume />);
-      }, 500);
-
-      setTimeout(() => {
-        launchApp("Portfolio", <PortfolioPage />);
-      }, 1000);
+      launchApp(
+        "UI Work Sample",
+        <iframe
+          src="https://quiz-web-liard.vercel.app/"
+          width="100%"
+          height="100%"
+          style={{ border: "none" }}
+        ></iframe>
+      );
+      launchApp("Resume", <InteractiveResume />);
+      launchApp("Portfolio", <PortfolioPage />);
     }
-  }, [systemState, booted]);
+  }, [systemState, booted, launchApp]);
 
   // Close a window
   const closeWindow = (id: string) => {

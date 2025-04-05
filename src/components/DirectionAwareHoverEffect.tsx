@@ -61,12 +61,12 @@ const outLeft = keyframes`
 
 // Initial load animations
 const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(1.25rem); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
 const staggeredFadeIn = keyframes`
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(1.875rem); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
@@ -125,6 +125,9 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+  html {
+    font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
+  }
   body {
     background-color: #fff;
     margin: 0;
@@ -133,10 +136,9 @@ const GlobalStyle = createGlobalStyle`
 
 // --- Styled Components ---
 const Container = styled.div`
-  width: 1260px;
+  width: 78.75rem;
   margin: 0 auto;
   animation: ${fadeIn} 0.8s ease-out forwards;
-
 `;
 
 const Title = styled.h1`
@@ -148,19 +150,18 @@ const Title = styled.h1`
   font-size: 3rem;
   font-weight: 800;
   letter-spacing: 4.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.1);
   padding-left: 4.5rem;
   line-height: 1.5;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     font-size: 3rem;
   }
 `;
 
-
 const List = styled.ul`
   padding: 0;
-  margin: 0 0 50px;
+  margin: 0 0 3.125rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -176,40 +177,40 @@ interface ListItemProps {
 }
 
 const ListItem = styled.li<ListItemProps>`
-  perspective: 400px;
+  perspective: 25rem;
   position: relative;
   float: left;
-  width: 200px;
-  height: 200px;
-  margin: 5px;
+  width: 12.5rem;
+  height: 12.5rem;
+  margin: 0.3125rem;
   padding: 0;
   list-style: none;
   opacity: 0;
   animation: ${staggeredFadeIn} 0.5s ease-out forwards;
-  animation-delay: ${props => `${props.delay * 0.1}s`};
+  animation-delay: ${(props) => `${props.delay * 0.1}s`};
 `;
 
 const ItemLink = styled.a`
   display: inline-block;
   vertical-align: top;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   width: 100%;
   height: 100%;
   background-color: ${clouds};
   color: rgba(52, 73, 94, 0.6);
   text-align: center;
-  font-size: 50px;
-  line-height: 200px;
+  font-size: 3.125rem;
+  line-height: 12.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.15);
   }
 
   svg {
     pointer-events: none;
-    width: 50px;
+    width: 3.125rem;
 
     path {
       fill: rgba(255, 255, 255, 0.4);
@@ -228,14 +229,14 @@ const Info = styled.div<InfoProps>`
   transform: rotate3d(1, 0, 0, 90deg);
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 1.25rem;
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   pointer-events: none;
-  background-color: ${props => props.bgColor || "rgba(26, 188, 156, 0.9)"};
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background-color: ${(props) => props.bgColor || "rgba(26, 188, 156, 0.9)"};
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
 
   ${(props) =>
     props.animationType &&
@@ -248,15 +249,15 @@ const Info = styled.div<InfoProps>`
   h3 {
     margin: 0;
     font-size: 1.2rem;
-    color: ${props => props.textColor || "rgba(255, 255, 255, 0.9)"};
+    color: ${(props) => props.textColor || "rgba(255, 255, 255, 0.9)"};
     font-weight: 600;
   }
 
   p {
     font-size: 1rem;
     line-height: 1.5;
-    color: ${props => props.textColor || "rgba(255, 255, 255, 0.8)"};
-    margin-top: 10px;
+    color: ${(props) => props.textColor || "rgba(255, 255, 255, 0.8)"};
+    margin-top: 0.625rem;
   }
 `;
 
@@ -280,23 +281,28 @@ interface HoverText {
 const hoverTexts: HoverText[] = [
   {
     title: "Craftsman Mindset",
-    description: "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
+    description:
+      "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
   },
   {
     title: "Perpetual Learner",
-    description: "My curiosity ships features. I chase problems like puzzles, not chores.",
+    description:
+      "My curiosity ships features. I chase problems like puzzles, not chores.",
   },
   {
     title: "Engineering with Empathy",
-    description: "Code is for humans first, machines second. Accessibility isn't optional.",
+    description:
+      "Code is for humans first, machines second. Accessibility isn't optional.",
   },
   {
     title: "Tech Explorer",
-    description: "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
+    description:
+      "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
   },
   {
     title: "Pixel-Perfect & Purpose-Driven",
-    description: "Design with intention. Animate with logic. Deliver with delight.",
+    description:
+      "Design with intention. Animate with logic. Deliver with delight.",
   },
   {
     title: "Web Performance Geek",
@@ -304,7 +310,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Creative Problem Solver",
-    description: "Give me a bottleneck—I'll give you a blueprint and a breakthrough.",
+    description:
+      "Give me a bottleneck—I'll give you a blueprint and a breakthrough.",
   },
   {
     title: "Detail-Oriented",
@@ -316,7 +323,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Style Meets Substance",
-    description: "Styled-components addict. UI should look good and feel right.",
+    description:
+      "Styled-components addict. UI should look good and feel right.",
   },
   {
     title: "Collaborative Energy",
@@ -324,7 +332,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Growth Mindset",
-    description: "Version 1 is never the end. I iterate, elevate, and never settle.",
+    description:
+      "Version 1 is never the end. I iterate, elevate, and never settle.",
   },
 ];
 
@@ -366,13 +375,8 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
       onMouseLeave={(e) => handleMouse(e, "out")}
       delay={delay}
     >
-      <ItemLink href="#">
-      </ItemLink>
-      <Info
-        animationType={animation}
-        bgColor={bgColor}
-        textColor={textColor}
-      >
+      <ItemLink href="#"></ItemLink>
+      <Info animationType={animation} bgColor={bgColor} textColor={textColor}>
         <h3>{title}</h3>
         <p>{description}</p>
       </Info>
@@ -391,12 +395,13 @@ export const DirectionAwareHoverEffect: React.FC = () => {
   return (
     <MainContainer>
       <GlobalStyle />
-          <Title>Principles</Title>
+      <Title>Principles</Title>
       <Container>
         <List>
-          {loaded && Array.from({ length: 12 }).map((_, i) => (
-            <HoverItem key={i} index={i} delay={i} />
-          ))}
+          {loaded &&
+            Array.from({ length: 12 }).map((_, i) => (
+              <HoverItem key={i} index={i} delay={i} />
+            ))}
         </List>
       </Container>
     </MainContainer>

@@ -12,8 +12,8 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 0 0.625rem;
+  box-shadow: 0rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 `;
@@ -36,8 +36,8 @@ const MenuItem = styled.li`
   color: #ffffff;
   cursor: default;
   user-select: none;
-  padding: 2px 4px;
-  border-radius: 4px;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@ const RightSection = styled.div`
 const IconImg = styled.img`
   width: 1.6rem;
   height: 1.6rem;
-  margin-right: 10px;
+  margin-right: 0.625rem;
   cursor: pointer;
 `;
 

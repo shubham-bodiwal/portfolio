@@ -44,14 +44,14 @@ const expandToList = keyframes`
 
 const NotificationStack = styled.div<{ isListView: boolean }>`
   position: fixed;
-  top: 50px;
-  right: 20px;
-  width: 300px;
+  top: 3.125rem;
+  right: 1.25rem;
+  width: 18.75rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   z-index: 10001;
-  perspective: 1000px; /* Add perspective for 3D effect */
+  perspective: 62.5rem; /* Add perspective for 3D effect */
   transition: all 0.3s ease;
 `;
 
@@ -62,15 +62,15 @@ const NotificationContainer = styled.div<{
   isActive: boolean;
 }>`
   position: relative;
-  width: 300px;
+  width: 18.75rem;
   background: rgba(28, 28, 30, 0.3);
-  backdrop-filter: blur(6px);
-  border-radius: 10px;
+  backdrop-filter: blur(0.375rem);
+  border-radius: 0.625rem;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
   margin-top: calc(0.4rem * ${props=> props.index});
@@ -84,26 +84,26 @@ const NotificationContainer = styled.div<{
     position: absolute;
     top: 0;
     right: 0;
-    transform: ${`translateX(${props.index * 8}px) translateY(${props.index * 8}px) translateZ(${-props.index * 20}px) rotateX(${props.index * 2}deg)`};
+    transform: ${`translateX(${(props.index * 8)/16}rem) translateY(${(props.index * 8)/16}rem) translateZ(${(-props.index * 20)/16}rem) rotateX(${props.index * 2}deg)`};
     opacity: ${Math.max(1 - props.index * 0.15, 0.65)};
     z-index: ${10001 - props.index};
     transform-origin: top right;
     
     &:hover {
-      transform: ${`translateX(${props.index * 8}px) translateY(${props.index * 8}px) translateZ(${-props.index * 20 + 10}px) rotateX(${props.index * 2}deg)`};
+      transform: ${`translateX(${(props.index * 8)/16}rem) translateY(${(props.index * 8)/16}rem) translateZ(${(-props.index * 20 + 10)/16}rem) rotateX(${props.index * 2}deg)`};
     }
   `}
   
   ${props => !props.isExiting && props.isListView && css`
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
     transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg);
     opacity: 1;
     animation: ${expandToList} 0.3s ease-out forwards;
     
     /* Add a subtle highlight for the currently active notification in list view */
     ${props.isActive && css`
-      box-shadow: 0 0 0 2px rgba(0, 245, 212, 0.5), 0 5px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 0 0.125rem rgba(0, 245, 212, 0.5), 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.4);
     `}
   `}
 `;
@@ -111,18 +111,18 @@ const NotificationContainer = styled.div<{
 const NotificationHeader = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.625rem 0.9375rem;
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05);
 `;
 
 const AppIcon = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.625rem;
 `;
 
 const AppName = styled.div`
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: white;
 `;
@@ -133,7 +133,7 @@ const CloseButton = styled.button`
   border: none;
   color: #aaa;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   padding: 0;
   z-index: 10; /* Ensure click works */
 
@@ -143,9 +143,9 @@ const CloseButton = styled.button`
 `;
 
 const NotificationBody = styled.div`
-  padding: 15px;
+  padding: 0.9375rem;
   color: #eee;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.4;
   height: 1.4rem;
   white-space: nowrap;         /* Prevents text from wrapping to next line */
@@ -154,24 +154,24 @@ const NotificationBody = styled.div`
 `;
 
 const Timestamp = styled.div`
-  font-size: 10px;
+  font-size: 0.625rem;
   color: rgba(255, 255, 255, 0.5);
-  padding: 0 15px 10px;
+  padding: 0 0.9375rem 0.625rem;
   text-align: right;
 `;
 
 const ViewToggle = styled.button<{ isListView: boolean }>`
   position: absolute;
-  top: -30px;
+  top: -1.875rem;
   right: 0;
   background: rgba(28, 28, 30, 0.5);
   color: #eee;
   border: none;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
   cursor: pointer;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   display: ${props => props.isListView || props.children === '▲ Collapse' ? 'block' : 'none'};
   
   &:hover {
@@ -181,14 +181,14 @@ const ViewToggle = styled.button<{ isListView: boolean }>`
 
 const Counter = styled.div`
   position: absolute;
-  top: 0px;
-  right: 10px;
+  top: 0rem;
+  right: 0.625rem;
   background: rgba(0, 245, 212, 0.7);
   color: #000;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: bold;
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
   border-radius: 50%;
   display: flex;
   align-items: center;

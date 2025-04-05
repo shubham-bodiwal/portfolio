@@ -44,7 +44,7 @@ const fadeIn = keyframes`
 `;
 
 const slideUp = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(1.25rem); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
@@ -71,11 +71,9 @@ const theme = {
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
-  // * {
-  //   box-sizing: border-box;
-  //   margin: 0;
-  //   padding: 0;
-  // }
+  html {
+    font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
+  }
 `;
 
 // Styled Components
@@ -105,7 +103,7 @@ const Name = styled.h1`
   color: transparent;
   margin-bottom: 0.5rem;
 
-  @media (max-width: 640px) {
+  @media (max-width: 40rem) {
     font-size: 2.5rem;
   }
 `;
@@ -163,25 +161,25 @@ const NavButton = styled.button<{ active: boolean }>`
   text-transform: capitalize;
   font-weight: ${(props) => (props.active ? "600" : "400")};
   box-shadow: ${(props) =>
-    props.active ? "0 4px 15px rgba(108, 99, 255, 0.2)" : "none"};
+    props.active ? "0 0.25rem 0.9375rem rgba(108, 99, 255, 0.2)" : "none"};
 
   &:hover {
     background: ${(props) =>
       props.active ? theme.gradient : theme.backgroundLighter};
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
   }
 `;
 
 const Main = styled.main`
   flex-grow: 1;
-  max-width: 1000px;
+  max-width: 62.5rem;
   margin: 0 auto;
   width: 100%;
 `;
 
 const Section = styled.div`
   animation: ${slideUp} 0.5s ease-out;
-  max-width: 900px;
+  max-width: 56.25rem;
   margin: 0 auto;
 `;
 
@@ -199,9 +197,9 @@ const SectionTitle = styled.h3`
     bottom: -0.5rem;
     left: 0;
     width: 3rem;
-    height: 3px;
+    height: 0.1875rem;
     background: ${theme.gradient};
-    border-radius: 3px;
+    border-radius: 0.1875rem;
   }
 `;
 
@@ -217,7 +215,7 @@ const AboutText = styled.p`
 
 const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
 `;
@@ -227,16 +225,16 @@ const Card = styled.div`
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.05);
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-0.3125rem);
+    box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.1);
   }
 `;
 
 const HighlightCard = styled(Card)`
-  border-left: 4px solid ${theme.primary};
+  border-left: 0.25rem solid ${theme.primary};
 `;
 
 const CardTitle = styled.h4`
@@ -313,7 +311,7 @@ const Timeline = styled.div`
     left: 0;
     top: 0;
     bottom: 0;
-    width: 2px;
+    width: 0.125rem;
     background: ${theme.backgroundLighter};
   }
 `;
@@ -331,7 +329,7 @@ const TimelineItem = styled.div`
     height: 1rem;
     border-radius: 50%;
     background: ${theme.primary};
-    border: 3px solid ${theme.backgroundLight};
+    border: 0.1875rem solid ${theme.backgroundLight};
   }
 `;
 
@@ -394,7 +392,7 @@ const ProjectCategoryTitle = styled.h4`
   &::after {
     content: "";
     flex-grow: 1;
-    height: 1px;
+    height: 0.0625rem;
     background: ${theme.backgroundLighter};
     margin-left: 1rem;
   }
@@ -454,7 +452,7 @@ const Footer = styled.footer`
   text-align: center;
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid ${theme.backgroundLighter};
+  border-top: 0.0625rem solid ${theme.backgroundLighter};
   color: ${theme.textMuted};
   font-size: 0.85rem;
 `;

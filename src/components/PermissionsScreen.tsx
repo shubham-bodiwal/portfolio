@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: none !important;
     overflow: hidden;
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
   }
 `;
 
@@ -22,13 +23,13 @@ const fadeIn = keyframes`
 
 const subtleFloat = keyframes`
   0% {
-    transform: translateY(0px);
+    transform: translateY(0rem);
   }
   50% {
     transform: translateY(-1rem);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(0rem);
   }
 `;
 
@@ -59,40 +60,40 @@ const ContentContainer = styled.div`
   justify-content: center;
   z-index: 2;
   padding: 2.5rem 3rem;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   background: #14141422;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  max-width: 500px;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(0.625rem);
+  max-width: 40rem;
   animation: ${subtleFloat} 6s ease-in-out infinite;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     padding: 2rem;
     max-width: 90%;
   }
 `;
 
 const PortfolioTitle = styled.h1`
-  font-size: 1.8rem;
-  margin-bottom: 24px;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
   color: white;
   font-weight: 600;
   text-align: center;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.0313rem;
 
   span {
     color: #4d9fff;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     font-size: 1.5rem;
   }
 `;
 
 const Message = styled.p`
-  font-size: 1rem;
-  margin-bottom: 28px;
+  font-size: 1.5rem;
+  margin-bottom: 1.75rem;
   text-align: center;
   max-width: 40rem;
   line-height: 1.6;
@@ -101,31 +102,31 @@ const Message = styled.p`
 `;
 
 const PoweredOffMessage = styled.p`
-  font-size: 1.2rem;
-  margin: 20px 0;
+  font-size: 1.5rem;
+  margin: 1.25rem 0;
   color: #e67e22;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.0313rem;
 `;
 
 const DeviceWarning = styled.div`
   background-color: rgba(220, 53, 69, 0.2);
-  border: 1px solid rgba(220, 53, 69, 0.6);
+  border: 0.0625rem solid rgba(220, 53, 69, 0.6);
   color: #ff6b6b;
   padding: 1rem;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   margin-bottom: 1.5rem;
   max-width: 100%;
   text-align: center;
 
   h3 {
     margin-top: 0;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
 
   p {
     margin-bottom: 0;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 `;
 
@@ -134,7 +135,7 @@ const pulse = keyframes`
     box-shadow: 0 0 0 0 rgba(61, 139, 255, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(61, 139, 255, 0);
+    box-shadow: 0 0 0 0.625rem rgba(61, 139, 255, 0);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(61, 139, 255, 0);
@@ -142,29 +143,30 @@ const pulse = keyframes`
 `;
 
 const Button = styled.button`
-  padding: 12px 28px;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   background: rgba(30, 50, 100, 0.2);
   color: #4d9fff;
-  border: 2px solid #4d9fff;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(61, 139, 255, 0.3);
+  border: 0.125rem solid #4d9fff;
+  border-radius: 0.375rem;
+  box-shadow: 0 0 0.625rem rgba(61, 139, 255, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.0313rem;
   animation: ${pulse} 2s infinite;
+  cursor: none;
 
   &:hover {
     background: rgba(61, 139, 255, 0.2);
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
     color: white;
   }
 
   &:active {
-    transform: translateY(1px);
+    transform: translateY(0.0625rem);
   }
 
   &::before {
@@ -191,12 +193,12 @@ const Button = styled.button`
 // Progress component with professional style
 const ProgressBar = styled.div`
   width: 100%;
-  height: 4px;
+  height: 0.25rem;
   background: rgba(255, 255, 255, 0.1);
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
   position: relative;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   overflow: hidden;
 `;
 
@@ -208,11 +210,11 @@ const ProgressFill = styled.div<{ progress: number }>`
 `;
 
 const StatusText = styled.div`
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.6);
-  margin-top: 8px;
+  margin-top: 0.5rem;
   text-align: center;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.0187rem;
 `;
 
 type Props = {
