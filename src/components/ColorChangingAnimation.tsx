@@ -5,7 +5,7 @@ import styled, { keyframes } from "styled-components";
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
   }
   to {
     opacity: 1;
@@ -15,7 +15,7 @@ const fadeIn = keyframes`
 
 const slideIn = keyframes`
   from {
-    transform: translateX(-20px);
+    transform: translateX(-1.25rem);
     opacity: 0;
   }
   to {
@@ -41,10 +41,10 @@ const ContentContainer = styled.div`
   height: 85%;
   padding: 2rem;
   background: rgba(10, 10, 14, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   color: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
   animation: ${fadeIn} 0.8s ease-out;
   user-select: none;
 `;
@@ -55,7 +55,7 @@ const SectionTitle = styled.h2`
   color: #ffaa33;
   letter-spacing: 0.1em;
   font-weight: 700;
-  margin-top: 0px;
+  margin-top: 0rem;
 `;
 
 const ContentWrapper = styled.div`
@@ -75,15 +75,15 @@ const CategoryTitle = styled.h3`
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
-  margin-top: 0px;
+  margin-top: 0rem;
 
   &::before {
     content: "";
-    width: 12px;
-    height: 12px;
+    width: 0.75rem;
+    height: 0.75rem;
     display: inline-block;
     background-color: #ffaa33;
-    margin-right: 10px;
+    margin-right: 0.625rem;
     border-radius: 50%;
   }
 `;
@@ -100,7 +100,7 @@ const SkillsList = styled.ul`
 const SkillItem = styled.li<{ index: number }>`
   background: rgba(255, 255, 255, 0.1);
   padding: 0.4rem 0.8rem;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   font-size: 0.9rem;
   animation: ${slideIn} 0.5s ease-out;
   animation-fill-mode: both;
@@ -109,7 +109,7 @@ const SkillItem = styled.li<{ index: number }>`
 
   &:hover {
     background: rgba(255, 170, 51, 0.6);
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
     transition: all 0.2s ease;
   }
 `;
@@ -117,7 +117,7 @@ const SkillItem = styled.li<{ index: number }>`
 const EducationSection = styled.div`
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.1);
   animation: ${fadeIn} 0.8s ease-out;
   animation-delay: 0.6s;
   animation-fill-mode: both;
@@ -147,7 +147,7 @@ const GradYear = styled.div`
 const PhilosophySection = styled.div`
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.1);
   animation: ${fadeIn} 0.8s ease-out;
   animation-delay: 0.8s;
   animation-fill-mode: both;
@@ -165,9 +165,9 @@ const PhilosophySection = styled.div`
 //     left: 0;
 //     top: 0;
 //     bottom: 0;
-//     width: 3px;
+//     width: 0.1875rem;
 //     background: #ffaa33;
-//     border-radius: 3px;
+//     border-radius: 0.1875rem;
 //   }
 // `;
 

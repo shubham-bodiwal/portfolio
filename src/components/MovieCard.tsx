@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     height: 100%;
-    font-size: calc(100vw / 75) !important;
+    font-size: calc(100vw / 140) !important;
   }
   
   body {
@@ -18,62 +18,62 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Open Sans', sans-serif;
     justify-content: center;
     overflow: hidden;
-    perspective: 1800px;
+    perspective: 112.5rem;
     text-align: center;
-    margin: 0 20px;
+    margin: 0 1.25rem;
   }
 `;
 
 // Styled components for headers
 const Subtitle = styled.h3`
   color: #eb285d;
-  font-size: 16px;
-  margin-bottom: 6px;
-  transform: translateZ(25px);
+  font-size: 1rem;
+  margin-bottom: 0.375rem;
+  transform: translateZ(1.5625rem);
 `;
 
 const Title = styled.h1`
   color: #3e3e42;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 800;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  transform: translateZ(35px);
+  letter-spacing: -0.0625rem;
+  margin-bottom: 1.875rem;
+  transform: translateZ(2.1875rem);
 `;
 
 // Container for the cards
 const Cards = styled.div`
   background: #fff;
-  border-radius: 15px;
-  box-shadow: 0px 10px 20px 20px rgba(0,0,0,0.17);
+  border-radius: 0.9375rem;
+  box-shadow: 0rem 0.625rem 1.25rem 1.25rem rgba(0,0,0,0.17);
   display: inline-block;
-  padding: 30px 35px;
-  perspective: 1800px;
+  padding: 1.875rem 2.1875rem;
+  perspective: 112.5rem;
   text-align: left;
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
   transform: rotateX(11deg) rotateY(16.5deg);
-  min-width: 595px;
+  min-width: 37.1875rem;
   position: relative;
 `;
 
 // Base card component
 const Card = styled.div`
-  border-radius: 15px;
-  box-shadow: 5px 5px 20px -5px rgba(0,0,0,0.6);
+  border-radius: 0.9375rem;
+  box-shadow: 0.3125rem 0.3125rem 1.25rem -0.3125rem rgba(0,0,0,0.6);
   display: inline-block;
-  height: 250px;
+  height: 15.625rem;
   overflow: hidden;
-  perspective: 1200px;
+  perspective: 75rem;
   position: relative;
   transform-style: preserve-3d;
-  transform: translateZ(35px);
+  transform: translateZ(2.1875rem);
   transition: transform 200ms ease-out;
-  width: 175px;
+  width: 10.9375rem;
   text-align: center;
 
   &:not(:last-child) {
-    margin-right: 30px;
+    margin-right: 1.875rem;
   }
 `;
 
@@ -85,12 +85,12 @@ const CardImg = styled.img`
 
 const CardBg = styled.div`
   position: absolute;
-  top: -50px;
-  left: -50px;
-  right: -50px;
-  bottom: -50px;
+  top: -3.125rem;
+  left: -3.125rem;
+  right: -3.125rem;
+  bottom: -3.125rem;
   transform-origin: 50% 50%;
-  transform: translateZ(-50px);
+  transform: translateZ(-3.125rem);
   z-index: 0;
 `;
 
@@ -100,7 +100,7 @@ const CardText = styled.div`
   bottom: 0;
   display: flex;
   flex-direction: column; 
-  height: 70px;
+  height: 4.375rem;
   justify-content: center;
   position: absolute;
   width: 100%;
@@ -109,17 +109,17 @@ const CardText = styled.div`
 
 const CardTitle = styled.p`
   color: #fff;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
-  padding: 0 10px;
-  margin-bottom: 3px;
+  padding: 0 0.625rem;
+  margin-bottom: 0.1875rem;
 `;
 
 // Specific card variants with additional styling
 const CardOne = styled(Card)`
   ${CardImg} {
-    top: 14px;
-    right: -10px;
+    top: 0.875rem;
+    right: -0.625rem;
     height: 110%;
     position: absolute;
   }
@@ -130,7 +130,7 @@ const CardOne = styled(Card)`
 
 const CardTwo = styled(Card)`
   ${CardImg} {
-    top: 25px;
+    top: 1.5625rem;
     position: absolute;
   }
   ${CardBg} {
@@ -140,8 +140,8 @@ const CardTwo = styled(Card)`
 
 const CardThree = styled(Card)`
   ${CardImg} {
-    top: 5px;
-    left: -4px;
+    top: 0.3125rem;
+    left: -0.25rem;
     height: 110%;
     position: absolute;
   }
@@ -153,33 +153,33 @@ const CardThree = styled(Card)`
 // Additional styled components for the notice and twitter link
 const Notice = styled.span`
   background: gold;
-  border-top-left-radius: 6px;
+  border-top-left-radius: 0.375rem;
   bottom: 0;
   font-family: monospace;
-  font-size: 14px;
-  padding: 8px 10px;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.625rem;
   position: absolute;
-  right: -20px;
+  right: -1.25rem;
 `;
 
 const TwitterLink = styled.a`
   cursor: pointer;
   position: absolute;
-  right: -10px;
-  top: 12px;
+  right: -0.625rem;
+  top: 0.75rem;
   z-index: -1;
   background: #00aced;
-  border-radius: 20px;
-  height: 30px;
+  border-radius: 1.25rem;
+  height: 1.875rem;
   text-decoration: none;
-  padding-right: 10px;
+  padding-right: 0.625rem;
   justify-content: space-between;
   font-weight: 600;
   display: flex;
   align-items: center;
   color: #fff;
-  font-size: 14px;
-  width: 74px;
+  font-size: 0.875rem;
+  width: 4.625rem;
   opacity: 0.4;
 
   &:hover {
@@ -188,7 +188,7 @@ const TwitterLink = styled.a`
 `;
 
 const TwitterIcon = styled.img`
-  height: 30px;
+  height: 1.875rem;
 `;
 
 const range = 40;
@@ -217,10 +217,10 @@ const MovieCards: React.FC = () => {
           const backgrounds = cardsRef.current.querySelectorAll<HTMLDivElement>('.card__bg');
 
           images.forEach(image => {
-            image.style.transform = `translateX(${-Number(xValue)}px) translateY(${yValue}px)`;
+            image.style.transform = `translateX(${(-Number(xValue))/16}rem) translateY(${Number(yValue)/16}rem)`;
           });
           backgrounds.forEach(bg => {
-            bg.style.backgroundPosition = `${Number(xValue) * 0.45}px ${-Number(yValue) * 0.45}px`;
+            bg.style.backgroundPosition = `${(Number(xValue) * 0.45)/16}rem ${(-Number(yValue) * 0.45)/16}rem`;
           });
         }
       });

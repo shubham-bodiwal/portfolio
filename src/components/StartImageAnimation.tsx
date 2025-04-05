@@ -24,12 +24,12 @@ const ImagesWrapper = styled.div`
 
 const slideLeftFade = keyframes`
   0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(-400px) scale(0.5); opacity: 0; }
+  100% { transform: translateX(-25rem) scale(0.5); opacity: 0; }
 `;
 
 const slideRightFade = keyframes`
   0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(400px) scale(0.5); opacity: 0; }
+  100% { transform: translateX(25rem) scale(0.5); opacity: 0; }
 `;
 
 const scaleFade = keyframes`

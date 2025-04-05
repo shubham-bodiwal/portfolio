@@ -7,7 +7,7 @@ const ellipsisDot = keyframes`
 `;
 
 const Message = styled.div`
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.8);
   text-align: center;

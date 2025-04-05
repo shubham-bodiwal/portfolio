@@ -10,9 +10,9 @@ import { Maximize2, ArrowUpCircle } from "lucide-react";
 // `;
 
 const float = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% { transform: translateY(0rem); }
+  50% { transform: translateY(-0.625rem); }
+  100% { transform: translateY(0rem); }
 `;
 
 const shimmer = keyframes`
@@ -53,7 +53,7 @@ const ContentContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  max-width: 600px;
+  max-width: 37.5rem;
   text-align: center;
 `;
 
@@ -89,8 +89,8 @@ const FullscreenButton = styled.button`
   padding: 0.9rem 2rem;
   background: rgba(255, 255, 255, 0.1);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+  border: 0.125rem solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -117,8 +117,8 @@ const FullscreenButton = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-0.1875rem);
+    box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.3);
     
     &:before {
       left: 100%;
@@ -127,13 +127,13 @@ const FullscreenButton = styled.button`
   
   &:active {
     transform: translateY(0);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
   }
 `;
 
 // const ChevronAnimation = styled.div`
 //   position: absolute;
-//   bottom: 50px;
+//   bottom: 3.125rem;
 //   display: flex;
 //   flex-direction: column;
 //   align-items: center;

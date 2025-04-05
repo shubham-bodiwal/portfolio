@@ -61,12 +61,12 @@ const outLeft = keyframes`
 
 // Initial load animations
 const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(1.25rem); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
 const staggeredFadeIn = keyframes`
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(1.875rem); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
@@ -126,7 +126,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   html {
-    font-size: calc(100vw / 75) !important;
+    font-size: calc(100vw / 140) !important;
   }
   body {
     background-color: #fff;
@@ -136,7 +136,7 @@ const GlobalStyle = createGlobalStyle`
 
 // --- Styled Components ---
 const Container = styled.div`
-  width: 1260px;
+  width: 78.75rem;
   margin: 0 auto;
   animation: ${fadeIn} 0.8s ease-out forwards;
 `;
@@ -150,18 +150,18 @@ const Title = styled.h1`
   font-size: 3rem;
   font-weight: 800;
   letter-spacing: 4.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.1);
   padding-left: 4.5rem;
   line-height: 1.5;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     font-size: 3rem;
   }
 `;
 
 const List = styled.ul`
   padding: 0;
-  margin: 0 0 50px;
+  margin: 0 0 3.125rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -177,12 +177,12 @@ interface ListItemProps {
 }
 
 const ListItem = styled.li<ListItemProps>`
-  perspective: 400px;
+  perspective: 25rem;
   position: relative;
   float: left;
-  width: 200px;
-  height: 200px;
-  margin: 5px;
+  width: 12.5rem;
+  height: 12.5rem;
+  margin: 0.3125rem;
   padding: 0;
   list-style: none;
   opacity: 0;
@@ -194,23 +194,23 @@ const ItemLink = styled.a`
   display: inline-block;
   vertical-align: top;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   width: 100%;
   height: 100%;
   background-color: ${clouds};
   color: rgba(52, 73, 94, 0.6);
   text-align: center;
-  font-size: 50px;
-  line-height: 200px;
+  font-size: 3.125rem;
+  line-height: 12.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.15);
   }
 
   svg {
     pointer-events: none;
-    width: 50px;
+    width: 3.125rem;
 
     path {
       fill: rgba(255, 255, 255, 0.4);
@@ -229,14 +229,14 @@ const Info = styled.div<InfoProps>`
   transform: rotate3d(1, 0, 0, 90deg);
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 1.25rem;
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   pointer-events: none;
   background-color: ${(props) => props.bgColor || "rgba(26, 188, 156, 0.9)"};
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
 
   ${(props) =>
     props.animationType &&
@@ -257,7 +257,7 @@ const Info = styled.div<InfoProps>`
     font-size: 1rem;
     line-height: 1.5;
     color: ${(props) => props.textColor || "rgba(255, 255, 255, 0.8)"};
-    margin-top: 10px;
+    margin-top: 0.625rem;
   }
 `;
 

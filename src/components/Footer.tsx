@@ -11,7 +11,7 @@ import {
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
   }
   to {
     opacity: 1;
@@ -26,9 +26,9 @@ const pulse = keyframes`
 `;
 
 // const float = keyframes`
-//   0% { transform: translateY(0px); }
-//   50% { transform: translateY(-5px); }
-//   100% { transform: translateY(0px); }
+//   0% { transform: translateY(0rem); }
+//   50% { transform: translateY(-0.3125rem); }
+//   100% { transform: translateY(0rem); }
 // `;
 
 const gradientMove = keyframes`
@@ -51,7 +51,7 @@ const FooterWrapper = styled.footer`
 `;
 
 const ContentContainer = styled.div`
-  max-width: 1200px;
+  max-width: 75rem;
   width: 90%;
   padding: 4rem 2rem;
   display: flex;
@@ -64,7 +64,7 @@ const ContentContainer = styled.div`
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
   gap: 3rem;
   width: 100%;
   margin-bottom: 1rem;
@@ -88,12 +88,12 @@ const ColumnTitle = styled.h3`
   &::after {
     content: "";
     position: absolute;
-    bottom: -10px;
+    bottom: -0.625rem;
     left: 0;
-    width: 50px;
-    height: 3px;
+    width: 3.125rem;
+    height: 0.1875rem;
     background: #ffaa33;
-    border-radius: 2px;
+    border-radius: 0.125rem;
   }
 `;
 
@@ -126,8 +126,8 @@ const SocialLinks = styled.div`
 `;
 
 const SocialLink = styled.a`
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   display: flex;
@@ -139,7 +139,7 @@ const SocialLink = styled.a`
 
   &:hover {
     background: #ffaa33;
-    transform: translateY(-5px);
+    transform: translateY(-0.3125rem);
     color: #03050b;
   }
 `;
@@ -169,7 +169,7 @@ const SocialLink = styled.a`
 
 //   &:hover {
 //     color: #ffaa33;
-//     transform: translateX(5px);
+//     transform: translateX(0.3125rem);
 
 //     svg {
 //       opacity: 1;
@@ -186,9 +186,9 @@ const NewsletterForm = styled.form`
 const NewsletterInput = styled.input`
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.2);
   padding: 0.8rem 1rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   color: #ffffff;
 
   &:focus {
@@ -199,12 +199,12 @@ const NewsletterInput = styled.input`
 
 const NewsletterButton = styled.button`
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 0.3125rem;
+  top: 0.3125rem;
   padding: 0.5rem 1rem;
   background: #ffaa33;
   border: none;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   color: #03050b;
   font-weight: 600;
   cursor: pointer;
@@ -217,7 +217,7 @@ const NewsletterButton = styled.button`
 
 const Divider = styled.div`
   width: 100%;
-  height: 1px;
+  height: 0.0625rem;
   background: linear-gradient(
     to right,
     transparent,
@@ -256,24 +256,24 @@ const SectionTitle = styled.h2`
   &::after {
     content: "";
     position: absolute;
-    bottom: -15px;
+    bottom: -0.9375rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
+    width: 6.25rem;
+    height: 0.25rem;
     background: #ffaa33;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 `;
 
 const QuoteCard = styled.div`
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 1.5rem;
   text-align: center;
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
 `;
 
 const Quote = styled.blockquote`
@@ -297,30 +297,30 @@ const CTAButton = styled.a`
   color: #03050b;
   text-decoration: none;
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s;
   margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba(255, 170, 51, 0.3);
+  box-shadow: 0 0.25rem 0.9375rem rgba(255, 170, 51, 0.3);
 
   svg {
     margin-left: 0.5rem;
   }
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255, 170, 51, 0.4);
+    transform: translateY(-0.1875rem);
+    box-shadow: 0 0.5rem 1.25rem rgba(255, 170, 51, 0.4);
   }
 `;
 
 // const BackToTop = styled.button`
 //   position: absolute;
-//   bottom: 30px;
-//   right: 30px;
-//   width: 50px;
-//   height: 50px;
+//   bottom: 1.875rem;
+//   right: 1.875rem;
+//   width: 3.125rem;
+//   height: 3.125rem;
 //   background: #ffaa33;
 //   border: none;
 //   border-radius: 50%;
@@ -328,24 +328,24 @@ const CTAButton = styled.a`
 //   align-items: center;
 //   justify-content: center;
 //   cursor: pointer;
-//   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+//   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.3);
 //   animation: ${float} 2s infinite ease-in-out;
 //   z-index: 10;
 //   transition: all 0.3s;
 
 //   &:hover {
 //     background: #ff9922;
-//     transform: translateY(-8px);
+//     transform: translateY(-0.5rem);
 //   }
 // `;
 
 const BackgroundGlow = styled.div`
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 18.75rem;
+  height: 18.75rem;
   border-radius: 50%;
   background: rgba(255, 170, 51, 0.05);
-  filter: blur(100px);
+  filter: blur(6.25rem);
   pointer-events: none;
 
   &:first-of-type {
@@ -387,7 +387,7 @@ const StatLabel = styled.div`
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.0625rem;
 `;
 
 export default function Footer() {

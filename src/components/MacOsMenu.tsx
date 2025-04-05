@@ -5,16 +5,16 @@ import styled from "styled-components";
 // Menu Wrapper with Apple-style gradient
 const MenuWrapper = styled.div`
   position: absolute;
-  min-width: 220px;
-  border-radius: 6px;
+  min-width: 13.75rem;
+  border-radius: 0.375rem;
   background: rgba(32, 33, 37, 0.9);
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0rem 0.3125rem 1.25rem rgba(0, 0, 0, 0.3);
   color: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
-  font-size: 14px;
-  padding: 6px 0;
-  backdrop-filter: blur(10px);
+  font-size: 0.875rem;
+  padding: 0.375rem 0;
+  backdrop-filter: blur(0.625rem);
   opacity: 0;
   transform: scale(0.95);
   transform-origin: top left;
@@ -29,10 +29,10 @@ const MenuWrapper = styled.div`
 
 // Menu Title item (e.g. "About This Mac")
 const MenuTitle = styled.div`
-  padding: 4px 10px;
+  padding: 0.25rem 0.625rem;
   font-weight: bold;
-  margin-bottom: 2px;
-  margin-left: 10px;
+  margin-bottom: 0.125rem;
+  margin-left: 0.625rem;
   color: #fff;
   opacity: 0.5; // Disabled
   cursor: default;
@@ -46,7 +46,7 @@ interface MenuItemProps {
 }
 
 const MenuItem = styled.div<MenuItemProps>`
-  padding: 4px 20px;
+  padding: 0.25rem 1.25rem;
   position: relative;
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   color: ${(props) => (props.disabled ? "rgba(255, 255, 255, 0.5)" : "#fff")};
@@ -68,7 +68,7 @@ const MenuItem = styled.div<MenuItemProps>`
     &:after {
       content: '›';
       position: absolute;
-      right: 10px;
+      right: 0.625rem;
       opacity: 0.5;
     }
   `}
@@ -77,16 +77,16 @@ const MenuItem = styled.div<MenuItemProps>`
 // Shortcut text (e.g. ⌘Q)
 const ShortcutText = styled.span`
   position: absolute;
-  right: 20px;
+  right: 1.25rem;
   opacity: 0.6;
-  font-size: 12px;
+  font-size: 0.75rem;
 `;
 
 // Separator line
 const Separator = styled.div`
-  height: 1px;
+  height: 0.0625rem;
   background-color: rgba(255, 255, 255, 0.1);
-  margin: 5px 0;
+  margin: 0.3125rem 0;
 `;
 
 interface MacOSMenuProps {

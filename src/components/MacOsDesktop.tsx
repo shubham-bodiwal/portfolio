@@ -77,7 +77,7 @@ const HeaderBackground = styled.div<{ isFullscreen: boolean }>`
   height: 1.6rem;
   width: 100%;
   backdrop-filter: ${(props) =>
-    props.isFullscreen ? "blur(10px)" : "blur(2px)"};
+    props.isFullscreen ? "blur(0.625rem)" : "blur(0.125rem)"};
 `;
 
 const WindowsArea = styled.div`
@@ -107,7 +107,7 @@ const BootScreen = styled.div<{ isShuttingDown?: boolean }>`
 `;
 
 const ProgressBarWrapper = styled.div`
-  width: 200px;
+  width: 12.5rem;
   height: 0.5rem;
   border-radius: 0.25rem;
   background-color: #555;
@@ -124,18 +124,18 @@ const ProgressBarFill = styled.div<{ isShuttingDown?: boolean }>`
 
 const Dock = styled.div<{ visible: boolean }>`
   position: absolute;
-  bottom: ${({ visible }) => (visible ? "0.5rem" : "-100px")};
+  bottom: ${({ visible }) => (visible ? "0.5rem" : "-6.25rem")};
   left: 50%;
   transform: translateX(-50%);
   z-index: 9998;
   background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(0.625rem);
   padding: 0.5rem 0.8rem;
   border-radius: 1rem;
   display: flex;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.3);
   transition: bottom 0.3s ease-in-out;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
 `;
 
 const DockItemContainer = styled.div`
@@ -144,7 +144,7 @@ const DockItemContainer = styled.div`
 `;
 
 const DockSeparator = styled.div`
-  width: 1px;
+  width: 0.0625rem;
   height: 2.5rem;
   background-color: rgba(255, 255, 255, 0.3);
   margin: 0 0.4rem;
@@ -187,11 +187,11 @@ const AppIcon = styled.div`
 // Status dot
 const StatusDot = styled.div<{ status: "open" | "minimized" }>`
   position: absolute;
-  bottom: -3px;
+  bottom: -0.1875rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: 0.25rem;
+  height: 0.25rem;
   border-radius: 50%;
   background-color: ${(props) => (props.status === "open" ? "white" : "#aaa")};
 `;
