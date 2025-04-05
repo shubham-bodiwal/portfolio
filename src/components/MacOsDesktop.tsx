@@ -583,6 +583,30 @@ export default function EnhancedMacOSDesktop() {
     });
   };
 
+  useEffect(() => {
+    if (systemState === "running" && booted) {
+      setTimeout(() => {
+        launchApp(
+          "UI Work Sample",
+          <iframe
+            src="https://quiz-web-liard.vercel.app/"
+            width="100%"
+            height="100%"
+            style={{ border: "none" }}
+          ></iframe>
+        );
+      }, 100);
+
+      setTimeout(() => {
+        launchApp("Resume", <InteractiveResume />);
+      }, 500);
+
+      setTimeout(() => {
+        launchApp("Portfolio", <PortfolioPage />);
+      }, 1000);
+    }
+  }, [systemState, booted]);
+
   // Close a window
   const closeWindow = (id: string) => {
     setOpenWindows((prev) => prev.filter((w) => w.id !== id));
