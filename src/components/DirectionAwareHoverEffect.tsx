@@ -125,6 +125,9 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+  html {
+    font-size: calc(100vw / 75) !important;
+  }
   body {
     background-color: #fff;
     margin: 0;
@@ -136,7 +139,6 @@ const Container = styled.div`
   width: 1260px;
   margin: 0 auto;
   animation: ${fadeIn} 0.8s ease-out forwards;
-
 `;
 
 const Title = styled.h1`
@@ -156,7 +158,6 @@ const Title = styled.h1`
     font-size: 3rem;
   }
 `;
-
 
 const List = styled.ul`
   padding: 0;
@@ -186,7 +187,7 @@ const ListItem = styled.li<ListItemProps>`
   list-style: none;
   opacity: 0;
   animation: ${staggeredFadeIn} 0.5s ease-out forwards;
-  animation-delay: ${props => `${props.delay * 0.1}s`};
+  animation-delay: ${(props) => `${props.delay * 0.1}s`};
 `;
 
 const ItemLink = styled.a`
@@ -204,7 +205,7 @@ const ItemLink = styled.a`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
 
   svg {
@@ -234,8 +235,8 @@ const Info = styled.div<InfoProps>`
   left: 0;
   border-radius: 4px;
   pointer-events: none;
-  background-color: ${props => props.bgColor || "rgba(26, 188, 156, 0.9)"};
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background-color: ${(props) => props.bgColor || "rgba(26, 188, 156, 0.9)"};
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
   ${(props) =>
     props.animationType &&
@@ -248,14 +249,14 @@ const Info = styled.div<InfoProps>`
   h3 {
     margin: 0;
     font-size: 1.2rem;
-    color: ${props => props.textColor || "rgba(255, 255, 255, 0.9)"};
+    color: ${(props) => props.textColor || "rgba(255, 255, 255, 0.9)"};
     font-weight: 600;
   }
 
   p {
     font-size: 1rem;
     line-height: 1.5;
-    color: ${props => props.textColor || "rgba(255, 255, 255, 0.8)"};
+    color: ${(props) => props.textColor || "rgba(255, 255, 255, 0.8)"};
     margin-top: 10px;
   }
 `;
@@ -280,23 +281,28 @@ interface HoverText {
 const hoverTexts: HoverText[] = [
   {
     title: "Craftsman Mindset",
-    description: "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
+    description:
+      "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
   },
   {
     title: "Perpetual Learner",
-    description: "My curiosity ships features. I chase problems like puzzles, not chores.",
+    description:
+      "My curiosity ships features. I chase problems like puzzles, not chores.",
   },
   {
     title: "Engineering with Empathy",
-    description: "Code is for humans first, machines second. Accessibility isn't optional.",
+    description:
+      "Code is for humans first, machines second. Accessibility isn't optional.",
   },
   {
     title: "Tech Explorer",
-    description: "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
+    description:
+      "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
   },
   {
     title: "Pixel-Perfect & Purpose-Driven",
-    description: "Design with intention. Animate with logic. Deliver with delight.",
+    description:
+      "Design with intention. Animate with logic. Deliver with delight.",
   },
   {
     title: "Web Performance Geek",
@@ -304,7 +310,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Creative Problem Solver",
-    description: "Give me a bottleneck—I'll give you a blueprint and a breakthrough.",
+    description:
+      "Give me a bottleneck—I'll give you a blueprint and a breakthrough.",
   },
   {
     title: "Detail-Oriented",
@@ -316,7 +323,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Style Meets Substance",
-    description: "Styled-components addict. UI should look good and feel right.",
+    description:
+      "Styled-components addict. UI should look good and feel right.",
   },
   {
     title: "Collaborative Energy",
@@ -324,7 +332,8 @@ const hoverTexts: HoverText[] = [
   },
   {
     title: "Growth Mindset",
-    description: "Version 1 is never the end. I iterate, elevate, and never settle.",
+    description:
+      "Version 1 is never the end. I iterate, elevate, and never settle.",
   },
 ];
 
@@ -366,13 +375,8 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
       onMouseLeave={(e) => handleMouse(e, "out")}
       delay={delay}
     >
-      <ItemLink href="#">
-      </ItemLink>
-      <Info
-        animationType={animation}
-        bgColor={bgColor}
-        textColor={textColor}
-      >
+      <ItemLink href="#"></ItemLink>
+      <Info animationType={animation} bgColor={bgColor} textColor={textColor}>
         <h3>{title}</h3>
         <p>{description}</p>
       </Info>
@@ -391,12 +395,13 @@ export const DirectionAwareHoverEffect: React.FC = () => {
   return (
     <MainContainer>
       <GlobalStyle />
-          <Title>Principles</Title>
+      <Title>Principles</Title>
       <Container>
         <List>
-          {loaded && Array.from({ length: 12 }).map((_, i) => (
-            <HoverItem key={i} index={i} delay={i} />
-          ))}
+          {loaded &&
+            Array.from({ length: 12 }).map((_, i) => (
+              <HoverItem key={i} index={i} delay={i} />
+            ))}
         </List>
       </Container>
     </MainContainer>

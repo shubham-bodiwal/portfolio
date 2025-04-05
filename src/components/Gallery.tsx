@@ -15,6 +15,9 @@ const GlobalCoverflowStyle = createGlobalStyle`
   :root {
     --transition-time: ${transitionTime};
   }
+    html {
+    font-size: calc(100vw / 75) !important;
+  }
 `;
 
 // Animation keyframes

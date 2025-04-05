@@ -71,11 +71,9 @@ const theme = {
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
-  // * {
-  //   box-sizing: border-box;
-  //   margin: 0;
-  //   padding: 0;
-  // }
+  html {
+    font-size: calc(100vw / 75) !important;
+  }
 `;
 
 // Styled Components

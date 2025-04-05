@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -533,7 +533,7 @@ export default function EnhancedMacOSDesktop() {
   };
 
   // Launch or restore an app window based on permissions
-  const launchApp = (appName: string, children?: React.ReactNode) => {
+  const launchApp = useCallback((appName: string, children?: React.ReactNode) => {
     // Find the app in dock items
     const app = dockItems.find((item) => item.name === appName);
 
@@ -581,31 +581,23 @@ export default function EnhancedMacOSDesktop() {
         },
       ];
     });
-  };
+  },[dockItems]);
 
   useEffect(() => {
     if (systemState === "running" && booted) {
-      setTimeout(() => {
-        launchApp(
-          "UI Work Sample",
-          <iframe
-            src="https://quiz-web-liard.vercel.app/"
-            width="100%"
-            height="100%"
-            style={{ border: "none" }}
-          ></iframe>
-        );
-      }, 100);
-
-      setTimeout(() => {
-        launchApp("Resume", <InteractiveResume />);
-      }, 500);
-
-      setTimeout(() => {
-        launchApp("Portfolio", <PortfolioPage />);
-      }, 1000);
+      launchApp(
+        "UI Work Sample",
+        <iframe
+          src="https://quiz-web-liard.vercel.app/"
+          width="100%"
+          height="100%"
+          style={{ border: "none" }}
+        ></iframe>
+      );
+      launchApp("Resume", <InteractiveResume />);
+      launchApp("Portfolio", <PortfolioPage />);
     }
-  }, [systemState, booted]);
+  }, [systemState, booted, launchApp]);
 
   // Close a window
   const closeWindow = (id: string) => {

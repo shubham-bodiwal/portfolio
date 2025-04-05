@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: none !important;
     overflow: hidden;
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    font-size: calc(100vw / 75) !important;
   }
 `;
 
