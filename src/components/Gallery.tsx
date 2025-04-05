@@ -16,7 +16,7 @@ const GlobalCoverflowStyle = createGlobalStyle`
     --transition-time: ${transitionTime};
   }
     html {
-    font-size: calc(100vw / 140) !important;
+    font-size: calc(100vw / 100) !important;
   }
 `;
 

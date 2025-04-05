@@ -230,6 +230,121 @@ const loadState = () => {
   return savedState ? JSON.parse(savedState) : null;
 };
 
+ // Define dock items with proper macOS app order, imported icons, and permissions
+ const dockItems: {
+  name: string;
+  icon: string;
+  permission: string;
+  children?: React.ReactNode;
+  section: string;
+  isTrash?: boolean;
+}[] = [
+  // Favorite apps section (left side) - Only Finder is authorized by default
+  {
+    name: "Finder",
+    icon: finderIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Launchpad",
+    icon: launchpadIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Safari",
+    icon: safariIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Mail",
+    icon: mailIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Photos",
+    icon: photosIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Messages",
+    icon: messagesIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "Music",
+    icon: musicIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "App Store",
+    icon: appStoreIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+  {
+    name: "System Settings",
+    icon: settingsIcon,
+    section: "normal",
+    permission: "unauthorized",
+  },
+
+  {
+    name: "Portfolio",
+    icon: portfolioIcon,
+    section: "favorites",
+    permission: "authorized",
+    children: <PortfolioPage />,
+  },
+  {
+    name: "Resume",
+    icon: ResumeIcon,
+    section: "favorites",
+    permission: "authorized",
+    children: <InteractiveResume />,
+  },
+  {
+    name: "UI Work Sample",
+    icon: SampleIcon,
+    section: "favorites",
+    permission: "authorized",
+    children: (
+      <iframe
+        src="https://quiz-web-liard.vercel.app/"
+        width="100%"
+        height="100%"
+        style={{ border: "none" }}
+      ></iframe>
+    ),
+  },
+  {
+    name: "Xcode",
+    icon: XcodeIcon,
+    section: "favourites",
+    permission: "unauthorized",
+  },
+  // Folders and Trash section (right side)
+  {
+    name: "Dictionary",
+    icon: dictionaryIcon,
+    section: "folders",
+    permission: "unauthorized",
+  },
+  {
+    name: "Trash",
+    icon: trashIcon,
+    section: "folders",
+    isTrash: true,
+    permission: "unauthorized",
+  },
+];
+
 // Main component
 export default function EnhancedMacOSDesktop() {
   // System state
@@ -286,120 +401,6 @@ export default function EnhancedMacOSDesktop() {
   //   setNotifications((prev) => [newNotification, ...prev]);
   // };
 
-  // Define dock items with proper macOS app order, imported icons, and permissions
-  const dockItems: {
-    name: string;
-    icon: string;
-    permission: string;
-    children?: React.ReactNode;
-    section: string;
-    isTrash?: boolean;
-  }[] = [
-    // Favorite apps section (left side) - Only Finder is authorized by default
-    {
-      name: "Finder",
-      icon: finderIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Launchpad",
-      icon: launchpadIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Safari",
-      icon: safariIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Mail",
-      icon: mailIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Photos",
-      icon: photosIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Messages",
-      icon: messagesIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "Music",
-      icon: musicIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "App Store",
-      icon: appStoreIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-    {
-      name: "System Settings",
-      icon: settingsIcon,
-      section: "normal",
-      permission: "unauthorized",
-    },
-
-    {
-      name: "Portfolio",
-      icon: portfolioIcon,
-      section: "favorites",
-      permission: "authorized",
-      children: <PortfolioPage />,
-    },
-    {
-      name: "Resume",
-      icon: ResumeIcon,
-      section: "favorites",
-      permission: "authorized",
-      children: <InteractiveResume />,
-    },
-    {
-      name: "UI Work Sample",
-      icon: SampleIcon,
-      section: "favorites",
-      permission: "authorized",
-      children: (
-        <iframe
-          src="https://quiz-web-liard.vercel.app/"
-          width="100%"
-          height="100%"
-          style={{ border: "none" }}
-        ></iframe>
-      ),
-    },
-    {
-      name: "Xcode",
-      icon: XcodeIcon,
-      section: "favourites",
-      permission: "unauthorized",
-    },
-    // Folders and Trash section (right side)
-    {
-      name: "Dictionary",
-      icon: dictionaryIcon,
-      section: "folders",
-      permission: "unauthorized",
-    },
-    {
-      name: "Trash",
-      icon: trashIcon,
-      section: "folders",
-      isTrash: true,
-      permission: "unauthorized",
-    },
-  ];
 
   // Request browser fullscreen on mount
   useEffect(() => {

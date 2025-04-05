@@ -239,22 +239,22 @@ export default function MacWindow({
   const defaultPosition = {
     x: 100 + Math.random() * 100,
     y: 100 + Math.random() * 100,
-    width: 700,
-    height: 500,
+    width: '700px',
+    height: '500px',
   };
 
   return ReactDOM.createPortal(
     <Rnd
       ref={rndRef}
       default={defaultPosition}
-      minWidth={350}
-      minHeight={250}
+      minWidth={'350px'}
+      minHeight={'250px'}
       bounds="parent"
       enableResizing={!isFullscreen}
       disableDragging={isFullscreen}
       size={getSize()}
       position={getPosition()}
-      style={{ zIndex: isActive ? (zIndex || 100) + 50 : zIndex }}
+      style={{ zIndex: isActive ? (zIndex || 10) + 1 : zIndex }}
       dragHandleClassName="window-drag-handle"
       onMouseDown={handleActivate}
       onDragStart={handleDragStart}

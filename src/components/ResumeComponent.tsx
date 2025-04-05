@@ -72,7 +72,7 @@ const theme = {
 // Global Styles
 const GlobalStyle = createGlobalStyle`
   html {
-    font-size: calc(100vw / 140) !important;
+    font-size: calc(100vw / 100) !important;
   }
 `;
 

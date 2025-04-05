@@ -64,23 +64,24 @@ const AnimatedImage = styled.div<{
   z-index: ${({ direction }) => (direction === "center" ? 20 : 1)};
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled.img<{direction: string}>`
   object-fit: cover;
+  height: ${({direction})=>direction === "center" ? "13rem" : "8rem"};
 `;
 
 const StartImageAnimation: React.FC = () => {
   return (
     <ImagesWrapper>
       <AnimatedImage direction="left">
-        <StyledImage src={Image1} alt="Left part" />
+        <StyledImage src={Image1} direction="left" alt="Left part" />
       </AnimatedImage>
 
       <AnimatedImage direction="center">
-        <StyledImage src={Image2} alt="Center part" />
+        <StyledImage src={Image2} direction="center" alt="Center part" />
       </AnimatedImage>
 
       <AnimatedImage direction="right">
-        <StyledImage src={Image3} alt="Right part" />
+        <StyledImage src={Image3} direction="right" alt="Right part" />
       </AnimatedImage>
     </ImagesWrapper>
   );
