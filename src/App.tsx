@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MacOSPortfolioUI from "./components/MacOsDesktop";
 import PermissionScreen from "./components/PermissionsScreen";
 import styled from "styled-components";
+import { Analytics } from "@vercel/analytics/react";
 
 const AppContainer = styled.div`
   height: 100vh;
@@ -43,13 +44,16 @@ const App: React.FC = () => {
   // When system is powered off, reset state to show permission screen again
 
   return (
-    <AppContainer>
-      {isFullscreenGranted ? (
-        <MacOSPortfolioUI />
-      ) : (
-        <PermissionScreen onClick={requestFullscreen} />
-      )}
-    </AppContainer>
+    <>
+      <AppContainer>
+        {isFullscreenGranted ? (
+          <MacOSPortfolioUI />
+        ) : (
+          <PermissionScreen onClick={requestFullscreen} />
+        )}
+      </AppContainer>
+      <Analytics />
+    </>
   );
 };
 
