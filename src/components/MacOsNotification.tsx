@@ -224,13 +224,6 @@ const MacNotification: React.FC<NotificationProps> = ({
         {message}
       </NotificationBody>
       
-      {/* Visually hidden timer information for screen readers */}
-      {autoClose && (
-        <span className="sr-only">
-          This notification will automatically close in {Math.round(autoCloseTime / 1000)} seconds. 
-          Press Escape to close now.
-        </span>
-      )}
     </NotificationContainer>
   );
 };

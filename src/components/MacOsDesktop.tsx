@@ -697,15 +697,6 @@ export default function EnhancedMacOSDesktop() {
         </HeaderWrapper>
       </HeaderBackground>
 
-      {/* Skip to content link for keyboard users */}
-      <a 
-        href="#windows-area" 
-        className="sr-only focus:not-sr-only"
-        aria-label="Skip to main content"
-        tabIndex={0}
-      >
-        Skip to content
-      </a>
 
       {/* Windows area */}
       <WindowsArea 

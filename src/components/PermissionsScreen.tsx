@@ -13,39 +13,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
     font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
   }
-    .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  /* Enhanced focus styles */
-  :focus {
-    outline: 2px solid #4299e1;
-    outline-offset: 2px;
-  }
-
-  /* Skip to content link - reveals on focus */
-  .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: #000;
-    color: white;
-    padding: 8px;
-    z-index: 100;
-    transition: top 0.2s;
-  }
-
-  .skip-link:focus {
-    top: 0;
-  }
+    
 `;
 
 // Refined animations

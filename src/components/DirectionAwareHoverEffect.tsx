@@ -410,7 +410,6 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
         tabIndex={0}
         role="button"
       >
-        <span className="sr-only">View principle: {title}</span>
       </ItemLink>
       <Info 
         animationType={animation} 

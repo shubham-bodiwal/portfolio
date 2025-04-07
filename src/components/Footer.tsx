@@ -432,7 +432,6 @@ export default function Footer() {
         </QuoteCard>
 
         <ProjectsStatsSection aria-labelledby="stats-heading">
-          <h2 id="stats-heading" className="sr-only">Project Statistics</h2>
           <StatItem index={0}>
             <StatNumber>10+</StatNumber>
             <StatLabel>Projects</StatLabel>
@@ -496,9 +495,7 @@ export default function Footer() {
           </FooterColumn>
 
           <FooterColumn index={2}>
-            <div aria-live="polite" id="subscription-status" className="sr-only">
               {subscribed ? "Thanks for subscribing!" : ""}
-            </div>
             
             {subscribed ? (
               <p 
@@ -544,7 +541,6 @@ export default function Footer() {
             <HeartIcon aria-hidden="true">
               <Heart size={16} />
             </HeartIcon>{" "}
-            <span className="sr-only">love</span>
             using React & TypeScript
           </div>
         </Copyright>

@@ -253,7 +253,6 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
       <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Force Quit...
         <ShortcutText aria-hidden="true">⌥⌘⎋</ShortcutText>
-        <span className="sr-only">Option Command Escape</span>
       </MenuItem>
       <Separator role="separator" />
       <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
@@ -274,12 +273,10 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
       <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Lock Screen
         <ShortcutText aria-hidden="true">⌃⌘Q</ShortcutText>
-        <span className="sr-only">Control Command Q</span>
       </MenuItem>
       <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Log Out Shubham...
         <ShortcutText aria-hidden="true">⇧⌘Q</ShortcutText>
-        <span className="sr-only">Shift Command Q</span>
       </MenuItem>
     </MenuWrapper>
   );
