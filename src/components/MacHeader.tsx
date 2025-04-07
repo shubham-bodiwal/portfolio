@@ -159,7 +159,6 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
             src={AppleLogoBG}
             alt="Apple Logo"
             onClick={handleAppleLogoClick}
-            loading="lazy"
           />
           <MenuList>
             <MenuItem>{activeAppName || "Finder"}</MenuItem>
@@ -172,10 +171,10 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
           </MenuList>
         </LeftSection>
         <RightSection>
-          <IconImg  loading="lazy" src={SpotlightSvg} alt="Spotlight" />
-          <IconImg  loading="lazy" src={ControlCenterSvg} alt="Control Center" />
-          <IconImg  loading="lazy" src={WifiSvg} alt="Wi-Fi" />
-          <IconImg  loading="lazy" src={BatterySvg} alt="Battery" />
+          <IconImg   src={SpotlightSvg} alt="Spotlight" />
+          <IconImg   src={ControlCenterSvg} alt="Control Center" />
+          <IconImg   src={WifiSvg} alt="Wi-Fi" />
+          <IconImg   src={BatterySvg} alt="Battery" />
           <TimeDisplay>{currentTime}</TimeDisplay>
         </RightSection>
       </HeaderContainer>

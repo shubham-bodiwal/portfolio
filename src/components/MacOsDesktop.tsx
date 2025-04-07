@@ -732,7 +732,7 @@ export default function EnhancedMacOSDesktop() {
               isAnimating={item.section === "favorites"}
             >
               <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img loading="lazy" src={item.icon} alt={item.name} />
+                <img src={item.icon} alt={item.name} />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
@@ -751,7 +751,7 @@ export default function EnhancedMacOSDesktop() {
               isAnimating={item.section === "favorites"}
             >
               <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img loading="lazy" src={item.icon} alt={item.name} />
+                <img src={item.icon} alt={item.name} />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
@@ -771,7 +771,7 @@ export default function EnhancedMacOSDesktop() {
               isAnimating={item.section === "favorites"}
             >
               <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img loading="lazy" src={item.icon} alt={item.name} />
+                <img src={item.icon} alt={item.name} />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
