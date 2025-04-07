@@ -315,7 +315,7 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
           onClick={() => handleNotificationClick(notification.id )}
         >
           <NotificationHeader>
-            <AppIcon src={notification.appIcon} alt={notification.appName} />
+            <AppIcon src={notification.appIcon} alt={notification.appName} loading="lazy" />
             <AppName>{notification.appName}</AppName>
             <CloseButton onClick={(e) => handleCloseClick(e, notification.id)}>×</CloseButton>
           </NotificationHeader>

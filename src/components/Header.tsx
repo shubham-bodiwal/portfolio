@@ -86,7 +86,7 @@ export default function Header() {
     <HeaderWrapper>
       <NavLink href="#about">Frontend Strategist</NavLink>
       <NavLink href="#work">Technology Pioneer</NavLink>
-      <Logo src={logoImage} alt="Logo" />
+      <Logo src={logoImage} alt="Logo" loading="lazy" />
       <NavLink href="#shop">Component Engineer</NavLink>
       <NavLink href="#contacts">Innovation Catalyst</NavLink>
     </HeaderWrapper>

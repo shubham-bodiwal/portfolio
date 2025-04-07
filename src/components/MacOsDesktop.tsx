@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 // Import wallpaper & sounds
-import OsWallpaper from "../assets/os-wallpaper2.jpg";
+import OsWallpaper from "../assets/os-wallpaper2.avif";
 import bootSound from "../assets/start-sound.wav";
 
 // Import MacHeader and MacWindow components
@@ -732,7 +732,7 @@ export default function EnhancedMacOSDesktop() {
               isAnimating={item.section === "favorites"}
             >
               <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img src={item.icon} alt={item.name} />
+                <img loading="lazy" src={item.icon} alt={item.name} />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
@@ -751,7 +751,7 @@ export default function EnhancedMacOSDesktop() {
               isAnimating={item.section === "favorites"}
             >
               <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img src={item.icon} alt={item.name} />
+                <img loading="lazy" src={item.icon} alt={item.name} />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
@@ -771,7 +771,7 @@ export default function EnhancedMacOSDesktop() {
               isAnimating={item.section === "favorites"}
             >
               <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img src={item.icon} alt={item.name} />
+                <img loading="lazy" src={item.icon} alt={item.name} />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot

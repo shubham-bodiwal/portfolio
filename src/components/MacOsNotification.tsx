@@ -125,7 +125,7 @@ const MacNotification: React.FC<NotificationProps> = ({
   return (
     <NotificationContainer isExiting={isExiting}>
       <NotificationHeader>
-        <AppIcon src={appIcon} alt={appName} />
+        <AppIcon loading="lazy" src={appIcon} alt={appName} />
         <AppName>{appName}</AppName>
         <CloseButton onClick={handleClose}>×</CloseButton>
       </NotificationHeader>

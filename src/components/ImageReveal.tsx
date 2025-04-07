@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import AppleLogoBG from '../assets/apple-logo 1 (1).png'
-import overlayImage from '../assets/apple-logo 1.png';
+import AppleLogoBG from '../assets/apple-logo 1 (1).avif'
+import overlayImage from '../assets/apple-logo 1.avif';
 
 const Container = styled.div`
   position: relative;
@@ -39,11 +39,12 @@ const OverlayImage = styled.img<{ animationDuration: string }>`
 const ImageReveal = () => {
   return (
     <Container>
-      <BackgroundImage src={AppleLogoBG} alt="Background" />
+      <BackgroundImage src={AppleLogoBG} alt="Background" loading="lazy" />
       <OverlayImage
         src={overlayImage}
         alt="Overlay"
         animationDuration='3s'
+        loading="lazy"
       />
     </Container>
   );

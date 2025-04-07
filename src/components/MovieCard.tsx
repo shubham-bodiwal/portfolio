@@ -244,6 +244,7 @@ const MovieCards: React.FC = () => {
         <CardOne>
           <CardBg className="card__bg" />
           <CardImg
+          loading="lazy"
             className="card__img"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_mono.png"
             alt="Princess Mononoke"
@@ -255,6 +256,7 @@ const MovieCards: React.FC = () => {
         <CardTwo>
           <CardBg className="card__bg" />
           <CardImg
+          loading="lazy"
             className="card__img"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_chihiro.png"
             alt="Spirited Away"
@@ -266,6 +268,7 @@ const MovieCards: React.FC = () => {
         <CardThree>
           <CardBg className="card__bg" />
           <CardImg
+          loading="lazy"
             className="card__img"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_howlcastle.png"
             alt="Howl's Moving Castle"
@@ -286,6 +289,7 @@ const MovieCards: React.FC = () => {
           className="twitter__icon"
           src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/twitter.svg"
           alt="Twitter Icon"
+          loading="lazy"
         />
         Share
       </TwitterLink>

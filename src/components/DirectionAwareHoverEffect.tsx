@@ -366,7 +366,29 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
     }
   };
 
+  // Handle keyboard focus/blur events
+  const handleFocus = () => {
+    setAnimation("in-top"); // Default animation direction for keyboard users
+  };
+
+  const handleBlur = () => {
+    setAnimation("out-top"); // Default animation direction for keyboard users
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.currentTarget.click();
+    }
+  };
+
   const { title, description } = hoverTexts[index % hoverTexts.length];
+
+  // Generate a unique ID for ARIA labeling
+  const itemId = `hover-item-${index}`;
+  const titleId = `title-${index}`;
+  const descId = `desc-${index}`;
 
   return (
     <ListItem
@@ -374,11 +396,29 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
       onMouseEnter={(e) => handleMouse(e, "in")}
       onMouseLeave={(e) => handleMouse(e, "out")}
       delay={delay}
+      aria-labelledby={titleId}
+      aria-describedby={descId}
+      id={itemId}
     >
-      <ItemLink href="#"></ItemLink>
-      <Info animationType={animation} bgColor={bgColor} textColor={textColor}>
-        <h3>{title}</h3>
-        <p>{description}</p>
+      <ItemLink 
+        href="#"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        aria-labelledby={titleId}
+        aria-describedby={descId}
+        tabIndex={0}
+        role="button"
+      >
+        <span className="sr-only">View principle: {title}</span>
+      </ItemLink>
+      <Info 
+        animationType={animation} 
+        bgColor={bgColor} 
+        textColor={textColor}
+      >
+        <h3 id={titleId}>{title}</h3>
+        <p id={descId}>{description}</p>
       </Info>
     </ListItem>
   );
@@ -397,7 +437,10 @@ export const DirectionAwareHoverEffect: React.FC = () => {
       <GlobalStyle />
       <Title>Principles</Title>
       <Container>
-        <List>
+        <List 
+          role="list" 
+          aria-label="Design principles"
+        >
           {loaded &&
             Array.from({ length: 12 }).map((_, i) => (
               <HoverItem key={i} index={i} delay={i} />

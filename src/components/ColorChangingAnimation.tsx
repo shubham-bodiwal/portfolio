@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
 // Animation for content fade-in
@@ -186,59 +186,59 @@ const ClickHere = styled.div`
   z-index: 20;
   user-select: none;
 `;
+const skillCategories = [
+  {
+    name: "Languages & Frameworks",
+    skills: [
+      "HTML5",
+      "CSS3",
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "ReactJS",
+      "Redux Toolkit",
+    ],
+  },
+  {
+    name: "Styling & UI",
+    skills: [
+      "Ant Design",
+      "Styled Components",
+      "Material UI",
+      "Web Vitals",
+      "Lighthouse",
+      "WCAG guidelines",
+    ],
+  },
+  {
+    name: "Tools & Technologies",
+    skills: [
+      "RESTful APIs",
+      "GraphQL",
+      "React Query",
+      "Axios",
+      "SWR",
+      "PWA",
+      "GitHub",
+      "Docker",
+      "Vercel",
+      "Jira",
+      "AWS basics",
+    ],
+  },
+  {
+    name: "Emerging Interests",
+    skills: [
+      "AI integrations",
+      "IoT",
+      "Arduino-based automation",
+      "Web Workers",
+      "Service Workers",
+    ],
+  },
+]
 
 const ColorChangingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [skillCategories] = useState([
-    {
-      name: "Languages & Frameworks",
-      skills: [
-        "HTML5",
-        "CSS3",
-        "JavaScript (ES6+)",
-        "TypeScript",
-        "ReactJS",
-        "Redux Toolkit",
-      ],
-    },
-    {
-      name: "Styling & UI",
-      skills: [
-        "Ant Design",
-        "Styled Components",
-        "Material UI",
-        "Web Vitals",
-        "Lighthouse",
-        "WCAG guidelines",
-      ],
-    },
-    {
-      name: "Tools & Technologies",
-      skills: [
-        "RESTful APIs",
-        "GraphQL",
-        "React Query",
-        "Axios",
-        "SWR",
-        "PWA",
-        "GitHub",
-        "Docker",
-        "Vercel",
-        "Jira",
-        "AWS basics",
-      ],
-    },
-    {
-      name: "Emerging Interests",
-      skills: [
-        "AI integrations",
-        "IoT",
-        "Arduino-based automation",
-        "Web Workers",
-        "Service Workers",
-      ],
-    },
-  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -437,6 +437,33 @@ const ColorChangingAnimation: React.FC = () => {
       animations.push(fillAnimation, rippleAnimation, particlesAnimation);
     };
 
+    // ----- Keyboard Navigation Handler -----
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const { key } = e;
+      // Space or Enter key to trigger animation at center of canvas
+      if (key === ' ' || key === 'Enter') {
+        e.preventDefault();
+        fauxClick(cW / 2, cH / 2);
+      }
+      // Arrow keys to trigger animation in those directions
+      else if (key === 'ArrowUp') {
+        e.preventDefault();
+        fauxClick(cW / 2, cH / 4);
+      }
+      else if (key === 'ArrowDown') {
+        e.preventDefault();
+        fauxClick(cW / 2, cH * 3 / 4);
+      }
+      else if (key === 'ArrowLeft') {
+        e.preventDefault();
+        fauxClick(cW / 4, cH / 2);
+      }
+      else if (key === 'ArrowRight') {
+        e.preventDefault();
+        fauxClick(cW * 3 / 4, cH / 2);
+      }
+    };
+
     // ----- Canvas Resizing -----
     const resizeCanvas = () => {
       cW = window.innerWidth;
@@ -451,6 +478,7 @@ const ColorChangingAnimation: React.FC = () => {
     // ----- Register Event Listeners -----
     document.addEventListener("mousedown", handleEvent);
     document.addEventListener("touchstart", handleEvent);
+    canvas.addEventListener("keydown", handleKeyDown);
 
     // ----- Inactive User Handling -----
     const fauxClick = (x: number, y: number) => {
@@ -512,6 +540,12 @@ const ColorChangingAnimation: React.FC = () => {
       animationFrameId = requestAnimationFrame(update);
     };
     update();
+    
+    // Enhanced accessibility attributes
+    canvas.setAttribute("role", "img");
+    canvas.setAttribute("aria-label", "Interactive color-changing background animation. Click or use arrow keys to create ripple effects.");
+    canvas.setAttribute("aria-live", "polite");
+    canvas.setAttribute("aria-atomic", "true");
 
     // ----- Cleanup -----
     return () => {
@@ -521,6 +555,7 @@ const ColorChangingAnimation: React.FC = () => {
       document.removeEventListener("touchstart", handleEvent);
       document.removeEventListener("mousedown", clearInactiveTimeout);
       document.removeEventListener("touchstart", clearInactiveTimeout);
+      canvas.removeEventListener("keydown", handleKeyDown);
       if (inactiveTimeout) clearTimeout(inactiveTimeout);
     };
   }, []);
@@ -535,10 +570,11 @@ const ColorChangingAnimation: React.FC = () => {
           height: "100%",
           position: "absolute",
         }}
+        tabIndex={0}
       />
       <ClickHere>Click Anywhere</ClickHere>
 
-      <ContentContainer>
+      <ContentContainer id="content">
         <SectionTitle>Skills & Achievements</SectionTitle>
 
         <ContentWrapper>
@@ -584,17 +620,6 @@ const ColorChangingAnimation: React.FC = () => {
                 Technical Recognition at Resume.io
               </SkillItem>
             </SkillsList>
-
-            {/* <CategoryTitle style={{ marginTop: "2rem" }}>
-              Development Philosophy
-            </CategoryTitle>
-            <Quote>
-              "I'm an innovative Frontend Developer passionate about optimizing
-              solutions for performance, scalability, and accessibility. I
-              believe in creating digital experiences that not only function
-              flawlessly but also delight users with intuitive interfaces and
-              responsive design."
-            </Quote> */}
           </PhilosophySection>
         </ContentWrapper>
       </ContentContainer>

@@ -13,6 +13,39 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
     font-size: min(calc(100vw / 65), calc(100vh / 65)) !important;
   }
+    .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Enhanced focus styles */
+  :focus {
+    outline: 2px solid #4299e1;
+    outline-offset: 2px;
+  }
+
+  /* Skip to content link - reveals on focus */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.2s;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
 `;
 
 // Refined animations
@@ -188,6 +221,20 @@ const Button = styled.button`
   &:hover::before {
     left: 100%;
   }
+
+  &:focus {
+    outline: 2px solid #4299e1;
+    outline-offset: 2px;
+  }
+  
+  /* Make disabled state more obvious */
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  /* Add transition for smoother state changes */
+  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
 `;
 
 // Progress component with professional style
@@ -283,44 +330,72 @@ const PermissionScreen: React.FC<Props> = ({
     }
   }, [shutdownMode]);
 
+  // Handle keyboard events for the button
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <>
       <GlobalStyle />
-      <CursorAnimation />
-      <Screen>
-        <StartImageAnimation />
+      <CursorAnimation aria-hidden="true" />
+      <Screen role="dialog" aria-labelledby="screen-title" aria-describedby="screen-message">
+        <StartImageAnimation aria-hidden="true" />
         <ContentContainer>
-          <PortfolioTitle>
+          <PortfolioTitle id="screen-title">
             <span>Shubham Bhodiwal</span>'s Portfolio
           </PortfolioTitle>
 
           {isMobile ? (
             <DeviceWarning>
-              <h3>Desktop Required</h3>
-              <p>
+              <h3 id="device-warning-title">Desktop Required</h3>
+              <p id="screen-message">
                 This interactive portfolio experience is optimized for desktop
                 devices. Please open it on a computer for the full experience.
               </p>
             </DeviceWarning>
           ) : shutdownMode ? (
             <>
-              <PoweredOffMessage>Session ended</PoweredOffMessage>
-              <Message>Restarting portfolio experience. Please wait...</Message>
-              <ProgressBar>
+              <PoweredOffMessage id="shutdown-message">Session ended</PoweredOffMessage>
+              <Message id="screen-message">Restarting portfolio experience. Please wait...</Message>
+              <ProgressBar 
+                role="progressbar" 
+                aria-valuenow={progress} 
+                aria-valuemin={0} 
+                aria-valuemax={100}
+                aria-label="Restart progress"
+              >
                 <ProgressFill progress={progress} />
               </ProgressBar>
-              <StatusText>{statusText}</StatusText>
-              <Button onClick={onClick}>Resume</Button>
+              <StatusText aria-live="polite">{statusText}</StatusText>
+              <Button 
+                onClick={onClick} 
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
+                aria-label="Resume portfolio session"
+              >
+                Resume
+              </Button>
             </>
           ) : (
             <>
-              <Message>
+              <Message id="screen-message">
                 This portfolio experience requires <strong>Fullscreen</strong>{" "}
                 access to properly showcase the projects and work in an optimal
                 presentation.{" "}
                 {!isMobile && "It is only available on desktop devices."}
               </Message>
-              <Button onClick={onClick} disabled={isMobile}>
+              <Button 
+                onClick={onClick} 
+                disabled={isMobile}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
+                aria-disabled={isMobile}
+                aria-label={isMobile ? "Desktop required for this portfolio" : "Enter fullscreen mode"}
+              >
                 {isMobile ? "Desktop Required" : "Enter Fullscreen"}
               </Button>
               <StatusText>Portfolio • Version 2.0</StatusText>

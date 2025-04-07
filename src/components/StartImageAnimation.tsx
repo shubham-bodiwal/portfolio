@@ -74,15 +74,15 @@ const StartImageAnimation: React.FC = () => {
   return (
     <ImagesWrapper>
       <AnimatedImage direction="left">
-        <StyledImage src={Image1} direction="left" alt="Left part" />
+        <StyledImage loading="lazy" src={Image1} direction="left" alt="Left part" />
       </AnimatedImage>
 
       <AnimatedImage direction="center">
-        <StyledImage src={Image2} direction="center" alt="Center part" />
+        <StyledImage loading="lazy" src={Image2} direction="center" alt="Center part" />
       </AnimatedImage>
 
       <AnimatedImage direction="right">
-        <StyledImage src={Image3} direction="right" alt="Right part" />
+        <StyledImage loading="lazy" src={Image3} direction="right" alt="Right part" />
       </AnimatedImage>
     </ImagesWrapper>
   );

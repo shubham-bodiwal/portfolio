@@ -400,24 +400,27 @@ export default function Footer() {
     if (email) {
       setSubscribed(true);
       setEmail("");
-      setTimeout(() => setSubscribed(false), 3000);
+      // Announce to screen readers that the subscription was successful
+      const statusElement = document.getElementById('subscription-status');
+      if (statusElement) {
+        statusElement.textContent = "Thanks for subscribing!";
+      }
+      setTimeout(() => {
+        setSubscribed(false);
+        if (statusElement) {
+          statusElement.textContent = "";
+        }
+      }, 3000);
     }
   };
 
-  // const scrollToTop = () => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // };
-
   return (
-    <FooterWrapper>
-      <BackgroundGlow />
-      <BackgroundGlow />
+    <FooterWrapper role="contentinfo" aria-label="Contact information and subscription">
+      <BackgroundGlow aria-hidden="true" />
+      <BackgroundGlow aria-hidden="true" />
 
       <ContentContainer>
-        <SectionTitle>Let's Connect</SectionTitle>
+        <SectionTitle id="connect-heading">Let's Connect</SectionTitle>
 
         <QuoteCard>
           <Quote>
@@ -429,7 +432,8 @@ export default function Footer() {
           <QuoteAuthor>— Shubham Bhodiwal</QuoteAuthor>
         </QuoteCard>
 
-        <ProjectsStatsSection>
+        <ProjectsStatsSection aria-labelledby="stats-heading">
+          <h2 id="stats-heading" className="sr-only">Project Statistics</h2>
           <StatItem index={0}>
             <StatNumber>10+</StatNumber>
             <StatLabel>Projects</StatLabel>
@@ -449,70 +453,38 @@ export default function Footer() {
         </ProjectsStatsSection>
 
         <GridContainer>
-          <FooterColumn index={0}>
-            <ColumnTitle>Contact Me</ColumnTitle>
+          <FooterColumn index={0} aria-labelledby="contact-heading">
+            <ColumnTitle id="contact-heading">Contact Me</ColumnTitle>
             <ContactItem>
-              <Mail size={18} />
-              <ContactLink href="mailto:bhodiwalshubham03@gmail.com">
+              <Mail size={18} aria-hidden="true" />
+              <ContactLink 
+                href="mailto:bhodiwalshubham03@gmail.com"
+                aria-label="Send email to bhodiwalshubham03@gmail.com"
+              >
                 bhodiwalshubham03@gmail.com
               </ContactLink>
             </ContactItem>
-            {/* <ContactItem>
-              <Globe size={18} />
-              <ContactLink href="https://shubhambhodiwal.com" target="_blank">
-                shubhambhodiwal.com
-              </ContactLink>
-            </ContactItem> */}
 
-            <SocialLinks>
-              {/* <SocialLink href="https://github.com/shubham" target="_blank">
-                <Github size={20} />
-              </SocialLink> */}
+            <SocialLinks aria-label="Social media links">
               <SocialLink
                 href="https://www.linkedin.com/in/shubham-bhodiwal-543a6b171/"
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
               >
-                <Linkedin size={20} />
+                <Linkedin size={20} aria-hidden="true" />
               </SocialLink>
-              {/* <SocialLink href="https://twitter.com/shubham" target="_blank">
-                <Twitter size={20} />
-              </SocialLink> */}
-              <SocialLink href="mailto:bhodiwalshubham03@gmail.com">
-                <Mail size={20} />
+              <SocialLink 
+                href="mailto:bhodiwalshubham03@gmail.com"
+                aria-label="Email me"
+              >
+                <Mail size={20} aria-hidden="true" />
               </SocialLink>
             </SocialLinks>
           </FooterColumn>
 
-          <FooterColumn index={1}>
-            {/* <ColumnTitle>Key Projects</ColumnTitle>
-            <FooterNav>
-              <FooterNavItem>
-                <FooterNavLink href="#">
-                  <Code size={16} /> SHS Homeopathy
-                </FooterNavLink>
-              </FooterNavItem>
-              <FooterNavItem>
-                <FooterNavLink href="#">
-                  <Bookmark size={16} /> Resume.io
-                </FooterNavLink>
-              </FooterNavItem>
-              <FooterNavItem>
-                <FooterNavLink href="#">
-                  <Coffee size={16} /> Gulf-HR
-                </FooterNavLink>
-              </FooterNavItem>
-              <FooterNavItem>
-                <FooterNavLink href="#">
-                  <Bookmark size={16} /> Twilio Segment
-                </FooterNavLink>
-              </FooterNavItem>
-              <FooterNavItem>
-                <FooterNavLink href="#">
-                  <Coffee size={16} /> AI Interview System
-                </FooterNavLink>
-              </FooterNavItem>
-            </FooterNav> */}
-             <ColumnTitle>Stay Updated</ColumnTitle>
+          <FooterColumn index={1} aria-labelledby="update-heading">
+            <ColumnTitle id="update-heading">Stay Updated</ColumnTitle>
             <p
               style={{
                 color: "rgba(255, 255, 255, 0.7)",
@@ -525,47 +497,59 @@ export default function Footer() {
           </FooterColumn>
 
           <FooterColumn index={2}>
-           
-
+            <div aria-live="polite" id="subscription-status" className="sr-only">
+              {subscribed ? "Thanks for subscribing!" : ""}
+            </div>
+            
             {subscribed ? (
-              <p style={{ color: "#ffaa33" }}>Thanks for subscribing!</p>
+              <p 
+                style={{ color: "#ffaa33" }}
+                aria-hidden="true" // Screen readers will use the live region instead
+              >
+                Thanks for subscribing!
+              </p>
             ) : (
-              <NewsletterForm onSubmit={handleSubmit}>
+              <NewsletterForm 
+                onSubmit={handleSubmit}
+                aria-labelledby="update-heading"
+              >
                 <NewsletterInput
                   type="email"
                   placeholder="Your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  aria-label="Your email address"
+                  aria-required="true"
                 />
                 <NewsletterButton type="submit">Subscribe</NewsletterButton>
               </NewsletterForm>
             )}
 
-            <CTAButton href="mailto:bhodiwalshubham03@gmail.com">
+            <CTAButton 
+              href="mailto:bhodiwalshubham03@gmail.com"
+              aria-label="Get in touch via email"
+            >
               Get In Touch{" "}
-              <ArrowUp size={16} style={{ transform: "rotate(45deg)" }} />
+              <ArrowUp size={16} style={{ transform: "rotate(45deg)" }} aria-hidden="true" />
             </CTAButton>
           </FooterColumn>
         </GridContainer>
 
-        <Divider />
+        <Divider role="separator" />
 
         <Copyright>
           <div>&copy; {currentYear} Shubham Bhodiwal. All rights reserved.</div>
           <div>
             Made with{" "}
-            <HeartIcon>
+            <HeartIcon aria-hidden="true">
               <Heart size={16} />
             </HeartIcon>{" "}
+            <span className="sr-only">love</span>
             using React & TypeScript
           </div>
         </Copyright>
       </ContentContainer>
-
-      {/* <BackToTop onClick={scrollToTop}>
-        <ArrowUp size={24} />
-      </BackToTop> */}
     </FooterWrapper>
   );
 }
