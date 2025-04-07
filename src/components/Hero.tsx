@@ -202,24 +202,31 @@ const Description = styled.div`
 // === Component ===
 export default function Hero() {
   return (
-    <HeroSection {...springUpFade}>
+    <HeroSection {...springUpFade} aria-label="Portfolio introduction">
       <Description>Portfolio</Description>
-      <BackgroundVideo autoPlay loop muted playsInline>
+      <BackgroundVideo 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        aria-hidden="true"
+        tabIndex={-1}
+      >
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </BackgroundVideo>
-      <Overlay />
+      <Overlay aria-hidden="true" />
       <HeaderContainer>
         <Header />
       </HeaderContainer>
-      <Content>
-        <Title>SHUBHAM BHODIWAL</Title>
-        <Subtitle>
+      <Content aria-labelledby="portfolio-title portfolio-subtitle">
+        <Title id="portfolio-title">SHUBHAM BHODIWAL</Title>
+        <Subtitle id="portfolio-subtitle">
           FRONTEND
           <br /> <span style={{ color: "white" }}>DEVELOPER</span>
         </Subtitle>
       </Content>
-      <CornerTag>Developer from november 2021 </CornerTag>
+      <CornerTag aria-label="Developer since November 2021">Developer from november 2021</CornerTag>
     </HeroSection>
   );
 }

@@ -354,30 +354,50 @@ export default function Gallery() {
   ];
 
   return (
-    <GalleryWrapper>
-      <BackgroundGlow />
-      <BackgroundGlow />
+    <GalleryWrapper aria-label="Projects gallery">
+      <BackgroundGlow aria-hidden="true" />
+      <BackgroundGlow aria-hidden="true" />
       <GlobalCoverflowStyle />
-      <Subtitle>Projects</Subtitle>
+      <Subtitle id="gallery-title">Projects</Subtitle>
 
-      <CoverflowContainer>
-        <CoverflowList>
+      <CoverflowContainer aria-labelledby="gallery-title">
+        <CoverflowList role="tablist" aria-orientation="horizontal">
           {galleries.map((gallery, index) => {
             const isWhite = index % 2 !== 0;
+            const isActive = index === activeIndex;
+            const itemId = `gallery-item-${index+1}`;
+            const contentId = `gallery-content-${index+1}`;
 
             return (
               <CoverflowItem
                 key={index+1}
-                isActive={index === activeIndex}
+                isActive={isActive}
                 isAfterActive={index > activeIndex}
                 onClick={() => setActiveIndex(index)}
                 dataIndex={(index+1).toString()}
                 isWhite={isWhite}
+                role="tab"
+                id={itemId}
+                aria-selected={isActive}
+                aria-controls={contentId}
+                tabIndex={isActive ? 0 : -1}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    setActiveIndex(index);
+                  }
+                }}
               >
-                <Title isWhite={isWhite} isActive={index === activeIndex}>
+                <Title isWhite={isWhite} isActive={isActive}>
                   {gallery.title}
                 </Title>
-                <Content isWhite={isWhite} isActive={index === activeIndex}>
+                <Content 
+                  isWhite={isWhite} 
+                  isActive={isActive}
+                  id={contentId}
+                  role="tabpanel"
+                  aria-labelledby={itemId}
+                  tabIndex={0}
+                >
                   {gallery.content}
                 </Content>
               </CoverflowItem>
@@ -386,17 +406,27 @@ export default function Gallery() {
         </CoverflowList>
       </CoverflowContainer>
 
-      <Controls>
-        {galleries.map((gallery, index) => (
-          <ControlButton
-            key={index+1}
-            isActive={index === activeIndex}
-            onClick={() => setActiveIndex(index)}
-            aria-label={`View ${gallery.title}`}
-          >
-            {index+1}
-          </ControlButton>
-        ))}
+      <Controls aria-label="Gallery navigation">
+        {galleries.map((gallery, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <ControlButton
+              key={index+1}
+              isActive={isActive}
+              onClick={() => setActiveIndex(index)}
+              aria-label={`View project ${index+1}: ${gallery.title}`}
+              aria-current={isActive ? "true" : "false"}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setActiveIndex(index);
+                }
+              }}
+            >
+              {index+1}
+            </ControlButton>
+          );
+        })}
       </Controls>
     </GalleryWrapper>
   );

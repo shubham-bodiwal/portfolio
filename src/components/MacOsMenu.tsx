@@ -104,11 +104,25 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(visible);
   const menuRef = useRef<HTMLDivElement>(null);
+  const firstItemRef = useRef<HTMLDivElement>(null);
+  const activeItemRef = useRef<number>(-1);
+
+  // Handle visibility state
+  useEffect(() => {
+    setIsVisible(visible);
+  }, [visible]);
+
+  // Focus management - focus the menu when it opens
+  useEffect(() => {
+    if (isVisible && menuRef.current) {
+      menuRef.current.focus();
+      // Reset active item index
+      activeItemRef.current = -1;
+    }
+  }, [isVisible]);
 
   // Handle clicking outside to close the menu
   useEffect(() => {
-    setIsVisible(visible);
-
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsVisible(false);
@@ -139,6 +153,74 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
     }, 100);
   };
 
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Get all menu items (excluding separators)
+    const menuItems = menuRef.current?.querySelectorAll('[role="menuitem"]');
+    
+    if (!menuItems || menuItems.length === 0) return;
+    
+    const itemCount = menuItems.length;
+    let newIndex = activeItemRef.current;
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        // Move to next item, loop around if at end
+        newIndex = (activeItemRef.current + 1) % itemCount;
+        e.preventDefault();
+        break;
+      case 'ArrowUp':
+        // Move to previous item, loop around if at beginning
+        newIndex = (activeItemRef.current - 1 + itemCount) % itemCount;
+        e.preventDefault();
+        break;
+      case 'Home':
+        // Move to first item
+        newIndex = 0;
+        e.preventDefault();
+        break;
+      case 'End':
+        // Move to last item
+        newIndex = itemCount - 1;
+        e.preventDefault();
+        break;
+      case 'Enter':
+      case ' ':
+        // Activate current item
+        if (activeItemRef.current >= 0 && activeItemRef.current < itemCount) {
+          (menuItems[activeItemRef.current] as HTMLElement).click();
+        }
+        e.preventDefault();
+        break;
+      case 'Escape':
+        // Close menu
+        setIsVisible(false);
+        if (onClose) onClose();
+        e.preventDefault();
+        break;
+      default:
+        // Optional: First-letter navigation
+        { const key = e.key.toLowerCase();
+        if (key.length === 1 && key >= 'a' && key <= 'z') {
+          // Find first item that starts with this letter
+          const itemIndex = Array.from(menuItems).findIndex(
+            item => (item.textContent || '').toLowerCase().startsWith(key)
+          );
+          if (itemIndex >= 0) {
+            newIndex = itemIndex;
+            e.preventDefault();
+          }
+        }
+         }
+    }
+    
+    // Update active item and focus it
+    if (newIndex !== activeItemRef.current && newIndex >= 0 && newIndex < itemCount) {
+      activeItemRef.current = newIndex;
+      (menuItems[newIndex] as HTMLElement).focus();
+    }
+  };
+
   // Create a menu that renders directly into the body using a portal
   // This ensures it's always on top of everything
   const menuElement = (
@@ -150,32 +232,54 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
         top: position.y,
         display: isVisible ? "block" : "none",
       }}
+      role="menu"
+      aria-label="Apple menu"
+      tabIndex={-1}
+      onKeyDown={handleKeyDown}
     >
-      <MenuTitle>About This Mac</MenuTitle>
-      <Separator />
-      <MenuItem disabled>System Settings...</MenuItem>
-      <MenuItem disabled>App Store...</MenuItem>
-      <Separator />
-      <MenuItem disabled hasSubmenu>
+      <MenuTitle role="presentation">About This Mac</MenuTitle>
+      <Separator role="separator" />
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
+        System Settings...
+      </MenuItem>
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
+        App Store...
+      </MenuItem>
+      <Separator role="separator" />
+      <MenuItem disabled hasSubmenu role="menuitem" aria-disabled="true" aria-haspopup="true" tabIndex={-1}>
         Recent Items
       </MenuItem>
-      <Separator />
-      <MenuItem disabled>
+      <Separator role="separator" />
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Force Quit...
-        <ShortcutText>⌥⌘⎋</ShortcutText>
+        <ShortcutText aria-hidden="true">⌥⌘⎋</ShortcutText>
+        <span className="sr-only">Option Command Escape</span>
       </MenuItem>
-      <Separator />
-      <MenuItem disabled>Sleep</MenuItem>
-      <MenuItem disabled>Restart...</MenuItem>
-      <MenuItem onClick={handleShutDown}>Shut Down...</MenuItem>
-      <Separator />
-      <MenuItem disabled>
+      <Separator role="separator" />
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
+        Sleep
+      </MenuItem>
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
+        Restart...
+      </MenuItem>
+      <MenuItem 
+        onClick={handleShutDown} 
+        role="menuitem" 
+        tabIndex={0} 
+        ref={firstItemRef}
+      >
+        Shut Down...
+      </MenuItem>
+      <Separator role="separator" />
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Lock Screen
-        <ShortcutText>⌃⌘Q</ShortcutText>
+        <ShortcutText aria-hidden="true">⌃⌘Q</ShortcutText>
+        <span className="sr-only">Control Command Q</span>
       </MenuItem>
-      <MenuItem disabled>
+      <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Log Out Shubham...
-        <ShortcutText>⇧⌘Q</ShortcutText>
+        <ShortcutText aria-hidden="true">⇧⌘Q</ShortcutText>
+        <span className="sr-only">Shift Command Q</span>
       </MenuItem>
     </MenuWrapper>
   );

@@ -1,14 +1,13 @@
-import styled, { keyframes } from 'styled-components';
-import AppleLogoBG from '../assets/apple-logo 1 (1).avif'
-import overlayImage from '../assets/apple-logo 1.avif';
+import styled, { keyframes } from "styled-components";
+import AppleLogoBG from "../assets/apple-logo 1 (1).avif";
+import overlayImage from "../assets/apple-logo 1.avif";
 
 const Container = styled.div`
   position: relative;
   overflow: hidden;
-   width: 10rem;
+  width: 10rem;
   height: 10rem;
-    margin-bottom: 2rem;
-
+  margin-bottom: 2rem;
 `;
 
 const BackgroundImage = styled.img`
@@ -33,17 +32,18 @@ const OverlayImage = styled.img<{ animationDuration: string }>`
   width: 10rem;
   height: 10rem;
   clip-path: inset(0 0 0 0);
-  animation: ${hideOverlay} ${({ animationDuration }) => animationDuration} forwards;
+  animation: ${hideOverlay} ${({ animationDuration }) => animationDuration}
+    forwards;
 `;
 
 const ImageReveal = () => {
   return (
-    <Container>
-      <BackgroundImage src={AppleLogoBG} alt="Background" loading="lazy" />
+    <Container aria-hidden="true">
+      <BackgroundImage src={AppleLogoBG} alt="" loading="lazy" />
       <OverlayImage
         src={overlayImage}
-        alt="Overlay"
-        animationDuration='3s'
+        alt=""
+        animationDuration="3s"
         loading="lazy"
       />
     </Container>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 const slideIn = keyframes`
@@ -101,35 +101,136 @@ const MacNotification: React.FC<NotificationProps> = ({
   autoCloseTime = 5000,
 }) => {
   const [isExiting, setIsExiting] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<number | null>(null);
+  const closeTimeoutRef = useRef<number | null>(null);
 
+  // Focus the notification when it appears
+  useEffect(() => {
+    if (isVisible && notificationRef.current) {
+      notificationRef.current.focus();
+    }
+  }, [isVisible]);
+
+  // Handle auto-close timer
   useEffect(() => {
     if (isVisible && autoClose) {
-      const timer = setTimeout(() => {
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      // Set new timeout
+      timeoutRef.current = window.setTimeout(() => {
         handleClose();
       }, autoCloseTime);
 
-      return () => clearTimeout(timer);
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
     }
   }, [isVisible, autoClose, autoCloseTime]);
 
+  // Reset when component unmounts
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleClose = () => {
     setIsExiting(true);
-    setTimeout(() => {
+    
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    
+    closeTimeoutRef.current = window.setTimeout(() => {
       onClose();
       setIsExiting(false);
     }, 400); // Same as animation duration
   };
 
+  // Pause auto-close on hover or focus
+  const handleMouseEnter = () => {
+    if (autoClose && timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
+
+  // Resume auto-close on mouse leave or blur
+  const handleMouseLeave = () => {
+    if (isVisible && autoClose) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = window.setTimeout(() => {
+        handleClose();
+      }, autoCloseTime);
+    }
+  };
+
+  // Handle keyboard events
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleClose();
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
-    <NotificationContainer isExiting={isExiting}>
+    <NotificationContainer 
+      role="alert"
+      aria-live="polite"
+      aria-atomic="true"
+      isExiting={isExiting}
+      ref={notificationRef}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleMouseEnter}
+      onBlur={handleMouseLeave}
+    >
       <NotificationHeader>
-        <AppIcon loading="lazy" src={appIcon} alt={appName} />
-        <AppName>{appName}</AppName>
-        <CloseButton onClick={handleClose}>×</CloseButton>
+        <AppIcon 
+          loading="lazy" 
+          src={appIcon} 
+          alt="" 
+          aria-hidden="true" 
+        />
+        <AppName id={`notification-app-${appName.replace(/\s+/g, '-').toLowerCase()}`}>
+          {appName}
+        </AppName>
+        <CloseButton 
+          onClick={handleClose}
+          aria-label="Close notification"
+          title="Close notification"
+        >
+          ×
+        </CloseButton>
       </NotificationHeader>
-      <NotificationBody>{message}</NotificationBody>
+      <NotificationBody 
+        aria-labelledby={`notification-app-${appName.replace(/\s+/g, '-').toLowerCase()}`}
+      >
+        {message}
+      </NotificationBody>
+      
+      {/* Visually hidden timer information for screen readers */}
+      {autoClose && (
+        <span className="sr-only">
+          This notification will automatically close in {Math.round(autoCloseTime / 1000)} seconds. 
+          Press Escape to close now.
+        </span>
+      )}
     </NotificationContainer>
   );
 };

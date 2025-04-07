@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes, css } from "styled-components";
 import { Rnd } from "react-rnd";
@@ -165,13 +165,14 @@ export default function MacWindow({
   };
 
   // Handle minimizing
-  const handleMinimize = () => {
+  const handleMinimize = useCallback(() => {
     saveCurrentPosition();
     onMinimize(id);
-  };
+
+  },[id, onMinimize]);
 
   // Handle fullscreen toggle
-  const handleFullscreenToggle = () => {
+  const handleFullscreenToggle = useCallback(() => {
     if (!isFullscreen) {
       saveCurrentPosition();
     } else {
@@ -180,19 +181,24 @@ export default function MacWindow({
     const newState = !isFullscreen;
     setIsFullscreen(newState);
     onFullscreenChange(id, newState);
-  };
+
+  },[id, isFullscreen, onFullscreenChange]);
 
   // Handle close with animation
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsClosing(true);
     setTimeout(() => {
       onClose(id);
     }, 200); // Match animation duration
-  };
+  },[id, onClose]);
 
   // Track when user starts dragging
   const handleDragStart = () => {
     setUserMovedAfterRestore(true);
+  };
+
+  // Handle resize
+  const handleResizeStart = () => {
   };
 
   // Handle blur when clicking outside
@@ -208,6 +214,40 @@ export default function MacWindow({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isActive) return;
+
+      // ESC key for closing or exiting fullscreen
+      if (e.key === 'Escape') {
+        if (isFullscreen) {
+          handleFullscreenToggle();
+        } else {
+          handleClose();
+        }
+        e.preventDefault();
+      }
+      
+      // Alt+Enter for fullscreen toggle (common keyboard shortcut)
+      if (e.key === 'Enter' && e.altKey) {
+        handleFullscreenToggle();
+        e.preventDefault();
+      }
+      
+      // Alt+M for minimize
+      if (e.key === 'm' && e.altKey) {
+        handleMinimize();
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleClose, handleFullscreenToggle, handleMinimize, isActive, isFullscreen]);
 
   // Get position based on window state
   const getPosition = () => {
@@ -258,12 +298,16 @@ export default function MacWindow({
       dragHandleClassName="window-drag-handle"
       onMouseDown={handleActivate}
       onDragStart={handleDragStart}
+      onResizeStart={handleResizeStart}
     >
       <WindowWrapper
         ref={windowRef}
         isFullscreen={isFullscreen}
         isActive={isActive}
         isClosing={isClosing}
+        role="dialog"
+        aria-labelledby={`window-title-${id}`}
+        aria-modal="true"
       >
         <WindowHeader
           className="window-drag-handle"
@@ -276,36 +320,48 @@ export default function MacWindow({
               icon="×"
               isActive={isActive}
               onClick={handleClose}
+              aria-label="Close window"
+              title="Close"
             ></CircleButton>
             <CircleButton
               color="#ffbd2e"
               icon="−"
               isActive={isActive}
               onClick={handleMinimize}
+              aria-label="Minimize window"
+              title="Minimize"
             ></CircleButton>
             <CircleButton
               color="#28c840"
               icon="+"
               isActive={isActive}
               onClick={handleFullscreenToggle}
+              aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             ></CircleButton>
           </ButtonGroup>
-          <Title isActive={isActive}>{appName}</Title>
+          <Title isActive={isActive} id={`window-title-${id}`}>{appName}</Title>
         </WindowHeader>
-        {children ? (
-          appName === "Portfolio" || appName === "UI Work Sample" ? (
-            <FullscreenPrompt
-              isFullscreen={isFullscreen}
-              requestFullscreen={handleFullscreenToggle}
-            >
-              {children}
-            </FullscreenPrompt>
+        <div 
+          role="region" 
+          aria-label={`${appName} content`}
+          style={{ flex: 1, overflow: 'auto' }}
+        >
+          {children ? (
+            appName === "Portfolio" || appName === "UI Work Sample" ? (
+              <FullscreenPrompt
+                isFullscreen={isFullscreen}
+                requestFullscreen={handleFullscreenToggle}
+              >
+                {children}
+              </FullscreenPrompt>
+            ) : (
+              children
+            )
           ) : (
-            children
-          )
-        ) : (
-          <WindowContent>This is the {appName} content.</WindowContent>
-        )}
+            <WindowContent>This is the {appName} content.</WindowContent>
+          )}
+        </div>
       </WindowWrapper>
     </Rnd>,
     portalTarget as HTMLElement

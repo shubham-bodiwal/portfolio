@@ -384,24 +384,6 @@ export default function EnhancedMacOSDesktop() {
     );
   };
 
-  // // 5. You can also create a function to add custom notifications
-  // const showCustomNotification = (
-  //   appName: string,
-  //   appIcon: string,
-  //   message: string
-  // ) => {
-  //   const newNotification: NotificationItem = {
-  //     id: uuidv4(),
-  //     appName,
-  //     appIcon,
-  //     message,
-  //     timestamp: Date.now(),
-  //   };
-
-  //   setNotifications((prev) => [newNotification, ...prev]);
-  // };
-
-
   // Request browser fullscreen on mount
   useEffect(() => {
     const element = document.documentElement;
@@ -582,7 +564,7 @@ export default function EnhancedMacOSDesktop() {
         },
       ];
     });
-  },[dockItems]);
+  },[]);
 
   useEffect(() => {
     if (systemState === "running" && booted) {
@@ -593,6 +575,8 @@ export default function EnhancedMacOSDesktop() {
           width="100%"
           height="100%"
           style={{ border: "none" }}
+          title="UI Work Sample"
+          aria-label="UI Work Sample"
         ></iframe>
       );
       launchApp("Resume", <InteractiveResume />);
@@ -667,7 +651,13 @@ export default function EnhancedMacOSDesktop() {
   // Render boot screen while booting or shutdown screen while shutting down
   if (!booted || showShutdownScreen) {
     return (
-      <BootScreen isShuttingDown={showShutdownScreen}>
+      <BootScreen 
+        isShuttingDown={showShutdownScreen}
+        role="alert"
+        aria-live="assertive"
+        aria-label={showShutdownScreen ? "System shutting down" : "System booting"}
+        aria-atomic="true"
+      >
         {showShutdownScreen ? (
           <ShutdownScreen />
         ) : (
@@ -688,7 +678,11 @@ export default function EnhancedMacOSDesktop() {
   const folderApps = dockItems.filter((item) => item.section === "folders");
 
   return (
-    <DesktopContainer id="desktop-container">
+    <DesktopContainer 
+      id="desktop-container"
+      role="application"
+      aria-label="Enhanced MacOS Desktop"
+    >
       {/* Header Bar */}
       <HeaderBackground isFullscreen={fullscreenWindows.size > 0}>
         <HeaderWrapper
@@ -698,12 +692,27 @@ export default function EnhancedMacOSDesktop() {
           <MacHeader
             activeAppName={activeAppName}
             onShutdown={handleShutdown}
+            aria-label="System menu bar"
           />
         </HeaderWrapper>
       </HeaderBackground>
 
+      {/* Skip to content link for keyboard users */}
+      <a 
+        href="#windows-area" 
+        className="sr-only focus:not-sr-only"
+        aria-label="Skip to main content"
+        tabIndex={0}
+      >
+        Skip to content
+      </a>
+
       {/* Windows area */}
-      <WindowsArea id="windows-area">
+      <WindowsArea 
+        id="windows-area"
+        role="region" 
+        aria-label="Application Windows"
+      >
         {openWindows.map(
           (win) =>
             !win.minimized && (
@@ -716,6 +725,7 @@ export default function EnhancedMacOSDesktop() {
                 onFullscreenChange={handleFullscreenChange}
                 onActivate={activateWindow}
                 zIndex={win.zIndex}
+                aria-label={`${win.appName} window`}
               >
                 {win?.children}
               </MacWindow>
@@ -724,25 +734,40 @@ export default function EnhancedMacOSDesktop() {
       </WindowsArea>
 
       {/* Dock */}
-      <Dock visible={dockVisible}>
+      <Dock 
+        visible={dockVisible}
+        role="toolbar"
+        aria-label="Application Dock"
+      >
         <DockItemContainer>
           {normalApps.map((item) => (
             <DockItem
               key={item.name}
               isAnimating={item.section === "favorites"}
             >
-              <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img src={item.icon} alt={item.name} />
+              <AppIcon 
+                onClick={() => handleDockItemClick(item)}
+                role="button"
+                aria-label={`${item.name} ${getAppStatus(item.name) ? `(${getAppStatus(item.name)})` : ''}`}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleDockItemClick(item);
+                  }
+                }}
+              >
+                <img src={item.icon} alt="" aria-hidden="true" />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
                   status={getAppStatus(item.name) as "open" | "minimized"}
+                  aria-hidden="true"
                 />
               )}
             </DockItem>
           ))}
 
-          {!!favoriteApps?.length && <DockSeparator />}
+          {!!favoriteApps?.length && <DockSeparator aria-hidden="true" />}
 
           {/* Favorite Apps */}
           {favoriteApps.map((item) => (
@@ -750,19 +775,30 @@ export default function EnhancedMacOSDesktop() {
               key={item.name}
               isAnimating={item.section === "favorites"}
             >
-              <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img src={item.icon} alt={item.name} />
+              <AppIcon 
+                onClick={() => handleDockItemClick(item)}
+                role="button"
+                aria-label={`${item.name} ${getAppStatus(item.name) ? `(${getAppStatus(item.name)})` : ''}`}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleDockItemClick(item);
+                  }
+                }}
+              >
+                <img src={item.icon} alt="" aria-hidden="true" />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
                   status={getAppStatus(item.name) as "open" | "minimized"}
+                  aria-hidden="true"
                 />
               )}
             </DockItem>
           ))}
 
           {/* Separator */}
-          {!!folderApps?.length && <DockSeparator />}
+          {!!folderApps?.length && <DockSeparator aria-hidden="true" />}
 
           {/* Folders and Trash */}
           {folderApps.map((item) => (
@@ -770,12 +806,23 @@ export default function EnhancedMacOSDesktop() {
               key={item.name}
               isAnimating={item.section === "favorites"}
             >
-              <AppIcon onClick={() => handleDockItemClick(item)}>
-                <img src={item.icon} alt={item.name} />
+              <AppIcon 
+                onClick={() => handleDockItemClick(item)}
+                role="button"
+                aria-label={`${item.name} ${getAppStatus(item.name) ? `(${getAppStatus(item.name)})` : ''}`}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleDockItemClick(item);
+                  }
+                }}
+              >
+                <img src={item.icon} alt="" aria-hidden="true" />
               </AppIcon>
               {getAppStatus(item.name) && (
                 <StatusDot
                   status={getAppStatus(item.name) as "open" | "minimized"}
+                  aria-hidden="true"
                 />
               )}
             </DockItem>
@@ -788,10 +835,14 @@ export default function EnhancedMacOSDesktop() {
         onClose={closeNotification}
         autoClose={true}
         autoCloseTime={5000}
+        aria-live="polite"
       />
 
       {/* Shutdown overlay */}
-      <DesktopFadeOut isShuttingDown={systemState === "shuttingDown"} />
+      <DesktopFadeOut 
+        isShuttingDown={systemState === "shuttingDown"}
+        aria-hidden={systemState !== "shuttingDown"}
+      />
     </DesktopContainer>
   );
 }

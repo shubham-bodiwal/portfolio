@@ -171,27 +171,31 @@ const FullscreenPrompt: React.FC<FullscreenPromptProps> = ({
   }
   
   return (
-    <FullscreenContainer>
-      <BackgroundGradient />
+    <FullscreenContainer role="dialog" aria-labelledby="fullscreen-title" aria-describedby="fullscreen-message">
+      <BackgroundGradient aria-hidden="true" />
       <ContentContainer>
-        <IconContainer>
+        <IconContainer aria-hidden="true">
           <Maximize2 size={80} color="white" strokeWidth={1.5} />
         </IconContainer>
-        <Title>Fullscreen Experience Required</Title>
-        <Message>
+        <Title id="fullscreen-title">Fullscreen Experience Required</Title>
+        <Message id="fullscreen-message">
           This interactive experience is designed to be viewed in fullscreen mode.
           Please click the button below to enter fullscreen and unlock the full immersive experience.
         </Message>
-        <FullscreenButton onClick={requestFullscreen}>
-          <ArrowUpCircle size={20} />
+        <FullscreenButton 
+          onClick={requestFullscreen}
+          aria-label="Enter fullscreen mode"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              requestFullscreen();
+            }
+          }}
+        >
+          <ArrowUpCircle size={20} aria-hidden="true" />
           Enter Fullscreen
         </FullscreenButton>
       </ContentContainer>
-{/*       
-      <ChevronAnimation>
-        <ChevronUp size={20} strokeWidth={1.5} />
-        <ChevronDown size={20} strokeWidth={1.5} />
-      </ChevronAnimation> */}
     </FullscreenContainer>
   );
 };

@@ -21,6 +21,19 @@ const Dot = styled.span<{ delay: string }>`
   animation-delay: ${(props) => props.delay};
 `;
 
+// Hidden text for screen readers
+const ScreenReaderText = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+`;
+
 type Props = {
   onAnimationComplete?: () => void;
   duration?: number;
@@ -31,6 +44,7 @@ const ShutdownScreen: React.FC<Props> = ({
   duration = 5000,
 }) => {
   const [countdown, setCountdown] = useState(duration);
+  const [progressPercentage, setProgressPercentage] = useState(0);
 
   useEffect(() => {
     if (duration > 0) {
@@ -49,19 +63,36 @@ const ShutdownScreen: React.FC<Props> = ({
     if (countdown <= 0) return;
 
     const interval = setInterval(() => {
-      setCountdown((prev) => Math.max(prev - 100, 0));
+      setCountdown((prev) => {
+        const newValue = Math.max(prev - 100, 0);
+        // Calculate progress percentage for aria-valuenow
+        setProgressPercentage(100 - Math.floor((newValue / duration) * 100));
+        return newValue;
+      });
     }, 100);
 
     return () => clearInterval(interval);
-  }, [countdown]);
+  }, [countdown, duration]);
 
   return (
-    <Message>
-      Shutting down
-      <Dot delay="0s">.</Dot>
-      <Dot delay="0.5s">.</Dot>
-      <Dot delay="1s">.</Dot>
-    </Message>
+    <>
+      
+      <div 
+        role="progressbar" 
+        aria-valuenow={progressPercentage} 
+        aria-valuemin={0} 
+        aria-valuemax={100}
+        aria-label="Shutting down"
+        style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden' }}
+      />
+
+      <Message aria-hidden="true">
+        Shutting down
+        <Dot delay="0s">.</Dot>
+        <Dot delay="0.5s">.</Dot>
+        <Dot delay="1s">.</Dot>
+      </Message>
+    </>
   );
 };
 

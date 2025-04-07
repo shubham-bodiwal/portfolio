@@ -400,7 +400,6 @@ export default function Footer() {
     if (email) {
       setSubscribed(true);
       setEmail("");
-      // Announce to screen readers that the subscription was successful
       const statusElement = document.getElementById('subscription-status');
       if (statusElement) {
         statusElement.textContent = "Thanks for subscribing!";

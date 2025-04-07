@@ -284,6 +284,14 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
     setIsListView(!isListView);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, id: string) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleNotificationClick(id);
+    } else if (e.key === 'Escape') {
+      handleClose(id);
+    }
+  };
+
   // Sort notifications by timestamp (newest first) and show at most 5
   const visibleNotifications = [...notifications]
     .sort((a, b) => b.timestamp - a.timestamp)
@@ -296,12 +304,32 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
 
   // Create a portal to render notifications directly into the body
   return ReactDOM.createPortal(
-    <NotificationStack isListView={isListView}>
+    <NotificationStack 
+      isListView={isListView}
+      aria-live="polite"
+      aria-label="System notifications"
+      aria-atomic="false"
+      aria-relevant="additions text"
+    >
       {!isListView && visibleNotifications.length > 1 && (
-        <Counter>{visibleNotifications.length}</Counter>
+        <Counter aria-label={`${visibleNotifications.length} notifications`}>
+          {visibleNotifications.length}
+        </Counter>
       )}
       
-      <ViewToggle isListView={isListView} onClick={toggleView}>
+      <ViewToggle 
+        isListView={isListView} 
+        onClick={toggleView}
+        role="button"
+        aria-pressed={isListView}
+        aria-label={isListView ? 'Collapse notifications' : 'Expand notifications'}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            toggleView();
+          }
+        }}
+      >
         {isListView ? '▲ Collapse' : '▼ Expand'}
       </ViewToggle>
       
@@ -312,15 +340,42 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
           index={index}
           isListView={isListView}
           isActive={notification.id === activeNotificationId}
-          onClick={() => handleNotificationClick(notification.id )}
+          onClick={() => handleNotificationClick(notification.id)}
+          role="article"
+          aria-label={`${notification.appName} notification`}
+          tabIndex={0}
+          onKeyDown={(e) => handleKeyDown(e, notification.id)}
         >
           <NotificationHeader>
-            <AppIcon src={notification.appIcon} alt={notification.appName} loading="lazy" />
-            <AppName>{notification.appName}</AppName>
-            <CloseButton onClick={(e) => handleCloseClick(e, notification.id)}>×</CloseButton>
+            <AppIcon 
+              src={notification.appIcon} 
+              alt="" 
+              loading="lazy" 
+              aria-hidden="true"
+            />
+            <AppName id={`notification-app-${notification.id}`}>
+              {notification.appName}
+            </AppName>
+            <CloseButton 
+              onClick={(e) => handleCloseClick(e, notification.id)}
+              aria-label={`Close ${notification.appName} notification`}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handleCloseClick(e as unknown as React.MouseEvent, notification.id);
+                }
+              }}
+            >
+              ×
+            </CloseButton>
           </NotificationHeader>
-          <NotificationBody>{notification.message}</NotificationBody>
-          <Timestamp>
+          <NotificationBody aria-labelledby={`notification-app-${notification.id}`}>
+            {notification.message}
+          </NotificationBody>
+          <Timestamp aria-label={`Notification time: ${new Date(notification.timestamp).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+          })}`}>
             {new Date(notification.timestamp).toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit'

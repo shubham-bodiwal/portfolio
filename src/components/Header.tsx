@@ -83,12 +83,23 @@ const NavLink = styled.a`
 
 export default function Header() {
   return (
-    <HeaderWrapper>
-      <NavLink href="#about">Frontend Strategist</NavLink>
-      <NavLink href="#work">Technology Pioneer</NavLink>
-      <Logo src={logoImage} alt="Logo" loading="lazy" />
-      <NavLink href="#shop">Component Engineer</NavLink>
-      <NavLink href="#contacts">Innovation Catalyst</NavLink>
+    <HeaderWrapper aria-label="Main navigation">
+      <NavLink href="#about" aria-label="About section - Frontend Strategist">
+        Frontend Strategist
+      </NavLink>
+      <NavLink href="#work" aria-label="Work section - Technology Pioneer">
+        Technology Pioneer
+      </NavLink>
+      <Logo src={logoImage} alt="Shubham Bhodiwal" loading="lazy" />
+      <NavLink href="#shop" aria-label="Shop section - Component Engineer">
+        Component Engineer
+      </NavLink>
+      <NavLink
+        href="#contacts"
+        aria-label="Contact section - Innovation Catalyst"
+      >
+        Innovation Catalyst
+      </NavLink>
     </HeaderWrapper>
   );
 }

@@ -70,21 +70,76 @@ const StyledImage = styled.img<{ direction: string }>`
   height: ${({ direction }) => (direction === "center" ? "13rem" : "8rem")};
 `;
 
+// Create a visually hidden description for screen readers
+const ScreenReaderDescription = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+`;
+
 const StartImageAnimation: React.FC = () => {
+  // Stop animations if user has requested reduced motion
+  const prefersReducedMotion = 
+    typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
   return (
-    <ImagesWrapper>
-      <AnimatedImage direction="left">
-        <StyledImage loading="lazy" src={Image1} direction="left" alt="Left part" />
-      </AnimatedImage>
+    <>
+      {/* Screen reader description of the animation */}
+      <ScreenReaderDescription>
+        Portfolio loading animation with three stylized geometric shapes forming a logo
+      </ScreenReaderDescription>
+      
+      <ImagesWrapper 
+        style={prefersReducedMotion ? { animation: 'none' } : undefined}
+        role="img" 
+        aria-label="Portfolio logo animation" 
+      >
+        <AnimatedImage 
+          direction="left"
+          style={prefersReducedMotion ? { animation: 'none' } : undefined}
+        >
+          <StyledImage 
+            loading="lazy" 
+            src={Image1} 
+            direction="left" 
+            alt="" 
+            aria-hidden="true" 
+          />
+        </AnimatedImage>
 
-      <AnimatedImage direction="center">
-        <StyledImage loading="lazy" src={Image2} direction="center" alt="Center part" />
-      </AnimatedImage>
+        <AnimatedImage 
+          direction="center"
+          style={prefersReducedMotion ? { animation: 'none' } : undefined}
+        >
+          <StyledImage 
+            loading="lazy" 
+            src={Image2} 
+            direction="center" 
+            alt="" 
+            aria-hidden="true" 
+          />
+        </AnimatedImage>
 
-      <AnimatedImage direction="right">
-        <StyledImage loading="lazy" src={Image3} direction="right" alt="Right part" />
-      </AnimatedImage>
-    </ImagesWrapper>
+        <AnimatedImage 
+          direction="right"
+          style={prefersReducedMotion ? { animation: 'none' } : undefined}
+        >
+          <StyledImage 
+            loading="lazy" 
+            src={Image3} 
+            direction="right" 
+            alt="" 
+            aria-hidden="true" 
+          />
+        </AnimatedImage>
+      </ImagesWrapper>
+    </>
   );
 };
 

@@ -132,7 +132,7 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
     };
   }, []);
 
-  const handleAppleLogoClick = (event: React.MouseEvent) => {
+  const handleAppleLogoClick = (event: any) => {
     const rect = event.currentTarget.getBoundingClientRect();
     setMenuPosition({
       x: rect.left,
@@ -153,29 +153,36 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
 
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer aria-label="System menu bar">
         <LeftSection>
           <BackgroundImage
             src={AppleLogoBG}
             alt="Apple Logo"
             onClick={handleAppleLogoClick}
+            tabIndex={0}
+            aria-label="Apple menu"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleAppleLogoClick(e);
+              }
+            }}
           />
           <MenuList>
-            <MenuItem>{activeAppName || "Finder"}</MenuItem>
-            <MenuItem>File</MenuItem>
-            <MenuItem>Edit</MenuItem>
-            <MenuItem>View</MenuItem>
-            <MenuItem>Go</MenuItem>
-            <MenuItem>Window</MenuItem>
-            <MenuItem>Help</MenuItem>
+            <MenuItem aria-label={`${activeAppName || "Finder"} menu`} tabIndex={0}>{activeAppName || "Finder"}</MenuItem>
+            <MenuItem aria-label="File menu" tabIndex={0}>File</MenuItem>
+            <MenuItem aria-label="Edit menu" tabIndex={0}>Edit</MenuItem>
+            <MenuItem aria-label="View menu" tabIndex={0}>View</MenuItem>
+            <MenuItem aria-label="Go menu" tabIndex={0}>Go</MenuItem>
+            <MenuItem aria-label="Window menu" tabIndex={0}>Window</MenuItem>
+            <MenuItem aria-label="Help menu" tabIndex={0}>Help</MenuItem>
           </MenuList>
         </LeftSection>
         <RightSection>
-          <IconImg   src={SpotlightSvg} alt="Spotlight" />
-          <IconImg   src={ControlCenterSvg} alt="Control Center" />
-          <IconImg   src={WifiSvg} alt="Wi-Fi" />
-          <IconImg   src={BatterySvg} alt="Battery" />
-          <TimeDisplay>{currentTime}</TimeDisplay>
+          <IconImg src={SpotlightSvg} alt="Spotlight" tabIndex={0} aria-label="Open Spotlight search" />
+          <IconImg src={ControlCenterSvg} alt="Control Center" tabIndex={0} aria-label="Open Control Center" />
+          <IconImg src={WifiSvg} alt="Wi-Fi" tabIndex={0} aria-label="Wi-Fi settings" />
+          <IconImg src={BatterySvg} alt="Battery" tabIndex={0} aria-label="Battery status" />
+          <TimeDisplay aria-label={`Current time: ${currentTime}`}>{currentTime}</TimeDisplay>
         </RightSection>
       </HeaderContainer>
 
@@ -184,6 +191,8 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
         onShutDown={handleShutDown}
+        aria-hidden={!menuVisible}
+        aria-label="Apple menu options"
       />
     </>
   );
