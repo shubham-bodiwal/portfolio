@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useEffect, useRef, useState, FC, KeyboardEvent } from "react";
+import styled, { createGlobalStyle } from "styled-components";
 
 // Global styles (including font import)
 const GlobalStyle = createGlobalStyle`
@@ -45,7 +45,7 @@ const Title = styled.h1`
 const Cards = styled.div`
   background: #fff;
   border-radius: 0.9375rem;
-  box-shadow: 0rem 0.625rem 1.25rem 1.25rem rgba(0,0,0,0.17);
+  box-shadow: 0rem 0.625rem 1.25rem 1.25rem rgba(0, 0, 0, 0.17);
   display: inline-block;
   padding: 1.875rem 2.1875rem;
   perspective: 112.5rem;
@@ -60,7 +60,7 @@ const Cards = styled.div`
 // Base card component
 const Card = styled.div`
   border-radius: 0.9375rem;
-  box-shadow: 0.3125rem 0.3125rem 1.25rem -0.3125rem rgba(0,0,0,0.6);
+  box-shadow: 0.3125rem 0.3125rem 1.25rem -0.3125rem rgba(0, 0, 0, 0.6);
   display: inline-block;
   height: 15.625rem;
   overflow: hidden;
@@ -96,10 +96,14 @@ const CardBg = styled.div`
 
 const CardText = styled.div`
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
   bottom: 0;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   height: 4.375rem;
   justify-content: center;
   position: absolute;
@@ -124,7 +128,8 @@ const CardOne = styled(Card)`
     position: absolute;
   }
   ${CardBg} {
-    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_monobg.jpg') center/cover no-repeat;
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_monobg.jpg")
+      center/cover no-repeat;
   }
 `;
 
@@ -134,7 +139,8 @@ const CardTwo = styled(Card)`
     position: absolute;
   }
   ${CardBg} {
-    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_spirited.jpg') center/cover no-repeat;
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_spirited.jpg")
+      center/cover no-repeat;
   }
 `;
 
@@ -146,7 +152,8 @@ const CardThree = styled(Card)`
     position: absolute;
   }
   ${CardBg} {
-    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_howlbg.jpg') center/cover no-repeat;
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_howlbg.jpg")
+      center/cover no-repeat;
   }
 `;
 
@@ -206,7 +213,7 @@ const ToggleButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  
+
   &:focus {
     outline: 2px solid #4299e1;
     outline-offset: 2px;
@@ -218,14 +225,16 @@ const range = 40;
 const calcValue = (a: number, b: number) =>
   ((a / b) * range - range / 2).toFixed(1);
 
-const MovieCards: React.FC = () => {
+const MovieCards: FC = () => {
   const cardsRef = useRef<HTMLDivElement>(null);
   const [motionEnabled, setMotionEnabled] = useState(true);
-  
+
   // Check for user's motion preference
   useEffect(() => {
     if (window.matchMedia) {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
       if (prefersReducedMotion) {
         setMotionEnabled(false);
       }
@@ -236,7 +245,7 @@ const MovieCards: React.FC = () => {
   useEffect(() => {
     // Skip effect if motion is disabled
     if (!motionEnabled) return;
-    
+
     let timeout: number | null = null;
     const handleMouseMove = (e: MouseEvent) => {
       if (timeout !== null) {
@@ -250,22 +259,28 @@ const MovieCards: React.FC = () => {
 
         if (cardsRef.current) {
           cardsRef.current.style.transform = `rotateX(${yValue}deg) rotateY(${xValue}deg)`;
-          const images = cardsRef.current.querySelectorAll<HTMLImageElement>('.card__img');
-          const backgrounds = cardsRef.current.querySelectorAll<HTMLDivElement>('.card__bg');
+          const images =
+            cardsRef.current.querySelectorAll<HTMLImageElement>(".card__img");
+          const backgrounds =
+            cardsRef.current.querySelectorAll<HTMLDivElement>(".card__bg");
 
-          images.forEach(image => {
-            image.style.transform = `translateX(${(-Number(xValue))/16}rem) translateY(${Number(yValue)/16}rem)`;
+          images.forEach((image) => {
+            image.style.transform = `translateX(${
+              -Number(xValue) / 16
+            }rem) translateY(${Number(yValue) / 16}rem)`;
           });
-          backgrounds.forEach(bg => {
-            bg.style.backgroundPosition = `${(Number(xValue) * 0.45)/16}rem ${(-Number(yValue) * 0.45)/16}rem`;
+          backgrounds.forEach((bg) => {
+            bg.style.backgroundPosition = `${(Number(xValue) * 0.45) / 16}rem ${
+              (-Number(yValue) * 0.45) / 16
+            }rem`;
           });
         }
       });
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener("mousemove", handleMouseMove);
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener("mousemove", handleMouseMove);
       if (timeout !== null) {
         cancelAnimationFrame(timeout);
       }
@@ -273,57 +288,65 @@ const MovieCards: React.FC = () => {
   }, [motionEnabled]);
 
   // Keyboard navigation handlers
-  const handleKeyNavigation = (e: React.KeyboardEvent) => {
+  const handleKeyNavigation = (e: KeyboardEvent) => {
     if (!motionEnabled) return;
-    
+
     // Only apply effect when using arrow keys
     let xValue = 0;
     let yValue = 0;
-    
+
     switch (e.key) {
-      case 'ArrowUp':
+      case "ArrowUp":
         yValue = -3;
         break;
-      case 'ArrowDown':
+      case "ArrowDown":
         yValue = 3;
         break;
-      case 'ArrowLeft':
+      case "ArrowLeft":
         xValue = -3;
         break;
-      case 'ArrowRight':
+      case "ArrowRight":
         xValue = 3;
         break;
       default:
         return; // Exit if not using arrow keys
     }
-    
+
     if (cardsRef.current) {
       cardsRef.current.style.transform = `rotateX(${yValue}deg) rotateY(${xValue}deg)`;
-      const images = cardsRef.current.querySelectorAll<HTMLImageElement>('.card__img');
-      const backgrounds = cardsRef.current.querySelectorAll<HTMLDivElement>('.card__bg');
+      const images =
+        cardsRef.current.querySelectorAll<HTMLImageElement>(".card__img");
+      const backgrounds =
+        cardsRef.current.querySelectorAll<HTMLDivElement>(".card__bg");
 
-      images.forEach(image => {
-        image.style.transform = `translateX(${(-xValue)/16}rem) translateY(${yValue/16}rem)`;
+      images.forEach((image) => {
+        image.style.transform = `translateX(${-xValue / 16}rem) translateY(${
+          yValue / 16
+        }rem)`;
       });
-      backgrounds.forEach(bg => {
-        bg.style.backgroundPosition = `${(xValue * 0.45)/16}rem ${(-yValue * 0.45)/16}rem`;
+      backgrounds.forEach((bg) => {
+        bg.style.backgroundPosition = `${(xValue * 0.45) / 16}rem ${
+          (-yValue * 0.45) / 16
+        }rem`;
       });
     }
   };
 
   const toggleMotion = () => {
-    setMotionEnabled(prev => !prev);
+    setMotionEnabled((prev) => !prev);
     // Reset transform when disabling motion
     if (motionEnabled && cardsRef.current) {
-      cardsRef.current.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      const images = cardsRef.current.querySelectorAll<HTMLImageElement>('.card__img');
-      const backgrounds = cardsRef.current.querySelectorAll<HTMLDivElement>('.card__bg');
-      
-      images.forEach(image => {
-        image.style.transform = 'translateX(0) translateY(0)';
+      cardsRef.current.style.transform = "rotateX(0deg) rotateY(0deg)";
+      const images =
+        cardsRef.current.querySelectorAll<HTMLImageElement>(".card__img");
+      const backgrounds =
+        cardsRef.current.querySelectorAll<HTMLDivElement>(".card__bg");
+
+      images.forEach((image) => {
+        image.style.transform = "translateX(0) translateY(0)";
       });
-      backgrounds.forEach(bg => {
-        bg.style.backgroundPosition = '0 0';
+      backgrounds.forEach((bg) => {
+        bg.style.backgroundPosition = "0 0";
       });
     }
   };
@@ -332,22 +355,26 @@ const MovieCards: React.FC = () => {
     <>
       <GlobalStyle />
       <AccessibilityControls>
-        <ToggleButton 
+        <ToggleButton
           onClick={toggleMotion}
           aria-pressed={motionEnabled}
-          aria-label={motionEnabled ? "Disable 3D motion effect" : "Enable 3D motion effect"}
+          aria-label={
+            motionEnabled
+              ? "Disable 3D motion effect"
+              : "Enable 3D motion effect"
+          }
         >
           {motionEnabled ? "Disable Motion" : "Enable Motion"}
         </ToggleButton>
       </AccessibilityControls>
-      
-      <Cards 
-        ref={cardsRef} 
-        tabIndex={0} 
-        role="region" 
+
+      <Cards
+        ref={cardsRef}
+        tabIndex={0}
+        role="region"
         aria-label="Movie collection with 3D effect"
         onKeyDown={handleKeyNavigation}
-        style={!motionEnabled ? { transform: 'none', transition: 'none' } : {}}
+        style={!motionEnabled ? { transform: "none", transition: "none" } : {}}
       >
         <Subtitle>Movies</Subtitle>
         <Title>Popular</Title>
@@ -388,13 +415,13 @@ const MovieCards: React.FC = () => {
           </CardText>
         </CardThree>
       </Cards>
-      
+
       <Notice className="notice" aria-live="polite">
-        {motionEnabled 
-          ? "View on desktop for mousemove or use arrow keys for 3D effect" 
+        {motionEnabled
+          ? "View on desktop for mousemove or use arrow keys for 3D effect"
           : "3D motion effect is disabled"}
       </Notice>
-      
+
       <TwitterLink
         className="twitter__link"
         target="_blank"

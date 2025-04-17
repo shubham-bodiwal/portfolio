@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect, FC } from "react";
 import styled, { keyframes } from "styled-components";
 
 // Animation for content fade-in
@@ -235,9 +235,9 @@ const skillCategories = [
       "Service Workers",
     ],
   },
-]
+];
 
-const ColorChangingAnimation: React.FC = () => {
+const ColorChangingAnimation: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -441,26 +441,23 @@ const ColorChangingAnimation: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const { key } = e;
       // Space or Enter key to trigger animation at center of canvas
-      if (key === ' ' || key === 'Enter') {
+      if (key === " " || key === "Enter") {
         e.preventDefault();
         fauxClick(cW / 2, cH / 2);
       }
       // Arrow keys to trigger animation in those directions
-      else if (key === 'ArrowUp') {
+      else if (key === "ArrowUp") {
         e.preventDefault();
         fauxClick(cW / 2, cH / 4);
-      }
-      else if (key === 'ArrowDown') {
+      } else if (key === "ArrowDown") {
         e.preventDefault();
-        fauxClick(cW / 2, cH * 3 / 4);
-      }
-      else if (key === 'ArrowLeft') {
+        fauxClick(cW / 2, (cH * 3) / 4);
+      } else if (key === "ArrowLeft") {
         e.preventDefault();
         fauxClick(cW / 4, cH / 2);
-      }
-      else if (key === 'ArrowRight') {
+      } else if (key === "ArrowRight") {
         e.preventDefault();
-        fauxClick(cW * 3 / 4, cH / 2);
+        fauxClick((cW * 3) / 4, cH / 2);
       }
     };
 
@@ -540,10 +537,13 @@ const ColorChangingAnimation: React.FC = () => {
       animationFrameId = requestAnimationFrame(update);
     };
     update();
-    
+
     // Enhanced accessibility attributes
     canvas.setAttribute("role", "img");
-    canvas.setAttribute("aria-label", "Interactive color-changing background animation. Click or use arrow keys to create ripple effects.");
+    canvas.setAttribute(
+      "aria-label",
+      "Interactive color-changing background animation. Click or use arrow keys to create ripple effects."
+    );
     canvas.setAttribute("aria-live", "polite");
     canvas.setAttribute("aria-atomic", "true");
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, FC, KeyboardEvent } from "react";
 import styled, { keyframes } from "styled-components";
 
 const slideIn = keyframes`
@@ -91,7 +91,7 @@ interface NotificationProps {
   autoCloseTime?: number;
 }
 
-const MacNotification: React.FC<NotificationProps> = ({
+const MacNotification: FC<NotificationProps> = ({
   isVisible,
   appName,
   appIcon,
@@ -147,11 +147,11 @@ const MacNotification: React.FC<NotificationProps> = ({
 
   const handleClose = () => {
     setIsExiting(true);
-    
+
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
     }
-    
+
     closeTimeoutRef.current = window.setTimeout(() => {
       onClose();
       setIsExiting(false);
@@ -178,8 +178,8 @@ const MacNotification: React.FC<NotificationProps> = ({
   };
 
   // Handle keyboard events
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
       handleClose();
     }
   };
@@ -187,7 +187,7 @@ const MacNotification: React.FC<NotificationProps> = ({
   if (!isVisible) return null;
 
   return (
-    <NotificationContainer 
+    <NotificationContainer
       role="alert"
       aria-live="polite"
       aria-atomic="true"
@@ -201,16 +201,13 @@ const MacNotification: React.FC<NotificationProps> = ({
       onBlur={handleMouseLeave}
     >
       <NotificationHeader>
-        <AppIcon 
-          loading="lazy" 
-          src={appIcon} 
-          alt="" 
-          aria-hidden="true" 
-        />
-        <AppName id={`notification-app-${appName.replace(/\s+/g, '-').toLowerCase()}`}>
+        <AppIcon loading="lazy" src={appIcon} alt="" aria-hidden="true" />
+        <AppName
+          id={`notification-app-${appName.replace(/\s+/g, "-").toLowerCase()}`}
+        >
           {appName}
         </AppName>
-        <CloseButton 
+        <CloseButton
           onClick={handleClose}
           aria-label="Close notification"
           title="Close notification"
@@ -218,12 +215,13 @@ const MacNotification: React.FC<NotificationProps> = ({
           ×
         </CloseButton>
       </NotificationHeader>
-      <NotificationBody 
-        aria-labelledby={`notification-app-${appName.replace(/\s+/g, '-').toLowerCase()}`}
+      <NotificationBody
+        aria-labelledby={`notification-app-${appName
+          .replace(/\s+/g, "-")
+          .toLowerCase()}`}
       >
         {message}
       </NotificationBody>
-      
     </NotificationContainer>
   );
 };

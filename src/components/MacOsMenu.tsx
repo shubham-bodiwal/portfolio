@@ -1,4 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  FC,
+  MouseEvent,
+  KeyboardEvent,
+} from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
@@ -96,7 +103,7 @@ interface MacOSMenuProps {
   visible?: boolean;
 }
 
-const MacOSMenu: React.FC<MacOSMenuProps> = ({
+const MacOSMenu: FC<MacOSMenuProps> = ({
   position = { x: 0, y: 0 },
   onShutDown,
   onClose,
@@ -123,7 +130,7 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
 
   // Handle clicking outside to close the menu
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: any) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsVisible(false);
         if (onClose) onClose();
@@ -139,7 +146,7 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
     };
   }, [visible, onClose]);
 
-  const handleShutDown = (e: React.MouseEvent) => {
+  const handleShutDown = (e: MouseEvent) => {
     // Stop propagation to prevent parent handlers from catching this event
     e.stopPropagation();
 
@@ -154,68 +161,72 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
   };
 
   // Handle keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     // Get all menu items (excluding separators)
     const menuItems = menuRef.current?.querySelectorAll('[role="menuitem"]');
-    
+
     if (!menuItems || menuItems.length === 0) return;
-    
+
     const itemCount = menuItems.length;
     let newIndex = activeItemRef.current;
-    
+
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         // Move to next item, loop around if at end
         newIndex = (activeItemRef.current + 1) % itemCount;
         e.preventDefault();
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         // Move to previous item, loop around if at beginning
         newIndex = (activeItemRef.current - 1 + itemCount) % itemCount;
         e.preventDefault();
         break;
-      case 'Home':
+      case "Home":
         // Move to first item
         newIndex = 0;
         e.preventDefault();
         break;
-      case 'End':
+      case "End":
         // Move to last item
         newIndex = itemCount - 1;
         e.preventDefault();
         break;
-      case 'Enter':
-      case ' ':
+      case "Enter":
+      case " ":
         // Activate current item
         if (activeItemRef.current >= 0 && activeItemRef.current < itemCount) {
           (menuItems[activeItemRef.current] as HTMLElement).click();
         }
         e.preventDefault();
         break;
-      case 'Escape':
+      case "Escape":
         // Close menu
         setIsVisible(false);
         if (onClose) onClose();
         e.preventDefault();
         break;
-      default:
+      default: {
         // Optional: First-letter navigation
-        { const key = e.key.toLowerCase();
-        if (key.length === 1 && key >= 'a' && key <= 'z') {
+        const key = e.key.toLowerCase();
+        if (key.length === 1 && key >= "a" && key <= "z") {
           // Find first item that starts with this letter
-          const itemIndex = Array.from(menuItems).findIndex(
-            item => (item.textContent || '').toLowerCase().startsWith(key)
+          const itemIndex = Array.from(menuItems).findIndex((item) =>
+            (item.textContent || "").toLowerCase().startsWith(key)
           );
           if (itemIndex >= 0) {
             newIndex = itemIndex;
             e.preventDefault();
           }
         }
-         }
+      }
     }
-    
+
     // Update active item and focus it
-    if (newIndex !== activeItemRef.current && newIndex >= 0 && newIndex < itemCount) {
+    if (
+      newIndex !== activeItemRef.current &&
+      newIndex >= 0 &&
+      newIndex < itemCount
+    ) {
       activeItemRef.current = newIndex;
       (menuItems[newIndex] as HTMLElement).focus();
     }
@@ -246,7 +257,14 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
         App Store...
       </MenuItem>
       <Separator role="separator" />
-      <MenuItem disabled hasSubmenu role="menuitem" aria-disabled="true" aria-haspopup="true" tabIndex={-1}>
+      <MenuItem
+        disabled
+        hasSubmenu
+        role="menuitem"
+        aria-disabled="true"
+        aria-haspopup="true"
+        tabIndex={-1}
+      >
         Recent Items
       </MenuItem>
       <Separator role="separator" />
@@ -261,10 +279,10 @@ const MacOSMenu: React.FC<MacOSMenuProps> = ({
       <MenuItem disabled role="menuitem" aria-disabled="true" tabIndex={-1}>
         Restart...
       </MenuItem>
-      <MenuItem 
-        onClick={handleShutDown} 
-        role="menuitem" 
-        tabIndex={0} 
+      <MenuItem
+        onClick={handleShutDown}
+        role="menuitem"
+        tabIndex={0}
         ref={firstItemRef}
       >
         Shut Down...

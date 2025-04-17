@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import styled, { keyframes, css } from "styled-components";
 import ReactDOM from "react-dom";
 
@@ -55,8 +55,8 @@ const NotificationStack = styled.div<{ isListView: boolean }>`
   transition: all 0.3s ease;
 `;
 
-const NotificationContainer = styled.div<{ 
-  isExiting: boolean; 
+const NotificationContainer = styled.div<{
+  isExiting: boolean;
   index: number;
   isListView: boolean;
   isActive: boolean;
@@ -73,39 +73,57 @@ const NotificationContainer = styled.div<{
   border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
-  margin-top: calc(0.4rem * ${props=> props.index});
-  
-  ${props => props.isExiting && css`
-    animation: ${slideOut} 0.4s ease-in-out forwards;
-  `}
-  
-  ${props => !props.isExiting && !props.isListView && css`
-    animation: ${slideIn} 0.4s ease-in-out forwards;
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: ${`translateX(${(props.index * 8)/16}rem) translateY(${(props.index * 8)/16}rem) translateZ(${(-props.index * 20)/16}rem) rotateX(${props.index * 2}deg)`};
-    opacity: ${Math.max(1 - props.index * 0.15, 0.65)};
-    z-index: ${10001 - props.index};
-    transform-origin: top right;
-    
-    &:hover {
-      transform: ${`translateX(${(props.index * 8)/16}rem) translateY(${(props.index * 8)/16}rem) translateZ(${(-props.index * 20 + 10)/16}rem) rotateX(${props.index * 2}deg)`};
-    }
-  `}
-  
-  ${props => !props.isExiting && props.isListView && css`
-    position: relative;
-    margin-bottom: 0.625rem;
-    transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg);
-    opacity: 1;
-    animation: ${expandToList} 0.3s ease-out forwards;
-    
-    /* Add a subtle highlight for the currently active notification in list view */
-    ${props.isActive && css`
-      box-shadow: 0 0 0 0.125rem rgba(0, 245, 212, 0.5), 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.4);
+  margin-top: calc(0.4rem * ${(props) => props.index});
+
+  ${(props) =>
+    props.isExiting &&
+    css`
+      animation: ${slideOut} 0.4s ease-in-out forwards;
     `}
-  `}
+
+  ${(props) =>
+    !props.isExiting &&
+    !props.isListView &&
+    css`
+      animation: ${slideIn} 0.4s ease-in-out forwards;
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: ${`translateX(${(props.index * 8) / 16}rem) translateY(${
+        (props.index * 8) / 16
+      }rem) translateZ(${(-props.index * 20) / 16}rem) rotateX(${
+        props.index * 2
+      }deg)`};
+      opacity: ${Math.max(1 - props.index * 0.15, 0.65)};
+      z-index: ${10001 - props.index};
+      transform-origin: top right;
+
+      &:hover {
+        transform: ${`translateX(${(props.index * 8) / 16}rem) translateY(${
+          (props.index * 8) / 16
+        }rem) translateZ(${(-props.index * 20 + 10) / 16}rem) rotateX(${
+          props.index * 2
+        }deg)`};
+      }
+    `}
+  
+  ${(props) =>
+    !props.isExiting &&
+    props.isListView &&
+    css`
+      position: relative;
+      margin-bottom: 0.625rem;
+      transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg);
+      opacity: 1;
+      animation: ${expandToList} 0.3s ease-out forwards;
+
+      /* Add a subtle highlight for the currently active notification in list view */
+      ${props.isActive &&
+      css`
+        box-shadow: 0 0 0 0.125rem rgba(0, 245, 212, 0.5),
+          0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.4);
+      `}
+    `}
 `;
 
 const NotificationHeader = styled.div`
@@ -148,8 +166,8 @@ const NotificationBody = styled.div`
   font-size: 0.8125rem;
   line-height: 1.4;
   height: 1.4rem;
-  white-space: nowrap;         /* Prevents text from wrapping to next line */
-  overflow: hidden;            /* Hides any content that overflows the element */
+  white-space: nowrap; /* Prevents text from wrapping to next line */
+  overflow: hidden; /* Hides any content that overflows the element */
   text-overflow: ellipsis;
 `;
 
@@ -172,8 +190,9 @@ const ViewToggle = styled.button<{ isListView: boolean }>`
   border-radius: 0.25rem;
   cursor: pointer;
   backdrop-filter: blur(0.25rem);
-  display: ${props => props.isListView || props.children === '▲ Collapse' ? 'block' : 'none'};
-  
+  display: ${(props) =>
+    props.isListView || props.children === "▲ Collapse" ? "block" : "none"};
+
   &:hover {
     background: rgba(40, 40, 40, 0.7);
   }
@@ -203,15 +222,19 @@ interface NotificationStackProps {
   autoCloseTime?: number;
 }
 
-const MacNotificationStack: React.FC<NotificationStackProps> = ({
+const MacNotificationStack: FC<NotificationStackProps> = ({
   notifications,
   onClose,
   autoClose = true,
   autoCloseTime = 5000,
 }) => {
-  const [exitingNotifications, setExitingNotifications] = useState<Record<string, boolean>>({});
+  const [exitingNotifications, setExitingNotifications] = useState<
+    Record<string, boolean>
+  >({});
   const [isListView, setIsListView] = useState(false);
-  const [activeNotificationId, setActiveNotificationId] = useState<string | null>(null);
+  const [activeNotificationId, setActiveNotificationId] = useState<
+    string | null
+  >(null);
 
   // Set the first notification as active when notifications change
   useEffect(() => {
@@ -226,37 +249,37 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
     if (autoClose) {
       // Set up auto-close timers for each notification
       const timers: Record<string, any> = {};
-      
-      notifications.forEach(notification => {
+
+      notifications.forEach((notification) => {
         if (!exitingNotifications[notification.id]) {
           timers[notification.id] = setTimeout(() => {
             handleClose(notification.id);
           }, autoCloseTime);
         }
       });
-      
+
       return () => {
         // Clean up all timers on unmount
-        Object.values(timers).forEach(timer => clearTimeout(timer));
+        Object.values(timers).forEach((timer) => clearTimeout(timer));
       };
     }
   }, [notifications, autoClose, autoCloseTime, exitingNotifications]);
 
   const handleClose = (id: string) => {
     // Stop propagation if clicked directly
-    setExitingNotifications(prev => ({ ...prev, [id]: true }));
-    
+    setExitingNotifications((prev) => ({ ...prev, [id]: true }));
+
     setTimeout(() => {
       onClose(id);
-      setExitingNotifications(prev => {
+      setExitingNotifications((prev) => {
         const newState = { ...prev };
         delete newState[id];
         return newState;
       });
-      
+
       // If the active notification is closed, select the next one
       if (activeNotificationId === id && notifications.length > 1) {
-        const index = notifications.findIndex(n => n.id === id);
+        const index = notifications.findIndex((n) => n.id === id);
         const nextIndex = index === 0 ? 1 : index - 1;
         if (notifications[nextIndex]) {
           setActiveNotificationId(notifications[nextIndex].id);
@@ -270,7 +293,7 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
     if (!isListView) {
       setIsListView(true);
     }
-    
+
     // Set the clicked notification as active
     setActiveNotificationId(id);
   };
@@ -285,9 +308,9 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, id: string) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       handleNotificationClick(id);
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       handleClose(id);
     }
   };
@@ -304,7 +327,7 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
 
   // Create a portal to render notifications directly into the body
   return ReactDOM.createPortal(
-    <NotificationStack 
+    <NotificationStack
       isListView={isListView}
       aria-live="polite"
       aria-label="System notifications"
@@ -316,26 +339,28 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
           {visibleNotifications.length}
         </Counter>
       )}
-      
-      <ViewToggle 
-        isListView={isListView} 
+
+      <ViewToggle
+        isListView={isListView}
         onClick={toggleView}
         role="button"
         aria-pressed={isListView}
-        aria-label={isListView ? 'Collapse notifications' : 'Expand notifications'}
+        aria-label={
+          isListView ? "Collapse notifications" : "Expand notifications"
+        }
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             toggleView();
           }
         }}
       >
-        {isListView ? '▲ Collapse' : '▼ Expand'}
+        {isListView ? "▲ Collapse" : "▼ Expand"}
       </ViewToggle>
-      
+
       {visibleNotifications.map((notification, index) => (
-        <NotificationContainer 
-          key={notification.id} 
+        <NotificationContainer
+          key={notification.id}
           isExiting={exitingNotifications[notification.id] || false}
           index={index}
           isListView={isListView}
@@ -347,38 +372,47 @@ const MacNotificationStack: React.FC<NotificationStackProps> = ({
           onKeyDown={(e) => handleKeyDown(e, notification.id)}
         >
           <NotificationHeader>
-            <AppIcon 
-              src={notification.appIcon} 
-              alt="" 
-              loading="lazy" 
+            <AppIcon
+              src={notification.appIcon}
+              alt=""
+              loading="lazy"
               aria-hidden="true"
             />
             <AppName id={`notification-app-${notification.id}`}>
               {notification.appName}
             </AppName>
-            <CloseButton 
+            <CloseButton
               onClick={(e) => handleCloseClick(e, notification.id)}
               aria-label={`Close ${notification.appName} notification`}
               tabIndex={0}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleCloseClick(e as unknown as React.MouseEvent, notification.id);
+                if (e.key === "Enter" || e.key === " ") {
+                  handleCloseClick(
+                    e as unknown as React.MouseEvent,
+                    notification.id
+                  );
                 }
               }}
             >
               ×
             </CloseButton>
           </NotificationHeader>
-          <NotificationBody aria-labelledby={`notification-app-${notification.id}`}>
+          <NotificationBody
+            aria-labelledby={`notification-app-${notification.id}`}
+          >
             {notification.message}
           </NotificationBody>
-          <Timestamp aria-label={`Notification time: ${new Date(notification.timestamp).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit'
-          })}`}>
+          <Timestamp
+            aria-label={`Notification time: ${new Date(
+              notification.timestamp
+            ).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}`}
+          >
             {new Date(notification.timestamp).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit'
+              hour: "2-digit",
+              minute: "2-digit",
             })}
           </Timestamp>
         </NotificationContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import styled, { keyframes } from "styled-components";
 
 const ellipsisDot = keyframes`
@@ -21,13 +21,12 @@ const Dot = styled.span<{ delay: string }>`
   animation-delay: ${(props) => props.delay};
 `;
 
-
 type Props = {
   onAnimationComplete?: () => void;
   duration?: number;
 };
 
-const ShutdownScreen: React.FC<Props> = ({
+const ShutdownScreen: FC<Props> = ({
   onAnimationComplete,
   duration = 5000,
 }) => {
@@ -64,14 +63,18 @@ const ShutdownScreen: React.FC<Props> = ({
 
   return (
     <>
-      
-      <div 
-        role="progressbar" 
-        aria-valuenow={progressPercentage} 
-        aria-valuemin={0} 
+      <div
+        role="progressbar"
+        aria-valuenow={progressPercentage}
+        aria-valuemin={0}
         aria-valuemax={100}
         aria-label="Shutting down"
-        style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden' }}
+        style={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+        }}
       />
 
       <Message aria-hidden="true">

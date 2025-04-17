@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import MacOSPortfolioUI from "./components/MacOsDesktop";
 import PermissionScreen from "./components/PermissionsScreen";
 import styled from "styled-components";
@@ -10,7 +10,7 @@ const AppContainer = styled.div`
   overflow: hidden;
 `;
 
-const App: React.FC = () => {
+const App: FC = () => {
   const [isFullscreenGranted, setIsFullscreenGranted] = useState(false);
 
   // Hook to handle the fullscreen change events from the browser

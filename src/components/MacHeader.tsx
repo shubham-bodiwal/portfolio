@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FC } from "react";
 import styled from "styled-components";
 import AppleLogoBG from "../assets/apple-logo 1 (1).avif";
 import BatterySvg from "../assets/Battery.svg";
@@ -76,7 +76,7 @@ interface MacHeaderProps {
   onShutdown?: () => void;
 }
 
-const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
+const MacHeader: FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [currentTime, setCurrentTime] = useState<string>(
@@ -162,27 +162,66 @@ const MacHeader: React.FC<MacHeaderProps> = ({ activeAppName, onShutdown }) => {
             tabIndex={0}
             aria-label="Apple menu"
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+              if (e.key === "Enter" || e.key === " ") {
                 handleAppleLogoClick(e);
               }
             }}
           />
           <MenuList>
-            <MenuItem aria-label={`${activeAppName || "Finder"} menu`} tabIndex={0}>{activeAppName || "Finder"}</MenuItem>
-            <MenuItem aria-label="File menu" tabIndex={0}>File</MenuItem>
-            <MenuItem aria-label="Edit menu" tabIndex={0}>Edit</MenuItem>
-            <MenuItem aria-label="View menu" tabIndex={0}>View</MenuItem>
-            <MenuItem aria-label="Go menu" tabIndex={0}>Go</MenuItem>
-            <MenuItem aria-label="Window menu" tabIndex={0}>Window</MenuItem>
-            <MenuItem aria-label="Help menu" tabIndex={0}>Help</MenuItem>
+            <MenuItem
+              aria-label={`${activeAppName || "Finder"} menu`}
+              tabIndex={0}
+            >
+              {activeAppName || "Finder"}
+            </MenuItem>
+            <MenuItem aria-label="File menu" tabIndex={0}>
+              File
+            </MenuItem>
+            <MenuItem aria-label="Edit menu" tabIndex={0}>
+              Edit
+            </MenuItem>
+            <MenuItem aria-label="View menu" tabIndex={0}>
+              View
+            </MenuItem>
+            <MenuItem aria-label="Go menu" tabIndex={0}>
+              Go
+            </MenuItem>
+            <MenuItem aria-label="Window menu" tabIndex={0}>
+              Window
+            </MenuItem>
+            <MenuItem aria-label="Help menu" tabIndex={0}>
+              Help
+            </MenuItem>
           </MenuList>
         </LeftSection>
         <RightSection>
-          <IconImg src={SpotlightSvg} alt="Spotlight" tabIndex={0} aria-label="Open Spotlight search" />
-          <IconImg src={ControlCenterSvg} alt="Control Center" tabIndex={0} aria-label="Open Control Center" />
-          <IconImg src={WifiSvg} alt="Wi-Fi" tabIndex={0} aria-label="Wi-Fi settings" />
-          <IconImg src={BatterySvg} alt="Battery" tabIndex={0} aria-label="Battery status" />
-          <TimeDisplay aria-label={`Current time: ${currentTime}`}>{currentTime}</TimeDisplay>
+          <IconImg
+            src={SpotlightSvg}
+            alt="Spotlight"
+            tabIndex={0}
+            aria-label="Open Spotlight search"
+          />
+          <IconImg
+            src={ControlCenterSvg}
+            alt="Control Center"
+            tabIndex={0}
+            aria-label="Open Control Center"
+          />
+          <IconImg
+            src={WifiSvg}
+            alt="Wi-Fi"
+            tabIndex={0}
+            aria-label="Wi-Fi settings"
+          />
+          <IconImg
+            src={BatterySvg}
+            alt="Battery"
+            tabIndex={0}
+            aria-label="Battery status"
+          />
+          <TimeDisplay aria-label={`Current time: ${currentTime}`}>
+            {currentTime}
+          </TimeDisplay>
         </RightSection>
       </HeaderContainer>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, FC, KeyboardEvent } from "react";
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 import StartImageAnimation from "./StartImageAnimation";
 import CursorAnimation from "./CursorAnimation";
@@ -194,13 +194,13 @@ const Button = styled.button`
     outline: 2px solid #4299e1;
     outline-offset: 2px;
   }
-  
+
   /* Make disabled state more obvious */
   &[aria-disabled="true"] {
     cursor: not-allowed;
     opacity: 0.6;
   }
-  
+
   /* Add transition for smoother state changes */
   transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
 `;
@@ -237,10 +237,7 @@ type Props = {
   shutdownMode?: boolean;
 };
 
-const PermissionScreen: React.FC<Props> = ({
-  onClick,
-  shutdownMode = false,
-}) => {
+const PermissionScreen: FC<Props> = ({ onClick, shutdownMode = false }) => {
   const [progress, setProgress] = useState(0);
   const [statusText, setStatusText] = useState("Initializing...");
   const [isMobile, setIsMobile] = useState(false);
@@ -299,8 +296,8 @@ const PermissionScreen: React.FC<Props> = ({
   }, [shutdownMode]);
 
   // Handle keyboard events for the button
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       onClick();
     }
@@ -310,7 +307,11 @@ const PermissionScreen: React.FC<Props> = ({
     <>
       <GlobalStyle />
       <CursorAnimation aria-hidden="true" />
-      <Screen role="dialog" aria-labelledby="screen-title" aria-describedby="screen-message">
+      <Screen
+        role="dialog"
+        aria-labelledby="screen-title"
+        aria-describedby="screen-message"
+      >
         <StartImageAnimation aria-hidden="true" />
         <ContentContainer>
           <PortfolioTitle id="screen-title">
@@ -327,20 +328,24 @@ const PermissionScreen: React.FC<Props> = ({
             </DeviceWarning>
           ) : shutdownMode ? (
             <>
-              <PoweredOffMessage id="shutdown-message">Session ended</PoweredOffMessage>
-              <Message id="screen-message">Restarting portfolio experience. Please wait...</Message>
-              <ProgressBar 
-                role="progressbar" 
-                aria-valuenow={progress} 
-                aria-valuemin={0} 
+              <PoweredOffMessage id="shutdown-message">
+                Session ended
+              </PoweredOffMessage>
+              <Message id="screen-message">
+                Restarting portfolio experience. Please wait...
+              </Message>
+              <ProgressBar
+                role="progressbar"
+                aria-valuenow={progress}
+                aria-valuemin={0}
                 aria-valuemax={100}
                 aria-label="Restart progress"
               >
                 <ProgressFill progress={progress} />
               </ProgressBar>
               <StatusText aria-live="polite">{statusText}</StatusText>
-              <Button 
-                onClick={onClick} 
+              <Button
+                onClick={onClick}
                 onKeyDown={handleKeyDown}
                 tabIndex={0}
                 aria-label="Resume portfolio session"
@@ -356,13 +361,17 @@ const PermissionScreen: React.FC<Props> = ({
                 presentation.{" "}
                 {!isMobile && "It is only available on desktop devices."}
               </Message>
-              <Button 
-                onClick={onClick} 
+              <Button
+                onClick={onClick}
                 disabled={isMobile}
                 onKeyDown={handleKeyDown}
                 tabIndex={0}
                 aria-disabled={isMobile}
-                aria-label={isMobile ? "Desktop required for this portfolio" : "Enter fullscreen mode"}
+                aria-label={
+                  isMobile
+                    ? "Desktop required for this portfolio"
+                    : "Enter fullscreen mode"
+                }
               >
                 {isMobile ? "Desktop Required" : "Enter Fullscreen"}
               </Button>

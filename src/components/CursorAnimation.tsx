@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef, FC } from "react";
 import { TweenMax } from "gsap";
 import styled from "styled-components";
 
@@ -8,7 +8,7 @@ const MainContainer = styled.div`
   width: 100%;
   background: linear-gradient(135deg, #000000 0%, #141414 100%);
 `;
-const CursorAnimation: React.FC = () => {
+const CursorAnimation: FC = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const mousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const dotsRef = useRef<Dot[]>([]);

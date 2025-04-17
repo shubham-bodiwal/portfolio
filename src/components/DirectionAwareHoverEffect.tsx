@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, FC, MouseEvent } from "react";
 import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 
 // --- Variables & Color Constants ---
@@ -343,13 +343,13 @@ interface HoverItemProps {
   delay: number;
 }
 
-const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
+const HoverItem: FC<HoverItemProps> = ({ index, delay }) => {
   const itemRef = useRef<HTMLLIElement>(null);
   const [animation, setAnimation] = useState<string | undefined>(undefined);
   const [colorPalette] = useState(getRandomColorPalette(index));
   const [bgColor, textColor] = colorPalette;
 
-  const handleMouse = (e: React.MouseEvent, prefix: "in" | "out") => {
+  const handleMouse = (e: MouseEvent, prefix: "in" | "out") => {
     if (itemRef.current) {
       const rect = itemRef.current.getBoundingClientRect();
       const l = e.pageX - (rect.left + window.pageXOffset);
@@ -377,7 +377,7 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
 
   // Handle keyboard navigation
   const handleKeyDown = (e: any) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       e.currentTarget.click();
     }
@@ -400,7 +400,7 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
       aria-describedby={descId}
       id={itemId}
     >
-      <ItemLink 
+      <ItemLink
         href="#"
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -409,13 +409,8 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
         aria-describedby={descId}
         tabIndex={0}
         role="button"
-      >
-      </ItemLink>
-      <Info 
-        animationType={animation} 
-        bgColor={bgColor} 
-        textColor={textColor}
-      >
+      ></ItemLink>
+      <Info animationType={animation} bgColor={bgColor} textColor={textColor}>
         <h3 id={titleId}>{title}</h3>
         <p id={descId}>{description}</p>
       </Info>
@@ -424,7 +419,7 @@ const HoverItem: React.FC<HoverItemProps> = ({ index, delay }) => {
 };
 
 // --- Main Component ---
-export const DirectionAwareHoverEffect: React.FC = () => {
+export const DirectionAwareHoverEffect: FC = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -436,10 +431,7 @@ export const DirectionAwareHoverEffect: React.FC = () => {
       <GlobalStyle />
       <Title>Principles</Title>
       <Container>
-        <List 
-          role="list" 
-          aria-label="Design principles"
-        >
+        <List role="list" aria-label="Design principles">
           {loaded &&
             Array.from({ length: 12 }).map((_, i) => (
               <HoverItem key={i} index={i} delay={i} />

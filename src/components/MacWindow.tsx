@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes, css } from "styled-components";
 import { Rnd } from "react-rnd";
@@ -114,7 +114,7 @@ type MacWindowProps = {
   onFullscreenChange: (id: string, isFullscreen: boolean) => void;
   onActivate?: (id: string) => void;
   zIndex?: number;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function MacWindow({
@@ -168,8 +168,7 @@ export default function MacWindow({
   const handleMinimize = useCallback(() => {
     saveCurrentPosition();
     onMinimize(id);
-
-  },[id, onMinimize]);
+  }, [id, onMinimize]);
 
   // Handle fullscreen toggle
   const handleFullscreenToggle = useCallback(() => {
@@ -181,8 +180,7 @@ export default function MacWindow({
     const newState = !isFullscreen;
     setIsFullscreen(newState);
     onFullscreenChange(id, newState);
-
-  },[id, isFullscreen, onFullscreenChange]);
+  }, [id, isFullscreen, onFullscreenChange]);
 
   // Handle close with animation
   const handleClose = useCallback(() => {
@@ -190,7 +188,7 @@ export default function MacWindow({
     setTimeout(() => {
       onClose(id);
     }, 200); // Match animation duration
-  },[id, onClose]);
+  }, [id, onClose]);
 
   // Track when user starts dragging
   const handleDragStart = () => {
@@ -198,8 +196,7 @@ export default function MacWindow({
   };
 
   // Handle resize
-  const handleResizeStart = () => {
-  };
+  const handleResizeStart = () => {};
 
   // Handle blur when clicking outside
   useEffect(() => {
@@ -221,7 +218,7 @@ export default function MacWindow({
       if (!isActive) return;
 
       // ESC key for closing or exiting fullscreen
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         if (isFullscreen) {
           handleFullscreenToggle();
         } else {
@@ -229,25 +226,31 @@ export default function MacWindow({
         }
         e.preventDefault();
       }
-      
+
       // Alt+Enter for fullscreen toggle (common keyboard shortcut)
-      if (e.key === 'Enter' && e.altKey) {
+      if (e.key === "Enter" && e.altKey) {
         handleFullscreenToggle();
         e.preventDefault();
       }
-      
+
       // Alt+M for minimize
-      if (e.key === 'm' && e.altKey) {
+      if (e.key === "m" && e.altKey) {
         handleMinimize();
         e.preventDefault();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleClose, handleFullscreenToggle, handleMinimize, isActive, isFullscreen]);
+  }, [
+    handleClose,
+    handleFullscreenToggle,
+    handleMinimize,
+    isActive,
+    isFullscreen,
+  ]);
 
   // Get position based on window state
   const getPosition = () => {
@@ -279,16 +282,16 @@ export default function MacWindow({
   const defaultPosition = {
     x: 100 + Math.random() * 100,
     y: 100 + Math.random() * 100,
-    width: '700px',
-    height: '500px',
+    width: "700px",
+    height: "500px",
   };
 
   return ReactDOM.createPortal(
     <Rnd
       ref={rndRef}
       default={defaultPosition}
-      minWidth={'350px'}
-      minHeight={'250px'}
+      minWidth={"350px"}
+      minHeight={"250px"}
       bounds="parent"
       enableResizing={!isFullscreen}
       disableDragging={isFullscreen}
@@ -340,12 +343,14 @@ export default function MacWindow({
               title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             ></CircleButton>
           </ButtonGroup>
-          <Title isActive={isActive} id={`window-title-${id}`}>{appName}</Title>
+          <Title isActive={isActive} id={`window-title-${id}`}>
+            {appName}
+          </Title>
         </WindowHeader>
-        <div 
-          role="region" 
+        <div
+          role="region"
           aria-label={`${appName} content`}
-          style={{ flex: 1, overflow: 'auto' }}
+          style={{ flex: 1, overflow: "auto" }}
         >
           {children ? (
             appName === "Portfolio" || appName === "UI Work Sample" ? (
