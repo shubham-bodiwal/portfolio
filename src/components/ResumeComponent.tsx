@@ -472,6 +472,7 @@ const Shield = ({ size }: { size?: string | number }) => (
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
   </svg>
 );
+
 const InteractiveResume = () => {
   const [activeSection, setActiveSection] = useState<string>("about");
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
@@ -480,10 +481,7 @@ const InteractiveResume = () => {
   );
 
   useEffect(() => {
-    // Initial animations
     setIsVisible({ about: true });
-
-    // Animate skills progress after a delay
     const timer = setTimeout(() => {
       setSkillsProgress({
         react: 90,
@@ -498,7 +496,6 @@ const InteractiveResume = () => {
         accessibility: 75,
       });
     }, 1000);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -507,44 +504,42 @@ const InteractiveResume = () => {
     setIsVisible((prev) => ({ ...prev, [section]: true }));
   };
 
-  // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent, section: string) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleSectionChange(section);
     }
   };
 
-  // Resume data
   const skills: Skill[] = [
     {
       name: "React",
-      icon: <Code size={18} aria-hidden="true" />,
+      icon: <Code size={18} />,
       value: skillsProgress.react || 0,
     },
     {
       name: "TypeScript",
-      icon: <Terminal size={18} aria-hidden="true" />,
+      icon: <Terminal size={18} />,
       value: skillsProgress.typescript || 0,
     },
     {
       name: "JavaScript",
-      icon: <Terminal size={18} aria-hidden="true" />,
+      icon: <Terminal size={18} />,
       value: skillsProgress.javascript || 0,
     },
     {
       name: "HTML/CSS",
-      icon: <Monitor size={18} aria-hidden="true" />,
+      icon: <Monitor size={18} />,
       value: skillsProgress.html || 0,
     },
     {
       name: "Redux",
-      icon: <Database size={18} aria-hidden="true" />,
+      icon: <Database size={18} />,
       value: skillsProgress.redux || 0,
     },
     {
       name: "REST/GraphQL",
-      icon: <Server size={18} aria-hidden="true" />,
+      icon: <Server size={18} />,
       value: skillsProgress.rest || 0,
     },
   ];
@@ -553,127 +548,127 @@ const InteractiveResume = () => {
     {
       title: "Associate Software Developer",
       company: "Daffodil Software",
-      period: "Nov 2021 - Present",
+      period: "Nov 2021 - Apr 2025",
       description: [
-        "Developed scalable frontend modules with React, TypeScript, and Redux, reliably serving over 5,000 concurrent users",
-        "Created reusable dynamic form and table components, substantially reducing development time",
-        "Led frontend performance optimizations, achieving a 30% reduction in app load times",
-        "Mentored junior developers, significantly improving code quality",
-        "Optimized frontend-heavy data management with IndexedDB",
-        "Improved SQL-based scripting performance, reducing execution time from over 2 hours to under 5 minutes",
+        "Architected and deployed scalable React + TypeScript modules, enhancing the user experience for over 5,000 users",
+        "Improved module load times by 40% and page load times by 60% through lazy loading and memoization",
+        "Built a data delivery infrastructure using GraphQL and REST, reducing data latency by 40%",
+        "Implemented caching strategies and IndexedDB for better performance in data-heavy apps",
+        "Mentored 4–6 developers through code reviews, agile sprints, and planning sessions",
+        "Developed reusable components and documentation, boosting team velocity by 30%",
+        "Wrote unit and snapshot tests using Jest and RTL to improve deployment reliability",
       ],
     },
   ];
 
   const mainProjects: ProjectItem[] = [
     {
-      title: "SHS Homeopathy",
-      icon: <Monitor size={18} aria-hidden="true" />,
+      title: "Gulf-HR",
+      icon: <Briefcase size={18} />,
       description:
-        "Led frontend efforts for an Electron-based and web-based homeopathy application managing complex medical data. Enhanced patient management, global search across 10L+ records, and remedy suggestions using data-driven clipboard features.",
-      tags: ["React", "Electron", "AI Chatbot", "Multi-Window"],
+        "Centralized HRMS with form builders, role-based permissions, and reporting—saved 15 hours per HR employee weekly.",
+      tags: ["React", "Ant Design", "Forms", "Permissions"],
+    },
+    {
+      title: "Twilio Segment (Fraud Guard)",
+      icon: <Shield size={18} />,
+      description:
+        "Streamlined fraud workflows in a monorepo setup, reducing false positives by 40% weekly.",
+      tags: ["Monorepo", "APIs", "Security", "Optimization"],
     },
     {
       title: "Resume.io",
-      icon: <Layout size={18} aria-hidden="true" />,
+      icon: <Layout size={18} />,
       description:
-        "Engineered an ATS-friendly resume builder with React PDF, web workers, and Vercel Lambdas. Enabled real-time previews and high-performance PDF downloads. Developed an editable DOCX-based resume builder using docs.js.",
-      tags: ["React", "PDF Generation", "DOCX Editing", "Serverless"],
+        "Developed editable DOCX templates using docs.js and React, deployed on Vercel. Reduced doc generation errors to zero.",
+      tags: ["React", "DOCX", "Serverless", "PDF"],
     },
     {
-      title: "Gulf-HR",
-      icon: <Briefcase size={18} aria-hidden="true" />,
+      title: "SHS Homeopathy",
+      icon: <Monitor size={18} />,
       description:
-        "Contributed to a modular, customizable HR management platform supporting payroll, leave, attendance, onboarding, and task management. Enabled users to generate personalized HR portals with dynamic forms.",
-      tags: ["React", "TypeScript", "Ant Design", "Role-based Permissions"],
-    },
-    {
-      title: "Twilio Segment",
-      icon: <Shield size={18} aria-hidden="true" />,
-      description:
-        "Engineered a robust fraud detection and validation system, significantly reducing manual interventions by 40%. Streamlined complex security compliance processes, boosting operational efficiency and user trust.",
-      tags: ["Fraud Detection", "Performance", "Security", "Dashboard"],
+        "Integrated AI search components and improved UX with intelligent suggestions, reducing user search time by 30%.",
+      tags: ["React", "Electron", "AI", "Search"],
     },
   ];
 
   const selfInitiatedProjects: ProjectItem[] = [
     {
-      title: "Personalized Quiz & Practice Reminder App",
+      title: "Quiz Reminder App",
       description:
-        "Designed a mobile app that encourages daily learning during idle time via smart notifications and quick MCQ practice directly from the notification tray. Integrated adaptive scheduling based on user behavior.",
-      tags: ["Mobile", "Adaptive Learning", "Notifications", "Gamification"],
-      icon: <Layout size={18}  aria-hidden="true" />,
+        "Smart notifications and MCQ practice via tray for idle time learning.",
+      tags: ["Gamification", "Notifications"],
+      icon: <Layout size={18} />,
     },
     {
-      title: "AI-Powered Interview System",
+      title: "AI Interview System",
       description:
-        "Created a platform using AI to assess candidates via audio/video recordings, eye contact, body posture, and voice analysis. Integrated real-time alerts for cheating detection and performance analytics.",
-      tags: ["AI", "Video Analysis", "Real-time", "Analytics"],
-      icon: <Cpu size={18}  aria-hidden="true" />,
+        "Analyzes candidates via video/audio, with posture, voice, and anti-cheat metrics.",
+      tags: ["AI", "Analytics", "Video"],
+      icon: <Cpu size={18} />,
     },
     {
-      title: "AI-Based Quality Assurance",
+      title: "AI QA Tool",
       description:
-        "Built a smart crawler for inspecting codebases and user interfaces, detecting potential issues based on predefined user stories and expected interactions. Implemented UI navigation automation and code analysis.",
-      tags: ["AI", "QA", "Automation", "Testing"],
-      icon: <Flame size={18}  aria-hidden="true" />,
+        "Crawls code and UI, checks against user stories, detects bugs and automates UI testing.",
+      tags: ["Automation", "Testing", "AI"],
+      icon: <Flame size={18} />,
     },
     {
-      title: "AI Code Refactor Extension",
+      title: "Code Refactor Extension",
       description:
-        "Developed an AI assistant for VS Code that analyzes, optimizes, and refactors code to improve readability, maintainability, and performance. Added features for renaming variables and simplifying logic.",
-      tags: ["VS Code", "Extension", "AI", "Refactoring"],
-      icon: <Zap size={18}  aria-hidden="true" />,
+        "AI plugin for VS Code to optimize, rename, and simplify logic in real time.",
+      tags: ["VS Code", "AI", "Refactor"],
+      icon: <Zap size={18} />,
     },
     {
-      title: "Gamers Box",
+      title: "Gaming News Platform",
       description:
-        "Created a dynamic platform for live game streams, news, and tournament updates. Integrated public APIs to fetch trending streams, newsfeeds, gear updates, and esports content with admin dashboard.",
-      tags: ["React", "Live Streams", "Admin Dashboard", "Content"],
-      icon: <Activity size={18}  aria-hidden="true" />,
+        "Live stream hub with updates on esports, trending games, and admin dashboard.",
+      tags: ["Content", "Streams", "Dashboard"],
+      icon: <Activity size={18} />,
     },
     {
       title: "WhatsApp Clone",
-      description:
-        "Built a real-time chat application using socket.io, featuring group chats, media sharing, and secure messaging. Served as a foundational learning project for WebSocket communication and event handling.",
-      tags: ["WebSockets", "Real-time", "Chat", "Media Sharing"],
-      icon: <Terminal size={18}  aria-hidden="true" />,
+      description: "Real-time chat with group features, media, and socket.io.",
+      tags: ["WebSocket", "Chat"],
+      icon: <Terminal size={18} />,
     },
     {
-      title: "Smart Home Automation",
+      title: "Smart Home IoT",
       description:
-        "Engineered a comprehensive smart home ecosystem using Arduino, including lighting, climate, gas, and voltage monitoring automation. Supported security sensors, curtain automation, and energy efficiency features.",
-      tags: ["Arduino", "IoT", "Automation", "Hardware"],
-      icon: <Cpu size={18}  aria-hidden="true" />,
+        "Arduino-based automation for lighting, gas, climate, and security.",
+      tags: ["IoT", "Arduino", "Automation"],
+      icon: <Cpu size={18} />,
     },
   ];
 
   return (
     <>
       <GlobalStyle />
-      
+
       <Container role="main">
         <Header>
           <Name>Shubham Bhodiwal</Name>
           <Title>Frontend Developer (3.5 Years of Experience)</Title>
 
           <ContactInfo>
-            <ContactLink 
+            <ContactLink
               href="mailto:bhodiwalshubham03@gmail.com"
               aria-label="Email: bhodiwalshubham03@gmail.com"
             >
               <Mail size={16} aria-hidden="true" /> bhodiwalshubham03@gmail.com
             </ContactLink>
-            <ContactLink 
+            <ContactLink
               href="tel:+918058597167"
               aria-label="Phone: +91 8058597167"
             >
               +91 8058597167
             </ContactLink>
-            <ContactLink 
+            <ContactLink
               href="https://www.linkedin.com/in/shubham-bhodiwal-543a6b171/"
               aria-label="LinkedIn profile"
-              target="_blank" 
+              target="_blank"
               rel="noopener noreferrer"
             >
               <Linkedin size={16} aria-hidden="true" /> LinkedIn
@@ -683,28 +678,37 @@ const InteractiveResume = () => {
 
         <Nav role="navigation" aria-label="Resume sections">
           <NavList>
-            {["about", "skills", "experience", "projects", "education"].map(
-              (section) => (
-                <li key={section}>
-                  <NavButton
-                    active={activeSection === section}
-                    onClick={() => handleSectionChange(section)}
-                    onKeyDown={(e) => handleKeyDown(e, section)}
-                    tabIndex={0}
-                    role="tab"
-                    id={`tab-${section}`}
-                    aria-selected={activeSection === section}
-                    aria-controls={`panel-${section}`}
-                  >
-                    {section}
-                  </NavButton>
-                </li>
-              )
-            )}
+            {[
+              "about",
+              "skills",
+              "experience",
+              "projects",
+              "awards",
+              "education",
+            ].map((section) => (
+              <li key={section}>
+                <NavButton
+                  active={activeSection === section}
+                  onClick={() => handleSectionChange(section)}
+                  onKeyDown={(e) => handleKeyDown(e, section)}
+                  tabIndex={0}
+                  role="tab"
+                  id={`tab-${section}`}
+                  aria-selected={activeSection === section}
+                  aria-controls={`panel-${section}`}
+                >
+                  {section}
+                </NavButton>
+              </li>
+            ))}
           </NavList>
         </Nav>
 
-        <Main role="tabpanel" id={`panel-${activeSection}`} aria-labelledby={`tab-${activeSection}`}>
+        <Main
+          role="tabpanel"
+          id={`panel-${activeSection}`}
+          aria-labelledby={`tab-${activeSection}`}
+        >
           {/* About Section */}
           {activeSection === "about" && isVisible.about && (
             <Section>
@@ -768,15 +772,17 @@ const InteractiveResume = () => {
                   <SkillCard key={skill.name}>
                     <SkillHeader>
                       <SkillName>
-                        <IconWrapper aria-hidden="true">{skill.icon}</IconWrapper>
+                        <IconWrapper aria-hidden="true">
+                          {skill.icon}
+                        </IconWrapper>
                         {skill.name}
                       </SkillName>
                       <SkillValue>{skill.value}%</SkillValue>
                     </SkillHeader>
-                    <SkillBar 
-                      role="progressbar" 
-                      aria-valuenow={skill.value} 
-                      aria-valuemin={0} 
+                    <SkillBar
+                      role="progressbar"
+                      aria-valuenow={skill.value}
+                      aria-valuemin={0}
                       aria-valuemax={100}
                       aria-label={`${skill.name} skill level: ${skill.value}%`}
                     >
@@ -810,7 +816,9 @@ const InteractiveResume = () => {
                   "Vercel",
                   "AWS basics",
                 ].map((tag) => (
-                  <Tag key={tag} role="listitem">{tag}</Tag>
+                  <Tag key={tag} role="listitem">
+                    {tag}
+                  </Tag>
                 ))}
               </TagsContainer>
             </Section>
@@ -837,7 +845,9 @@ const InteractiveResume = () => {
                       </TimelineHeader>
                       <BulletList role="list">
                         {job.description.map((item, i) => (
-                          <BulletItem key={i} role="listitem">{item}</BulletItem>
+                          <BulletItem key={i} role="listitem">
+                            {item}
+                          </BulletItem>
                         ))}
                       </BulletList>
                     </TimelineCard>
@@ -859,7 +869,10 @@ const InteractiveResume = () => {
 
               <ProjectsContainer>
                 <ProjectCategoryTitle>
-                  <IconWrapper style={{ color: theme.primary }} aria-hidden="true">
+                  <IconWrapper
+                    style={{ color: theme.primary }}
+                    aria-hidden="true"
+                  >
                     <Briefcase size={18} />
                   </IconWrapper>
                   Professional Projects
@@ -869,11 +882,15 @@ const InteractiveResume = () => {
                   {mainProjects.map((project, index) => (
                     <ProjectCard key={index} role="listitem">
                       <ProjectHeader>
-                        <ProjectIcon aria-hidden="true">{project.icon}</ProjectIcon>
+                        <ProjectIcon aria-hidden="true">
+                          {project.icon}
+                        </ProjectIcon>
                         <ProjectTitle>{project.title}</ProjectTitle>
                       </ProjectHeader>
                       <CardText>{project.description}</CardText>
-                      <ProjectTags aria-label={`Technologies used in ${project.title}`}>
+                      <ProjectTags
+                        aria-label={`Technologies used in ${project.title}`}
+                      >
                         {project.tags.map((tag, i) => (
                           <ProjectTag key={i}>{tag}</ProjectTag>
                         ))}
@@ -883,7 +900,10 @@ const InteractiveResume = () => {
                 </CardGrid>
 
                 <ProjectCategoryTitle style={{ marginTop: "3rem" }}>
-                  <IconWrapper style={{ color: theme.secondary }} aria-hidden="true">
+                  <IconWrapper
+                    style={{ color: theme.secondary }}
+                    aria-hidden="true"
+                  >
                     <Flame size={18} />
                   </IconWrapper>
                   Self-Initiated Projects
@@ -893,11 +913,15 @@ const InteractiveResume = () => {
                   {selfInitiatedProjects.map((project, index) => (
                     <ProjectCard key={index} role="listitem">
                       <ProjectHeader>
-                        <ProjectIcon aria-hidden="true">{project.icon}</ProjectIcon>
+                        <ProjectIcon aria-hidden="true">
+                          {project.icon}
+                        </ProjectIcon>
                         <ProjectTitle>{project.title}</ProjectTitle>
                       </ProjectHeader>
                       <CardText>{project.description}</CardText>
-                      <ProjectTags aria-label={`Technologies used in ${project.title}`}>
+                      <ProjectTags
+                        aria-label={`Technologies used in ${project.title}`}
+                      >
                         {project.tags.map((tag, i) => (
                           <ProjectTag key={i}>{tag}</ProjectTag>
                         ))}
@@ -909,31 +933,12 @@ const InteractiveResume = () => {
             </Section>
           )}
 
-          {/* Education Section */}
-          {activeSection === "education" && isVisible.education && (
+          {/* Awards Section */}
+          {activeSection === "awards" && isVisible.awards && (
             <Section>
               <SectionTitle>
                 <IconWrapper aria-hidden="true">
-                  <BookOpen size={22} />
-                </IconWrapper>{" "}
-                Education & Awards
-              </SectionTitle>
-
-              <Card style={{ marginBottom: "2rem" }}>
-                <CardTitle as="h3">
-                  Bachelor of Technology (B.Tech) in Computer Science
-                </CardTitle>
-                <TimelineHeader>
-                  <TimelineCompany>
-                    BK Birla Institute of Engineering and Technology, Pilani
-                  </TimelineCompany>
-                  <TimelineDate>2018 - 2022</TimelineDate>
-                </TimelineHeader>
-              </Card>
-
-              <SectionTitle style={{ fontSize: "1.25rem" }}>
-                <IconWrapper aria-hidden="true">
-                  <Award size={18} />
+                  <Award size={22} />
                 </IconWrapper>{" "}
                 Awards & Recognition
               </SectionTitle>
@@ -955,6 +960,30 @@ const InteractiveResume = () => {
                   </CardText>
                 </HighlightCard>
               </CardGrid>
+            </Section>
+          )}
+
+          {/* Education Section */}
+          {activeSection === "education" && isVisible.education && (
+            <Section>
+              <SectionTitle>
+                <IconWrapper aria-hidden="true">
+                  <BookOpen size={22} />
+                </IconWrapper>{" "}
+                Education
+              </SectionTitle>
+
+              <Card style={{ marginBottom: "2rem" }}>
+                <CardTitle as="h3">
+                  Bachelor of Technology (B.Tech) in Computer Science
+                </CardTitle>
+                <TimelineHeader>
+                  <TimelineCompany>
+                    BK Birla Institute of Engineering and Technology, Pilani
+                  </TimelineCompany>
+                  <TimelineDate>2018 - 2022</TimelineDate>
+                </TimelineHeader>
+              </Card>
             </Section>
           )}
         </Main>
