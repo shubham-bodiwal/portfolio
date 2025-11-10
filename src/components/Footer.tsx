@@ -480,7 +480,7 @@ export default function Footer() {
             </SocialLinks>
           </FooterColumn>
 
-          <FooterColumn index={1} aria-labelledby="update-heading">
+          {/* <FooterColumn index={1} aria-labelledby="update-heading">
             <ColumnTitle id="update-heading">Stay Updated</ColumnTitle>
             <p
               style={{
@@ -491,7 +491,7 @@ export default function Footer() {
               Subscribe to receive updates on my latest projects and tech
               insights.
             </p>
-          </FooterColumn>
+          </FooterColumn> */}
 
           {/* <FooterColumn index={2}>
               {subscribed ? "Thanks for subscribing!" : ""}
