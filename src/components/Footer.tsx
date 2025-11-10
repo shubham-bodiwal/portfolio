@@ -423,30 +423,29 @@ export default function Footer() {
 
         <QuoteCard>
           <Quote>
-            "I'm dedicated to enhancing user experiences and streamlining
-            development processes. My approach combines technical expertise with
-            a passion for creating scalable, accessible, and high-performance
-            applications that make a real difference for users."
+            "I partner with product, design, and engineering to build
+            enterprise-grade React and Next.js experiences that stay fast,
+            accessible, and reliable long after launch."
           </Quote>
           <QuoteAuthor>— Shubham Bhodiwal</QuoteAuthor>
         </QuoteCard>
 
         <ProjectsStatsSection aria-labelledby="stats-heading">
           <StatItem index={0}>
-            <StatNumber>10+</StatNumber>
-            <StatLabel>Projects</StatLabel>
+            <StatNumber>15+</StatNumber>
+            <StatLabel>Products Delivered</StatLabel>
           </StatItem>
           <StatItem index={1}>
             <StatNumber>5K+</StatNumber>
-            <StatLabel>Concurrent Users</StatLabel>
+            <StatLabel>Enterprise Users Served</StatLabel>
           </StatItem>
           <StatItem index={2}>
-            <StatNumber>30%</StatNumber>
-            <StatLabel>App Load Time Reduction</StatLabel>
+            <StatNumber>60%</StatNumber>
+            <StatLabel>Faster Load Times Shipped</StatLabel>
           </StatItem>
           <StatItem index={3}>
-            <StatNumber>40%</StatNumber>
-            <StatLabel>Manual Intervention Reduction</StatLabel>
+            <StatNumber>95%</StatNumber>
+            <StatLabel>Test Coverage on Critical Flows</StatLabel>
           </StatItem>
         </ProjectsStatsSection>
 

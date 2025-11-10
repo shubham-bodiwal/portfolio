@@ -188,60 +188,57 @@ const ClickHere = styled.div`
 `;
 const skillCategories = [
   {
-    name: "Web Development",
+    name: "Product Engineering",
     skills: [
       "React",
+      "Next.js",
       "TypeScript",
-      "JavaScript",
+      "JavaScript (ES6+)",
       "HTML5",
       "CSS3",
       "Redux Toolkit",
+      "GraphQL",
       "REST APIs",
+      "SSR & SSG",
       "WebSockets",
       "Electron.js",
       "PWA",
-      "React PDF",
-      "Portals",
-      "Suspense",
       "Vite",
     ],
   },
   {
     name: "Performance & Optimization",
     skills: [
+      "Core Web Vitals",
       "Lazy Loading",
-      "Memoization",
       "Code Splitting",
+      "Memoization",
       "Bundle Analysis",
       "Lighthouse",
-      "Core Web Vitals",
       "Web Workers",
       "Service Workers",
       "IndexedDB",
       "Cache API",
-      "Intersection Observer",
       "Virtualized Lists",
+      "Turbopack",
     ],
   },
   {
-    name: "UI/UX & Tools",
+    name: "UI/UX & Tooling",
     skills: [
       "Figma",
-      "Ant Design",
+      "Shadcn",
       "Material UI",
+      "Ant Design",
+      "Tailwind CSS",
       "Styled Components",
+      "Storybook",
+      "Design Tokens",
       "Vercel",
-      "Git",
       "Bitbucket",
+      "Git",
       "Jira",
       "VS Code",
-      "ESLint",
-      "Prettier",
-      "Husky",
-      "Chrome DevTools",
-      "Postman",
-      "Babel",
-      "Webpack",
     ],
   },
   {
@@ -249,23 +246,23 @@ const skillCategories = [
     skills: [
       "Jest",
       "React Testing Library",
+      "Cypress",
       "Unit Testing",
-      "Snapshot Testing",
       "Integration Testing",
+      "Snapshot Testing",
       "Mocking",
     ],
   },
   {
-    name: "Additional Skills",
+    name: "Leadership & Delivery",
     skills: [
-      "Data Structures and Algorithms",
-      "Node.js",
-      "GraphQL",
-      "PostgreSQL",
-      "Mongo Realm",
-      "LocalStorage",
-      "Authentication",
-      "Authorization",
+      "Technical Roadmapping",
+      "Cross-functional Collaboration",
+      "Mentorship",
+      "Agile & Scrum",
+      "Code Reviews",
+      "System Design",
+      "Documentation",
     ],
   },
 ];
@@ -644,13 +641,13 @@ const ColorChangingAnimation: FC = () => {
                 index={0}
                 style={{ background: "rgba(255, 170, 51, 0.2)" }}
               >
-                "New Star on The Block" Award at Daffodil Software
+                "New Star on the Block" Award - Daffodil Software
               </SkillItem>
               <SkillItem
                 index={1}
                 style={{ background: "rgba(255, 170, 51, 0.2)" }}
               >
-                Technical Recognition at Resume.io
+                Resume.io Product Transformation Recognition
               </SkillItem>
             </SkillsList>
           </PhilosophySection>

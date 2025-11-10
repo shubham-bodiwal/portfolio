@@ -244,7 +244,7 @@ function PortfolioPage() {
         <VerticalLabel>YOU'RE HERE</VerticalLabel>
       </IndicatorWrapper>
 
-      <VerticalRightText>3.5 Years of Experience</VerticalRightText>
+      <VerticalRightText>4+ Years of Frontend Leadership</VerticalRightText>
     </AppWrapper>
   );
 }

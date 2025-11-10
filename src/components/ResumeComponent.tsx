@@ -10,7 +10,6 @@ import {
   BookOpen,
   Server,
   Activity,
-  Database,
   Monitor,
   Cpu,
   Flame,
@@ -484,16 +483,12 @@ const InteractiveResume = () => {
     setIsVisible({ about: true });
     const timer = setTimeout(() => {
       setSkillsProgress({
-        react: 90,
-        typescript: 85,
-        javascript: 88,
-        redux: 80,
-        html: 92,
-        css: 88,
-        antd: 85,
-        rest: 78,
-        graphql: 70,
-        accessibility: 75,
+        react: 95,
+        next: 92,
+        typescript: 92,
+        javascript: 90,
+        architecture: 88,
+        testing: 90,
       });
     }, 1000);
     return () => clearTimeout(timer);
@@ -518,77 +513,113 @@ const InteractiveResume = () => {
       value: skillsProgress.react || 0,
     },
     {
+      name: "Next.js",
+      icon: <Monitor size={18} />,
+      value: skillsProgress.next || 0,
+    },
+    {
       name: "TypeScript",
       icon: <Terminal size={18} />,
       value: skillsProgress.typescript || 0,
     },
     {
-      name: "JavaScript",
+      name: "JavaScript (ES6+)",
       icon: <Terminal size={18} />,
       value: skillsProgress.javascript || 0,
     },
     {
-      name: "HTML/CSS",
-      icon: <Monitor size={18} />,
-      value: skillsProgress.html || 0,
+      name: "Frontend Architecture",
+      icon: <Layout size={18} />,
+      value: skillsProgress.architecture || 0,
     },
     {
-      name: "Redux",
-      icon: <Database size={18} />,
-      value: skillsProgress.redux || 0,
-    },
-    {
-      name: "REST/GraphQL",
-      icon: <Server size={18} />,
-      value: skillsProgress.rest || 0,
+      name: "Testing Automation",
+      icon: <Activity size={18} />,
+      value: skillsProgress.testing || 0,
     },
   ];
 
   const experience: ExperienceItem[] = [
     {
+      title: "Software Development Engineer II (Frontend)",
+      company: "Swivl.tech",
+      period: "Jun 2025 - Present",
+      description: [
+        "Led the architecture and launch of an AI-powered work order management platform (Next.js, React, TypeScript) while mentoring a 6-member squad including 2 junior developers.",
+        "Introduced SSR-driven modules and a unified design system that improved dashboard load times by 40% and lifted delivery velocity by 35%.",
+        "Partnered with product and design to build smart chatbot routing that cut ticket resolution time in half and elevated customer satisfaction.",
+        "Set engineering quality bars via code reviews, documentation, and automated testing practices that sustained 95% unit test coverage across critical flows.",
+      ],
+    },
+    {
       title: "Associate Software Developer",
       company: "Daffodil Software",
-      period: "Nov 2021 - Apr 2025",
+      period: "Apr 2024 - Jun 2025",
       description: [
-        "Architected and deployed scalable React + TypeScript modules, enhancing the user experience for over 5,000 users",
-        "Improved module load times by 40% and page load times by 60% through lazy loading and memoization",
-        "Built a data delivery infrastructure using GraphQL and REST, reducing data latency by 40%",
-        "Implemented caching strategies and IndexedDB for better performance in data-heavy apps",
-        "Mentored 4–6 developers through code reviews, agile sprints, and planning sessions",
-        "Developed reusable components and documentation, boosting team velocity by 30%",
-        "Wrote unit and snapshot tests using Jest and RTL to improve deployment reliability",
+        "Directed a 6-person frontend team delivering a React + TypeScript HR/Finance platform for 5,000+ enterprise users.",
+        "Engineered high-throughput client code with Web Workers and Service Workers, trimming page loads by 60% and decreasing bounce rates by 15%.",
+        "Rolled out a Jest + RTL testing framework with 100% coverage standards, reducing production bugs by 45% and boosting release confidence.",
+        "Mentored three junior engineers, ran technical interviews, and formalized code review rituals that accelerated team velocity by 30%.",
+      ],
+    },
+    {
+      title: "Junior Associate Software Developer",
+      company: "Daffodil Software",
+      period: "May 2022 - Mar 2024",
+      description: [
+        "Delivered scalable React UI features backed by GraphQL/REST services, modernizing legacy modules and improving rendering speed by 25%.",
+        "Designed a reusable component library and modular architecture that increased feature throughput by 40% across squads.",
+        "Converted Figma design systems into production-ready experiences with pixel-perfect fidelity and cross-browser reliability.",
+        "Resolved high-priority defects and performance bottlenecks under tight timelines while coordinating with stakeholders in multiple geographies.",
+      ],
+    },
+    {
+      title: "Software Development Intern",
+      company: "Daffodil Software",
+      period: "Nov 2021 - Apr 2022",
+      description: [
+        "Implemented enterprise UI components with modern React/TypeScript patterns and upheld 100% unit test coverage targets.",
+        "Automated regression coverage using Jest and React Testing Library to harden CI/CD pipelines and improve deployment reliability.",
+        "Ramp up on modern frontend tooling and practices that fast-tracked conversion to a full-time engineering role.",
       ],
     },
   ];
 
   const mainProjects: ProjectItem[] = [
     {
-      title: "Gulf-HR",
+      title: "Swivl Work Order OS",
       icon: <Briefcase size={18} />,
       description:
-        "Centralized HRMS with form builders, role-based permissions, and reporting—saved 15 hours per HR employee weekly.",
-      tags: ["React", "Ant Design", "Forms", "Permissions"],
+        "AI-assisted work order orchestration for field teams built with Next.js and React. Delivered SSR modules and reusable patterns that unlocked 40% faster dashboards.",
+      tags: ["Next.js", "React", "Design System", "AI"],
     },
     {
-      title: "Twilio Segment (Fraud Guard)",
-      icon: <Shield size={18} />,
-      description:
-        "Streamlined fraud workflows in a monorepo setup, reducing false positives by 40% weekly.",
-      tags: ["Monorepo", "APIs", "Security", "Optimization"],
-    },
-    {
-      title: "Resume.io",
+      title: "Resume.io Editor Platform",
       icon: <Layout size={18} />,
       description:
-        "Developed editable DOCX templates using docs.js and React, deployed on Vercel. Reduced doc generation errors to zero.",
-      tags: ["React", "DOCX", "Serverless", "PDF"],
+        "Re-architected the resume builder with React PDF and docs.js to produce ATS-friendly exports and 25% quicker live previews.",
+      tags: ["React", "docs.js", "Serverless", "Performance"],
     },
     {
-      title: "SHS Homeopathy",
+      title: "Twilio Segment Fraud Guard",
+      icon: <Shield size={18} />,
+      description:
+        "Built automated fraud detection workflows in a shared monorepo, reducing manual case reviews by 40% while tightening compliance controls.",
+      tags: ["Monorepo", "Automation", "Security", "APIs"],
+    },
+    {
+      title: "Gulf-HR Platform",
       icon: <Monitor size={18} />,
       description:
-        "Integrated AI search components and improved UX with intelligent suggestions, reducing user search time by 30%.",
-      tags: ["React", "Electron", "AI", "Search"],
+        "Modular HRMS with form builders, role-based access, and analytics that saved HR teams 15+ hours per week.",
+      tags: ["React", "Ant Design", "Component Library", "Analytics"],
+    },
+    {
+      title: "SHS Homeopathy OS",
+      icon: <Monitor size={18} />,
+      description:
+        "Electron + web apps with AI search, offline-first storage, and practitioner dashboards serving clinics globally.",
+      tags: ["Electron", "React", "AI", "Offline"],
     },
   ];
 
@@ -596,48 +627,48 @@ const InteractiveResume = () => {
     {
       title: "Quiz Reminder App",
       description:
-        "Smart notifications and MCQ practice via tray for idle time learning.",
+        "Adaptive study coach that delivers gamified MCQs directly in the notification tray for effortless daily practice.",
       tags: ["Gamification", "Notifications"],
       icon: <Layout size={18} />,
     },
     {
-      title: "AI Interview System",
+      title: "AI Interview Intelligence",
       description:
-        "Analyzes candidates via video/audio, with posture, voice, and anti-cheat metrics.",
+        "Vision and voice analytics for interview panels that surface posture, tone, and focus metrics alongside cheat detection.",
       tags: ["AI", "Analytics", "Video"],
       icon: <Cpu size={18} />,
     },
     {
       title: "AI QA Tool",
       description:
-        "Crawls code and UI, checks against user stories, detects bugs and automates UI testing.",
+        "Autonomous QA assistant that maps user stories to UI flows, flags regressions, and generates prioritized bug reports.",
       tags: ["Automation", "Testing", "AI"],
       icon: <Flame size={18} />,
     },
     {
       title: "Code Refactor Extension",
       description:
-        "AI plugin for VS Code to optimize, rename, and simplify logic in real time.",
+        "VS Code extension that applies AI-guided refactors to improve readability, naming, and algorithmic efficiency in real time.",
       tags: ["VS Code", "AI", "Refactor"],
       icon: <Zap size={18} />,
     },
     {
       title: "Gaming News Platform",
       description:
-        "Live stream hub with updates on esports, trending games, and admin dashboard.",
+        "Esports companion with live streams, editorial workflows, and an admin console for sponsorship and tournament management.",
       tags: ["Content", "Streams", "Dashboard"],
       icon: <Activity size={18} />,
     },
     {
       title: "WhatsApp Clone",
-      description: "Real-time chat with group features, media, and socket.io.",
+      description: "Real-time messaging platform with group collaboration, media sharing, and socket.io-backed delivery guarantees.",
       tags: ["WebSocket", "Chat"],
       icon: <Terminal size={18} />,
     },
     {
       title: "Smart Home IoT",
       description:
-        "Arduino-based automation for lighting, gas, climate, and security.",
+        "Arduino-based home automation stack for lighting, safety, and climate with energy usage intelligence.",
       tags: ["IoT", "Arduino", "Automation"],
       icon: <Cpu size={18} />,
     },
@@ -650,7 +681,7 @@ const InteractiveResume = () => {
       <Container role="main">
         <Header>
           <Name>Shubham Bhodiwal</Name>
-          <Title>Frontend Developer (3.5 Years of Experience)</Title>
+          <Title>SDE-II • Frontend Engineering (4+ Years)</Title>
 
           <ContactInfo>
             <ContactLink
@@ -720,37 +751,36 @@ const InteractiveResume = () => {
               </SectionTitle>
 
               <AboutText>
-                Innovative Frontend Developer skilled in React, TypeScript, and
-                modern web technologies. Proven experience in optimizing
-                frontend solutions for performance, scalability, and
-                accessibility across complex applications including HR
-                management systems and automation solutions. Passionate learner
-                dedicated to enhancing user experiences and streamlining
-                development processes.
+                Results-driven frontend engineer focused on React and Next.js
+                ecosystems. I build and scale enterprise platforms that serve
+                5K+ users, blending AI-assisted experiences with robust
+                engineering guardrails. My sweet spot is marrying system design,
+                performance tuning, and team mentorship to ship products that
+                stay fast, accessible, and maintainable.
               </AboutText>
 
               <CardGrid>
                 <Card>
-                  <CardTitle>Frontend Focus</CardTitle>
+                  <CardTitle>Enterprise Scale Craft</CardTitle>
                   <CardText>
-                    Specialized in building responsive, performant React
-                    applications with clean, maintainable code.
+                    Architect scalable React & Next.js systems with reusable
+                    design tokens, component libraries, and SSR pipelines.
                   </CardText>
                 </Card>
 
                 <Card>
-                  <CardTitle>Problem Solver</CardTitle>
+                  <CardTitle>Performance Champion</CardTitle>
                   <CardText>
-                    Reduced application load times by 30% through strategic
-                    optimization and performance tuning.
+                    Delivered 40-60% faster experiences using caching layers,
+                    workers, and Core Web Vitals guided optimizations.
                   </CardText>
                 </Card>
 
                 <Card>
-                  <CardTitle>Continuous Learner</CardTitle>
+                  <CardTitle>Team Catalyst</CardTitle>
                   <CardText>
-                    Always exploring new technologies and methodologies to
-                    enhance development workflows.
+                    Mentor engineers, lead code reviews, and uphold 95%+ test
+                    coverage to keep releases calm and predictable.
                   </CardText>
                 </Card>
               </CardGrid>
@@ -801,20 +831,22 @@ const InteractiveResume = () => {
 
               <TagsContainer role="list" aria-label="Additional skills">
                 {[
+                  "Next.js",
                   "Redux Toolkit",
+                  "Shadcn UI",
                   "Styled Components",
                   "Ant Design",
                   "Material UI",
-                  "Web Vitals",
+                  "Core Web Vitals",
                   "Accessibility",
                   "PWA",
                   "Service Workers",
                   "GraphQL",
                   "React Query",
+                  "Cypress",
                   "Git",
-                  "Docker",
                   "Vercel",
-                  "AWS basics",
+                  "AWS (Essentials)",
                 ].map((tag) => (
                   <Tag key={tag} role="listitem">
                     {tag}
@@ -945,18 +977,22 @@ const InteractiveResume = () => {
 
               <CardGrid role="list" aria-label="Awards and recognition">
                 <HighlightCard role="listitem">
-                  <CardTitle as="h3">New Star on The Block</CardTitle>
+                  <CardTitle as="h3">
+                    "New Star on the Block" - Daffodil Software
+                  </CardTitle>
                   <CardText>
-                    Awarded for impactful contributions to mission-critical
-                    projects at Daffodil Software.
+                    Honored for rapidly delivering mission-critical frontend
+                    modules with exceptional quality and impact.
                   </CardText>
                 </HighlightCard>
 
                 <HighlightCard role="listitem">
-                  <CardTitle as="h3">Technical Excellence Award</CardTitle>
+                  <CardTitle as="h3">
+                    Resume.io Product Transformation Recognition
+                  </CardTitle>
                   <CardText>
-                    Recognized by Resume.io for technical interventions that
-                    accelerated project improvements.
+                    Celebrated for modernizing the resume builder architecture,
+                    improving render speed by 25% and elevating UX.
                   </CardText>
                 </HighlightCard>
               </CardGrid>
@@ -989,7 +1025,8 @@ const InteractiveResume = () => {
         </Main>
 
         <Footer role="contentinfo">
-          © {new Date().getFullYear()} Shubham Bhodiwal • Frontend Developer
+          © {new Date().getFullYear()} Shubham Bhodiwal • SDE-II, Frontend
+          Engineering
         </Footer>
       </Container>
     </>

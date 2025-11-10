@@ -280,60 +280,64 @@ interface HoverText {
 
 const hoverTexts: HoverText[] = [
   {
-    title: "Craftsman Mindset",
+    title: "Architect First",
     description:
-      "I don't just write code—I sculpt it, pixel by pixel, with precision and pride.",
+      "I shape frontend systems that scale gracefully across squads, products, and release cycles.",
   },
   {
-    title: "Perpetual Learner",
+    title: "Performance Obsessed",
     description:
-      "My curiosity ships features. I chase problems like puzzles, not chores.",
+      "Core Web Vitals, caching layers, and SSR pipelines are my playground for faster ships.",
   },
   {
-    title: "Engineering with Empathy",
+    title: "AI-Augmented Delivery",
     description:
-      "Code is for humans first, machines second. Accessibility isn't optional.",
+      "From smart ticket routing to QA agents, I blend AI with UX to unlock measurable gains.",
   },
   {
-    title: "Tech Explorer",
+    title: "Accessibility Advocate",
     description:
-      "From React to Arduino, I explore, build, break, and rebuild. Curiosity > Comfort.",
+      "Every interaction should be inclusive. WCAG compliance is a feature, not a task.",
   },
   {
-    title: "Pixel-Perfect & Purpose-Driven",
+    title: "Mentor Mode",
     description:
-      "Design with intention. Animate with logic. Deliver with delight.",
+      "I coach teams through architecture reviews, pairing sessions, and healthy feedback loops.",
   },
   {
-    title: "Web Performance Geek",
-    description: "Fast feels good. I tune every byte until it sings.",
-  },
-  {
-    title: "Creative Problem Solver",
+    title: "Story-Driven UI",
     description:
-      "Give me a bottleneck—I'll give you a blueprint and a breakthrough.",
+      "I translate user pain points into journey maps, then code experiences that feel effortless.",
   },
   {
-    title: "Detail-Oriented",
-    description: "I debug with surgical precision and review PRs like poetry.",
-  },
-  {
-    title: "System Thinker",
-    description: "I see patterns. I build systems. I make chaos modular.",
-  },
-  {
-    title: "Style Meets Substance",
+    title: "Data-Informed Decisions",
     description:
-      "Styled-components addict. UI should look good and feel right.",
+      "Instrumentation and analytics inform my roadmap, validating each iteration before scaling.",
   },
   {
-    title: "Collaborative Energy",
-    description: "I bring code, calm, and candor to every stand-up and sprint.",
-  },
-  {
-    title: "Growth Mindset",
+    title: "Quality Gatekeeper",
     description:
-      "Version 1 is never the end. I iterate, elevate, and never settle.",
+      "95% automated coverage, bulletproof pipelines, and calm releases are non-negotiable.",
+  },
+  {
+    title: "Systems Thinker",
+    description:
+      "Reusable component libraries and guardrails keep teams fast without sacrificing craft.",
+  },
+  {
+    title: "Design System Builder",
+    description:
+      "I partner with design to codify tokens, patterns, and accessibility baked into the stack.",
+  },
+  {
+    title: "Cross-Functional Partner",
+    description:
+      "Product, design, GTM, and support teams get a frontend ally who speaks their language.",
+  },
+  {
+    title: "Continuous Improver",
+    description:
+      "Retros, metrics, and curiosity fuel a culture where ‘done’ means better than yesterday.",
   },
 ];
 

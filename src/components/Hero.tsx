@@ -222,11 +222,13 @@ export default function Hero() {
       <Content aria-labelledby="portfolio-title portfolio-subtitle">
         <Title id="portfolio-title">SHUBHAM BHODIWAL</Title>
         <Subtitle id="portfolio-subtitle">
-          FRONTEND
-          <br /> <span style={{ color: "white" }}>DEVELOPER</span>
+          SDE-II
+          <br /> <span style={{ color: "white" }}>FRONTEND</span>
         </Subtitle>
       </Content>
-      <CornerTag aria-label="Developer since November 2021">Developer from november 2021</CornerTag>
+      <CornerTag aria-label="Building production systems since 2021">
+        Crafting production systems since 2021
+      </CornerTag>
     </HeroSection>
   );
 }

@@ -297,59 +297,59 @@ export default function Gallery() {
   // Gallery data
   const galleries: GalleryData[] = [
     {
-      title: "AI Interview System",
+      title: "Swivl Work Order OS",
       content:
-        "AI platform for interview assessment via video, analyzing eye contact, posture, and voice. Real-time cheat alerts and performance analytics.",
+        "Next.js + React platform orchestrating AI-assisted work orders for field teams. Led SSR architecture and design system rollout that boosted dashboard loads by 40%.",
     },
     {
-      title: "Quiz Reminder App",
+      title: "Smart Ticket Router",
       content:
-        "Mobile app delivering personalized quiz reminders with gamified MCQs directly in the notification tray. Adaptive scheduling based on user habits.",
+        "Conversational routing experience that pairs chatbots with human agents. Reduced ticket resolution time by 50% with context-aware escalation rules.",
+    },
+    {
+      title: "Resume.io Editor",
+      content:
+        "Modernized the Resume.io builder with React PDF and docs.js. Delivered instant previews, ATS-friendly exports, and 25% faster render performance.",
+    },
+    {
+      title: "Twilio Segment Fraud Guard",
+      content:
+        "Fraud detection workflows embedded in Segment’s monorepo. Automated validation to cut manual reviews by 40% while strengthening compliance.",
+    },
+    {
+      title: "Gulf-HR Platform",
+      content:
+        "Enterprise HR suite with dynamic form builders, role-driven access, and on-demand analytics. Powered by Ant Design and modular component libraries.",
+    },
+    {
+      title: "SHS Homeopathy OS",
+      content:
+        "Electron and web apps with AI-assisted search, multi-window navigation, and clinical insights dashboards for practitioners worldwide.",
     },
     {
       title: "AI QA Crawler",
       content:
-        "Smart crawler that inspects codebases and UIs to detect bugs and usability issues. Automates QA by mimicking expected interactions.",
+        "Autonomous QA agent that scans codebases and UIs, maps scenarios to user stories, and highlights regression risks before release.",
     },
     {
-      title: "AI Code Refactor Extension",
+      title: "AI Interview Intelligence",
       content:
-        "VS Code extension that uses AI to refactor code for readability and maintainability. Features include variable renaming, logic simplification, and structure enhancement.",
+        "Vision and voice analytics for interview panels. Tracks focus, vocal cues, posture, and surfaces candidate summaries with risk indicators.",
     },
     {
-      title: "SHS Homeopathy",
+      title: "Quiz Reminder App",
       content:
-        "Electron and web-based app managing medical data with global search, AI chatbot, graphical insights, and multi-window OS-style UI.",
-    },
-    {
-      title: "Resume.io",
-      content:
-      "ATS-friendly resume builder with React PDF, live previews, and DOCX editing using docs.js on a serverless backend. Optimized for performance and scalability.",
-    },
-    {
-      title: "Twilio Segment",
-      content:
-      "Built a fraud detection and validation system that cut manual review by 40%. Enhanced security compliance and automated verification processes.",
-    },
-    {
-      title: "Gulf-HR",
-      content:
-      "Modular HR management system with dynamic forms, role-based permissions, and backend-configurable fields. Built using Ant Design and reusable components.",
+        "Mobile companion that schedules bite-sized MCQs in the notification tray. Adaptive cadence keeps daily practice effortless and engaging.",
     },
     {
       title: "Gamers Box",
       content:
-        "Gaming platform with live streams, esports news, and gear updates. Includes an admin dashboard for tournament management and content moderation.",
-    },
-    {
-      title: "WhatsApp Clone",
-      content:
-        "Real-time messaging app with group chat, media sharing, and secure socket.io communication. Built to explore WebSocket architecture.",
+        "Gaming and esports hub with live streams, editorial workflows, and an admin console for tournament operations and sponsorship tracking.",
     },
     {
       title: "Smart Home Automation",
       content:
-        "End-to-end IoT smart home ecosystem using Arduino. Includes automation for lighting, gas, climate, and curtains with energy efficiency insights.",
+        "Arduino-based home automation stack for lighting, climate, and safety systems with energy intelligence dashboards.",
     },
   ];
 
