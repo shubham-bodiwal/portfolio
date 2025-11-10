@@ -297,7 +297,7 @@ export default function Gallery() {
   // Gallery data
   const galleries: GalleryData[] = [
     {
-      title: "Swivl Work Order OS",
+      title: "Swivl Work Order",
       content:
         "Next.js + React platform orchestrating AI-assisted work orders for field teams. Led SSR architecture and design system rollout that boosted dashboard loads by 40%.",
     },
@@ -322,7 +322,7 @@ export default function Gallery() {
         "Enterprise HR suite with dynamic form builders, role-driven access, and on-demand analytics. Powered by Ant Design and modular component libraries.",
     },
     {
-      title: "SHS Homeopathy OS",
+      title: "SHS Homeopathy",
       content:
         "Electron and web apps with AI-assisted search, multi-window navigation, and clinical insights dashboards for practitioners worldwide.",
     },

@@ -493,7 +493,7 @@ export default function Footer() {
             </p>
           </FooterColumn>
 
-          <FooterColumn index={2}>
+          {/* <FooterColumn index={2}>
               {subscribed ? "Thanks for subscribing!" : ""}
             
             {subscribed ? (
@@ -528,7 +528,7 @@ export default function Footer() {
               Get In Touch{" "}
               <ArrowUp size={16} style={{ transform: "rotate(45deg)" }} aria-hidden="true" />
             </CTAButton>
-          </FooterColumn>
+          </FooterColumn> */}
         </GridContainer>
 
         <Divider role="separator" />

@@ -587,7 +587,7 @@ const InteractiveResume = () => {
 
   const mainProjects: ProjectItem[] = [
     {
-      title: "Swivl Work Order OS",
+      title: "Swivl Work Order",
       icon: <Briefcase size={18} />,
       description:
         "AI-assisted work order orchestration for field teams built with Next.js and React. Delivered SSR modules and reusable patterns that unlocked 40% faster dashboards.",
@@ -615,7 +615,7 @@ const InteractiveResume = () => {
       tags: ["React", "Ant Design", "Component Library", "Analytics"],
     },
     {
-      title: "SHS Homeopathy OS",
+      title: "SHS Homeopathy",
       icon: <Monitor size={18} />,
       description:
         "Electron + web apps with AI search, offline-first storage, and practitioner dashboards serving clinics globally.",
@@ -807,7 +807,7 @@ const InteractiveResume = () => {
                         </IconWrapper>
                         {skill.name}
                       </SkillName>
-                      <SkillValue>{skill.value}%</SkillValue>
+                      {/* <SkillValue>{skill.value}%</SkillValue> */}
                     </SkillHeader>
                     <SkillBar
                       role="progressbar"
