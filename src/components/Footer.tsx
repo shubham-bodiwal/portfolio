@@ -1,9 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import {
   Linkedin,
   Mail,
-  ArrowUp,
+  // ArrowUp,
   Heart,
 } from "lucide-react";
 
@@ -31,11 +31,11 @@ const pulse = keyframes`
 //   100% { transform: translateY(0rem); }
 // `;
 
-const gradientMove = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
+// const gradientMove = keyframes`
+//   0% { background-position: 0% 50%; }
+//   50% { background-position: 100% 50%; }
+//   100% { background-position: 0% 50%; }
+// `;
 
 // Styled components
 const FooterWrapper = styled.footer`
@@ -177,43 +177,43 @@ const SocialLink = styled.a`
 //   }
 // `;
 
-const NewsletterForm = styled.form`
-  width: 100%;
-  position: relative;
-  margin-top: 1rem;
-`;
+// const NewsletterForm = styled.form`
+//   width: 100%;
+//   position: relative;
+//   margin-top: 1rem;
+// `;
 
-const NewsletterInput = styled.input`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 0.0625rem solid rgba(255, 255, 255, 0.2);
-  padding: 0.8rem 1rem;
-  border-radius: 0.25rem;
-  color: #ffffff;
+// const NewsletterInput = styled.input`
+//   width: 100%;
+//   background: rgba(255, 255, 255, 0.1);
+//   border: 0.0625rem solid rgba(255, 255, 255, 0.2);
+//   padding: 0.8rem 1rem;
+//   border-radius: 0.25rem;
+//   color: #ffffff;
 
-  &:focus {
-    outline: none;
-    border-color: #ffaa33;
-  }
-`;
+//   &:focus {
+//     outline: none;
+//     border-color: #ffaa33;
+//   }
+// `;
 
-const NewsletterButton = styled.button`
-  position: absolute;
-  right: 0.3125rem;
-  top: 0.3125rem;
-  padding: 0.5rem 1rem;
-  background: #ffaa33;
-  border: none;
-  border-radius: 0.125rem;
-  color: #03050b;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
+// const NewsletterButton = styled.button`
+//   position: absolute;
+//   right: 0.3125rem;
+//   top: 0.3125rem;
+//   padding: 0.5rem 1rem;
+//   background: #ffaa33;
+//   border: none;
+//   border-radius: 0.125rem;
+//   color: #03050b;
+//   font-weight: 600;
+//   cursor: pointer;
+//   transition: all 0.3s;
 
-  &:hover {
-    background: #ff9922;
-  }
-`;
+//   &:hover {
+//     background: #ff9922;
+//   }
+// `;
 
 const Divider = styled.div`
   width: 100%;
@@ -289,31 +289,31 @@ const QuoteAuthor = styled.p`
   font-weight: 500;
 `;
 
-const CTAButton = styled.a`
-  padding: 0.8rem 2rem;
-  background: linear-gradient(45deg, #ffaa33, #ff5e7d, #ffaa33);
-  background-size: 200% 200%;
-  animation: ${gradientMove} 5s ease infinite;
-  color: #03050b;
-  text-decoration: none;
-  font-weight: 700;
-  border-radius: 0.25rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  margin-top: 1rem;
-  box-shadow: 0 0.25rem 0.9375rem rgba(255, 170, 51, 0.3);
+// const CTAButton = styled.a`
+//   padding: 0.8rem 2rem;
+//   background: linear-gradient(45deg, #ffaa33, #ff5e7d, #ffaa33);
+//   background-size: 200% 200%;
+//   animation: ${gradientMove} 5s ease infinite;
+//   color: #03050b;
+//   text-decoration: none;
+//   font-weight: 700;
+//   border-radius: 0.25rem;
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   transition: all 0.3s;
+//   margin-top: 1rem;
+//   box-shadow: 0 0.25rem 0.9375rem rgba(255, 170, 51, 0.3);
 
-  svg {
-    margin-left: 0.5rem;
-  }
+//   svg {
+//     margin-left: 0.5rem;
+//   }
 
-  &:hover {
-    transform: translateY(-0.1875rem);
-    box-shadow: 0 0.5rem 1.25rem rgba(255, 170, 51, 0.4);
-  }
-`;
+//   &:hover {
+//     transform: translateY(-0.1875rem);
+//     box-shadow: 0 0.5rem 1.25rem rgba(255, 170, 51, 0.4);
+//   }
+// `;
 
 // const BackToTop = styled.button`
 //   position: absolute;
@@ -391,27 +391,27 @@ const StatLabel = styled.div`
 `;
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [subscribed, setSubscribed] = useState(false);
   const currentYear = new Date().getFullYear();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
-      const statusElement = document.getElementById('subscription-status');
-      if (statusElement) {
-        statusElement.textContent = "Thanks for subscribing!";
-      }
-      setTimeout(() => {
-        setSubscribed(false);
-        if (statusElement) {
-          statusElement.textContent = "";
-        }
-      }, 3000);
-    }
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (email) {
+  //     setSubscribed(true);
+  //     setEmail("");
+  //     const statusElement = document.getElementById('subscription-status');
+  //     if (statusElement) {
+  //       statusElement.textContent = "Thanks for subscribing!";
+  //     }
+  //     setTimeout(() => {
+  //       setSubscribed(false);
+  //       if (statusElement) {
+  //         statusElement.textContent = "";
+  //       }
+  //     }, 3000);
+  //   }
+  // };
 
   return (
     <FooterWrapper role="contentinfo" aria-label="Contact information and subscription">

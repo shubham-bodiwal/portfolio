@@ -264,10 +264,10 @@ const SkillName = styled.span`
   gap: 0.5rem;
 `;
 
-const SkillValue = styled.span`
-  color: ${theme.primary};
-  font-weight: 500;
-`;
+// const SkillValue = styled.span`
+//   color: ${theme.primary};
+//   font-weight: 500;
+// `;
 
 const SkillBar = styled.div`
   width: 100%;
