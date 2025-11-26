@@ -33,7 +33,8 @@ const fadeInIndicator = keyframes`
 `;
 
 const AppWrapper = styled.div`
-  background-color: #03050b;
+background: radial-gradient(ellipse at top, #09416c, transparent),
+  radial-gradient(ellipse at bottom, #001238);
   color: #fff;
   font-family: "Inter", sans-serif;
   overflow: hidden;
@@ -50,7 +51,8 @@ const Section = styled.section<{ $active?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #03050b;
+  background: radial-gradient(ellipse at top, #09416c, transparent),
+  radial-gradient(ellipse at bottom, #001238);
   transition: opacity 0.8s ease, transform 0.8s ease;
   transform: ${(p) =>
     p.$active ? "translateY(0) scale(1)" : "translateY(5%) scale(0.98)"};

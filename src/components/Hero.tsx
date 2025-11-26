@@ -105,14 +105,15 @@ const HeaderContainer = styled.div`
   animation: ${fadeInHeader} 1.5s ease-out both;
 `;
 
+// backdrop-filter: blur(0.1875rem);
 const Content = styled.div`
   z-index: 2;
   max-width: 85%;
   padding: 1rem 5rem;
   animation: ${fadeInHero} 1.5s ease-out both;
-  backdrop-filter: blur(0.1875rem);
   border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   transition: color 2s;
+  background-color: #00b3ff14;
 `;
 
 const Title = styled.h1`

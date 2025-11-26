@@ -27,7 +27,7 @@ const Logo = styled.img`
 
 const NavLink = styled.a`
   position: relative;
-  color: #566278;
+  color: #7394a7ff;
   text-decoration: none;
   letter-spacing: 0.05em;
   font-weight: 700;

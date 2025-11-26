@@ -45,7 +45,9 @@ const FooterWrapper = styled.footer`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0f1827 0%, #1a1a2e 50%, #03050b 100%);
+  background: 
+  radial-gradient(ellipse at top, #09416c, transparent),
+  radial-gradient(ellipse at bottom, #001238);
   position: relative;
   overflow: hidden;
 `;

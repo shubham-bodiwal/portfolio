@@ -60,7 +60,9 @@ const GalleryWrapper = styled.section`
   align-items: center;
   padding: 4rem;
   text-align: center;
-  background: linear-gradient(135deg, #0f1827 0%, #1a1a2e 50%, #03050b 100%);
+  background: 
+  radial-gradient(ellipse at top, #09416c, transparent),
+  radial-gradient(ellipse at bottom, #001238);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -124,7 +126,7 @@ const CoverflowItem = styled.li<{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: 0.0625rem solid ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
+  border: 0.0625rem solid ${(props) => (props.isWhite ? "#0f79cc" : "#0f79cc")};
   background: ${(props) => (props.isWhite ? "#ffffff" : "#000000")};
   cursor: pointer;
   ${(props) => (props.isActive ? "height: 20rem;" : "")}
@@ -150,12 +152,12 @@ const CoverflowItem = styled.li<{
     bottom: 0rem;
     left: 50%;
     transform: translateX(-50%);
-    width: ${(props) => (props.isActive ? "50%" : "10%")};
+    width: ${(props) => (props.isActive ? "70%" : "10%")};
     height: 0.25rem;
-    background-color: ${(props) => (props.isWhite ? "#000000" : "#ffffff")};
+    background-color: ${(props) => (props.isWhite ? "#256af1" : "#ffffff")};
     opacity: ${(props) => (props.isActive ? 0.9 : 0.6)};
     border-radius: 0.0625rem;
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   &:hover {
@@ -176,7 +178,7 @@ const CoverflowItem = styled.li<{
     transform: translate(-50%, -50%);
     font-size: ${(props) => (props.isActive ? "26rem" : "18rem")};
     font-weight: 900;
-    color: ${(props) => (props.isWhite ? "#bdbdbd3b" : "#ffffff18")};
+    color: ${(props) => (props.isWhite ? "#256af13b" : "#00a7ff47")};
     pointer-events: none;
     z-index: 0;
     user-select: none;
@@ -239,30 +241,24 @@ const ControlButton = styled.button<{ isActive: boolean }>`
   transition: all 0.3s ease;
   background: ${(props) =>
     props.isActive
-      ? "linear-gradient(135deg, #ffaa33 0%, #ff8a33 100%)"
+      ? "linear-gradient(135deg, #3276db 0%, #1e0e6c 100%)"
       : "rgba(255, 255, 255, 0.08)"};
-  color: ${(props) => (props.isActive ? "#111" : "rgba(255, 255, 255, 0.7)")};
   border: none;
   position: relative;
   overflow: hidden;
-  box-shadow: ${(props) =>
-    props.isActive
-      ? "0 0.25rem 0.9375rem rgba(255, 170, 51, 0.4)"
-      : "0 0.25rem 0.375rem rgba(0, 0, 0, 0.1)"};
+box-shadow: 0 0.25rem 0.9375rem rgb(0 0 0 / 40%);
   transform: scale(${(props) => (props.isActive ? "1.1" : "1")});
+    color: #ffffff;
+    box-shadow: 0 0.25rem 0.9375rem rgb(0 0 0 / 40%);
 
   &:hover {
-    background: ${(props) =>
-      props.isActive
-        ? "linear-gradient(135deg, #ffaa33 0%, #ff8a33 100%)"
-        : "rgba(255, 255, 255, 0.15)"};
-    transform: translateY(-0.1875rem)
-      scale(${(props) => (props.isActive ? "1.1" : "1")});
-    box-shadow: ${(props) =>
-      props.isActive
-        ? "0 0.375rem 1.25rem rgba(255, 170, 51, 0.5)"
-        : "0 0.375rem 0.625rem rgba(0, 0, 0, 0.15)"};
-    color: ${(props) => (props.isActive ? "#111" : "#ffaa33")};
+ 
+    background: linear-gradient(135deg, #3276db 0%, #1e0e6c 100%);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0.25rem 0.9375rem rgb(0 0 0 / 40%);
+    transform: scale(1.1);
   }
 
   &::after {
@@ -281,13 +277,7 @@ const ControlButton = styled.button<{ isActive: boolean }>`
     transition: opacity 0.3s ease;
   }
 
-  &:focus {
-    outline: none;
-    box-shadow: ${(props) =>
-      props.isActive
-        ? "0 0 0 0.1875rem rgba(255, 170, 51, 0.5), 0 0.25rem 0.9375rem rgba(255, 170, 51, 0.4)"
-        : "0 0 0 0.1875rem rgba(255, 255, 255, 0.3), 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1)"};
-  }
+  
 `;
 
 // Main component

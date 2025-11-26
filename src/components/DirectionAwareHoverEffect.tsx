@@ -5,7 +5,7 @@ import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 const duration = "300ms";
 const timingFn = "ease";
 // const wetAsphalt = "#34495E";
-const clouds = "#5d5d5d";
+const clouds = "#5d5d5d00";
 
 // --- Color palettes for random backgrounds ---
 const colorPalettes = [
@@ -136,7 +136,7 @@ const GlobalStyle = createGlobalStyle`
 
 // --- Styled Components ---
 const Container = styled.div`
-  width: 78.75rem;
+  width: 52.5rem;
   margin: 0 auto;
   animation: ${fadeIn} 0.8s ease-out forwards;
 `;
@@ -197,7 +197,8 @@ const ItemLink = styled.a`
   border-radius: 0.25rem;
   width: 100%;
   height: 100%;
-  background-color: ${clouds};
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.1875rem);
   color: rgba(52, 73, 94, 0.6);
   text-align: center;
   font-size: 3.125rem;
@@ -268,7 +269,8 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background: linear-gradient(135deg, #03050b 0%, #1a1e2e 100%);
+  background: radial-gradient(ellipse at top, #09416c, transparent),
+  radial-gradient(ellipse at bottom, #001238);
   padding: 2rem 1rem;
 `;
 
