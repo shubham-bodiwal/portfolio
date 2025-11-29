@@ -78,20 +78,28 @@ const GlobalStyle = createGlobalStyle`
 
 // Styled Components
 const Container = styled.div`
-  height: calc(100vh - 107px);
+  height: 100%;
   overflow: auto;
   background: linear-gradient(135deg, ${theme.background} 0%, #02040a 100%);
   color: ${theme.text};
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 0 2rem 6rem 2rem;
   font-family: "Inter", sans-serif;
 `;
 
 const Header = styled.header`
   text-align: center;
-  margin-bottom: 2.5rem;
   animation: ${fadeIn} 0.8s ease-out;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5, 11, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.5rem 0;
+  border-bottom: 1px solid ${theme.border};
+  margin: 0 -2rem 2rem -2rem;
 `;
 
 const Name = styled.h1`
@@ -133,42 +141,6 @@ const ContactLink = styled.a`
 
   &:hover {
     color: ${theme.secondary};
-  }
-`;
-
-const Nav = styled.nav`
-  margin-bottom: 2rem;
-`;
-
-const NavList = styled.ul`
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  list-style: none;
-`;
-
-const NavButton = styled.button<{ active: boolean }>`
-  padding: 0.6rem 1.25rem;
-  background: ${(props) =>
-    props.active ? theme.gradient : "transparent"};
-  color: ${(props) => (props.active ? theme.text : theme.textMuted)};
-  border-radius: 2rem;
-  font-size: 0.95rem;
-  border: 1px solid ${(props) => (props.active ? "transparent" : theme.border)};
-  cursor: pointer;
-  transition: all 0.3s;
-  text-transform: capitalize;
-  font-weight: ${(props) => (props.active ? "600" : "400")};
-  box-shadow: ${(props) =>
-    props.active ? "0 0.25rem 0.9375rem rgba(77, 159, 255, 0.3)" : "none"};
-
-  &:hover {
-    background: ${(props) =>
-      props.active ? theme.gradient : theme.surfaceHighlight};
-    transform: translateY(-0.125rem);
-    border-color: ${(props) => (props.active ? "transparent" : theme.primary)};
-    color: ${(props) => (props.active ? theme.text : theme.primary)};
   }
 `;
 
@@ -478,14 +450,11 @@ const Footer = styled.footer`
 
 
 const InteractiveResume = () => {
-  const [activeSection, setActiveSection] = useState<string>("about");
-  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const [skillsProgress, setSkillsProgress] = useState<Record<string, number>>(
     {}
   );
 
   useEffect(() => {
-    setIsVisible({ about: true });
     const timer = setTimeout(() => {
       setSkillsProgress({
         react: 95,
@@ -499,17 +468,6 @@ const InteractiveResume = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSectionChange = (section: string) => {
-    setActiveSection(section);
-    setIsVisible((prev) => ({ ...prev, [section]: true }));
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent, section: string) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleSectionChange(section);
-    }
-  };
 
   const skills: Skill[] = [
     {
@@ -703,324 +661,296 @@ const InteractiveResume = () => {
           </ContactInfo>
         </Header>
 
-        <Nav role="navigation" aria-label="Resume sections">
-          <NavList>
-            {[
-              "about",
-              "skills",
-              "experience",
-              "projects",
-              "awards",
-              "education",
-            ].map((section) => (
-              <li key={section}>
-                <NavButton
-                  active={activeSection === section}
-                  onClick={() => handleSectionChange(section)}
-                  onKeyDown={(e) => handleKeyDown(e, section)}
-                  tabIndex={0}
-                  role="tab"
-                  id={`tab-${section}`}
-                  aria-selected={activeSection === section}
-                  aria-controls={`panel-${section}`}
-                >
-                  {section}
-                </NavButton>
-              </li>
-            ))}
-          </NavList>
-        </Nav>
-
-        <Main
-          role="tabpanel"
-          id={`panel-${activeSection}`}
-          aria-labelledby={`tab-${activeSection}`}
-        >
+        <Main>
           {/* About Section */}
-          {activeSection === "about" && isVisible.about && (
-            <Section>
-              <SectionTitle>
-                <IconWrapper aria-hidden="true">
-                  <Terminal size={22} />
-                </IconWrapper>{" "}
-                About Me
-              </SectionTitle>
+          <Section id="about" style={{ marginBottom: "4rem" }}>
+            <SectionTitle>
+              <IconWrapper aria-hidden="true">
+                <Terminal size={22} />
+              </IconWrapper>{" "}
+              About Me
+            </SectionTitle>
 
-              <AboutText>
-                Frontend Engineer with 4+ years building scalable web applications serving 5,000+ enterprise users.
-                Expertise in React, Next.js, and TypeScript with proven 40-60% performance improvements. Led teams of
-                6 engineers delivering AI-powered platforms and SaaS products with 95%+ test coverage.
-              </AboutText>
+            <AboutText>
+              Frontend Engineer with 4+ years building scalable web applications serving 5,000+ enterprise users.
+              Expertise in React, Next.js, and TypeScript with proven 40-60% performance improvements. Led teams of
+              6 engineers delivering AI-powered platforms and SaaS products with 95%+ test coverage.
+            </AboutText>
 
-              <CardGrid>
-                <Card>
-                  <CardTitle>Enterprise Scale Craft</CardTitle>
-                  <CardText>
-                    Architect scalable React & Next.js systems with reusable
-                    design tokens, component libraries, and SSR pipelines.
-                  </CardText>
-                </Card>
+            <CardGrid>
+              <Card>
+                <CardTitle>Enterprise Scale Craft</CardTitle>
+                <CardText>
+                  Architect scalable React & Next.js systems with reusable
+                  design tokens, component libraries, and SSR pipelines.
+                </CardText>
+              </Card>
 
-                <Card>
-                  <CardTitle>Performance Champion</CardTitle>
-                  <CardText>
-                    Delivered 40-60% faster experiences using caching layers,
-                    workers, and Core Web Vitals guided optimizations.
-                  </CardText>
-                </Card>
+              <Card>
+                <CardTitle>Performance Champion</CardTitle>
+                <CardText>
+                  Delivered 40-60% faster experiences using caching layers,
+                  workers, and Core Web Vitals guided optimizations.
+                </CardText>
+              </Card>
 
-                <Card>
-                  <CardTitle>Team Catalyst</CardTitle>
-                  <CardText>
-                    Mentor engineers, lead code reviews, and uphold 95%+ test
-                    coverage to keep releases calm and predictable.
-                  </CardText>
-                </Card>
-              </CardGrid>
-            </Section>
-          )}
+              <Card>
+                <CardTitle>Team Catalyst</CardTitle>
+                <CardText>
+                  Mentor engineers, lead code reviews, and uphold 95%+ test
+                  coverage to keep releases calm and predictable.
+                </CardText>
+              </Card>
+            </CardGrid>
+          </Section>
 
           {/* Skills Section */}
-          {activeSection === "skills" && isVisible.skills && (
-            <Section>
-              <SectionTitle>
-                <IconWrapper aria-hidden="true">
-                  <Code size={22} />
-                </IconWrapper>{" "}
-                Technical Skills
-              </SectionTitle>
+          <Section id="skills" style={{ marginBottom: "4rem" }}>
+            <SectionTitle>
+              <IconWrapper aria-hidden="true">
+                <Code size={22} />
+              </IconWrapper>{" "}
+              Technical Skills
+            </SectionTitle>
 
-              <CardGrid>
-                {skills.map((skill) => (
-                  <SkillCard key={skill.name}>
-                    <SkillHeader>
-                      <SkillName>
-                        <IconWrapper aria-hidden="true">
-                          {skill.icon}
-                        </IconWrapper>
-                        {skill.name}
-                      </SkillName>
-                      {/* <SkillValue>{skill.value}%</SkillValue> */}
-                    </SkillHeader>
-                    <SkillBar
-                      role="progressbar"
-                      aria-valuenow={skill.value}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-label={`${skill.name} skill level: ${skill.value}%`}
-                    >
-                      <SkillFill value={skill.value} />
-                    </SkillBar>
-                  </SkillCard>
-                ))}
-              </CardGrid>
+            <CardGrid>
+              {skills.map((skill) => (
+                <SkillCard key={skill.name}>
+                  <SkillHeader>
+                    <SkillName>
+                      <IconWrapper aria-hidden="true">
+                        {skill.icon}
+                      </IconWrapper>
+                      {skill.name}
+                    </SkillName>
+                    {/* <SkillValue>{skill.value}%</SkillValue> */}
+                  </SkillHeader>
+                  <SkillBar
+                    role="progressbar"
+                    aria-valuenow={skill.value}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`${skill.name} skill level: ${skill.value}%`}
+                  >
+                    <SkillFill value={skill.value} />
+                  </SkillBar>
+                </SkillCard>
+              ))}
+            </CardGrid>
 
-              <SectionTitle style={{ fontSize: "1.25rem", marginTop: "2rem" }}>
-                <IconWrapper aria-hidden="true">
-                  <Server size={18} />
-                </IconWrapper>{" "}
-                Additional Expertise
-              </SectionTitle>
+            <SectionTitle style={{ fontSize: "1.25rem", marginTop: "2rem" }}>
+              <IconWrapper aria-hidden="true">
+                <Server size={18} />
+              </IconWrapper>{" "}
+              Additional Expertise
+            </SectionTitle>
 
-              <TagsContainer role="list" aria-label="Additional skills">
-                {[
-                  "Next.js",
-                  "Redux Toolkit",
-                  "Node.js",
-                  "GraphQL",
-                  "Docker",
-                  "Shadcn UI",
-                  "Material UI",
-                  "Tailwind CSS",
-                  "Core Web Vitals",
-                  "PWA",
-                  "Service Workers",
-                  "Cypress",
-                  "Git",
-                  "CI/CD",
-                  "AI-Assisted Development",
-                ].map((tag) => (
-                  <Tag key={tag} role="listitem">
-                    {tag}
-                  </Tag>
-                ))}
-              </TagsContainer>
-            </Section>
-          )}
+            <TagsContainer role="list" aria-label="Additional skills">
+              {[
+                "Next.js",
+                "Redux Toolkit",
+                "Node.js",
+                "GraphQL",
+                "Docker",
+                "Shadcn UI",
+                "Tailwind CSS",
+                "Core Web Vitals",
+                "PWA",
+                "CI/CD",
+                "AI-Assisted Development",
+              ].map((tag) => (
+                <Tag key={tag} role="listitem">
+                  {tag}
+                </Tag>
+              ))}
+            </TagsContainer>
+          </Section>
 
           {/* Experience Section */}
-          {activeSection === "experience" && isVisible.experience && (
-            <Section>
-              <SectionTitle>
-                <IconWrapper aria-hidden="true">
-                  <Briefcase size={22} />
-                </IconWrapper>{" "}
-                Work Experience
-              </SectionTitle>
+          <Section id="experience" style={{ marginBottom: "4rem" }}>
+            <SectionTitle>
+              <IconWrapper aria-hidden="true">
+                <Briefcase size={22} />
+              </IconWrapper>{" "}
+              Work Experience
+            </SectionTitle>
 
-              <Timeline>
-                {experience.map((job, index) => (
-                  <TimelineItem key={index}>
-                    <TimelineCard>
-                      <CardTitle as="h3">{job.title}</CardTitle>
-                      <TimelineHeader>
-                        <TimelineCompany>{job.company}</TimelineCompany>
-                        <TimelineDate>{job.period}</TimelineDate>
-                      </TimelineHeader>
-                      <BulletList role="list">
-                        {job.description.map((item, i) => (
-                          <BulletItem key={i} role="listitem">
-                            {item}
-                          </BulletItem>
-                        ))}
-                      </BulletList>
-                    </TimelineCard>
-                  </TimelineItem>
-                ))}
-              </Timeline>
-            </Section>
-          )}
+            <Timeline>
+              {experience.map((job, index) => (
+                <TimelineItem key={index}>
+                  <TimelineCard>
+                    <CardTitle as="h3">{job.title}</CardTitle>
+                    <TimelineHeader>
+                      <TimelineCompany>{job.company}</TimelineCompany>
+                      <TimelineDate>{job.period}</TimelineDate>
+                    </TimelineHeader>
+                    <BulletList role="list">
+                      {job.description.map((item, i) => (
+                        <BulletItem key={i} role="listitem">
+                          {item}
+                        </BulletItem>
+                      ))}
+                    </BulletList>
+                  </TimelineCard>
+                </TimelineItem>
+              ))}
+            </Timeline>
+          </Section>
 
           {/* Projects Section */}
-          {activeSection === "projects" && isVisible.projects && (
-            <Section>
-              <SectionTitle>
-                <IconWrapper aria-hidden="true">
-                  <Activity size={22} />
-                </IconWrapper>{" "}
-                Projects
-              </SectionTitle>
+          <Section id="projects" style={{ marginBottom: "4rem" }}>
+            <SectionTitle>
+              <IconWrapper aria-hidden="true">
+                <Activity size={22} />
+              </IconWrapper>{" "}
+              Projects
+            </SectionTitle>
 
-              <ProjectsContainer>
-                <ProjectCategoryTitle>
-                  <IconWrapper
-                    style={{ color: theme.primary }}
-                    aria-hidden="true"
-                  >
-                    <Briefcase size={18} />
-                  </IconWrapper>
-                  Professional Projects
-                </ProjectCategoryTitle>
+            <ProjectsContainer>
+              <ProjectCategoryTitle>
+                <IconWrapper
+                  style={{ color: theme.primary }}
+                  aria-hidden="true"
+                >
+                  <Briefcase size={18} />
+                </IconWrapper>
+                Professional Projects
+              </ProjectCategoryTitle>
 
-                <CardGrid role="list" aria-label="Professional projects">
-                  {mainProjects.map((project, index) => (
-                    <ProjectCard key={index} role="listitem">
-                      <ProjectHeader>
-                        <ProjectIcon aria-hidden="true">
-                          {project.icon}
-                        </ProjectIcon>
-                        <ProjectTitle>{project.title}</ProjectTitle>
-                      </ProjectHeader>
-                      <CardText>{project.description}</CardText>
-                      <ProjectTags
-                        aria-label={`Technologies used in ${project.title}`}
-                      >
-                        {project.tags.map((tag, i) => (
-                          <ProjectTag key={i}>{tag}</ProjectTag>
-                        ))}
-                      </ProjectTags>
-                    </ProjectCard>
-                  ))}
-                </CardGrid>
-
-                <ProjectCategoryTitle style={{ marginTop: "3rem" }}>
-                  <IconWrapper
-                    style={{ color: theme.secondary }}
-                    aria-hidden="true"
-                  >
-                    <Flame size={18} />
-                  </IconWrapper>
-                  Self-Initiated Projects
-                </ProjectCategoryTitle>
-
-                <CardGrid role="list" aria-label="Self-initiated projects">
-                  {selfInitiatedProjects.map((project, index) => (
-                    <ProjectCard key={index} role="listitem">
-                      <ProjectHeader>
-                        <ProjectIcon aria-hidden="true">
-                          {project.icon}
-                        </ProjectIcon>
-                        <ProjectTitle>{project.title}</ProjectTitle>
-                      </ProjectHeader>
-                      <CardText>{project.description}</CardText>
-                      <ProjectTags
-                        aria-label={`Technologies used in ${project.title}`}
-                      >
-                        {project.tags.map((tag, i) => (
-                          <ProjectTag key={i}>{tag}</ProjectTag>
-                        ))}
-                      </ProjectTags>
-                    </ProjectCard>
-                  ))}
-                </CardGrid>
-              </ProjectsContainer>
-            </Section>
-          )}
-
-          {/* Awards Section */}
-          {activeSection === "awards" && isVisible.awards && (
-            <Section>
-              <SectionTitle>
-                <IconWrapper aria-hidden="true">
-                  <Award size={22} />
-                </IconWrapper>{" "}
-                Awards & Recognition
-              </SectionTitle>
-
-              <CardGrid role="list" aria-label="Awards and recognition">
-                <HighlightCard role="listitem">
-                  <CardTitle as="h3">
-                    'Overachiever' Recognition - Swivl.tech
-                  </CardTitle>
-                  <CardText>
-                    Recognized for exceptional technical delivery and consistently exceeding sprint commitments.
-                  </CardText>
-                </HighlightCard>
-
-                <HighlightCard role="listitem">
-                  <CardTitle as="h3">
-                    'New Star on the Block' - Daffodil Software
-                  </CardTitle>
-                  <CardText>
-                    Delivered mission-critical modules 30% ahead of schedule with zero production incidents.
-                  </CardText>
-                </HighlightCard>
-
-                <HighlightCard role="listitem">
-                  <CardTitle as="h3">
-                    Resume.io Technical Excellence
-                  </CardTitle>
-                  <CardText>
-                    Acknowledged as top technical contributor; 25% rendering optimization impacting 50,000+ users.
-                  </CardText>
-                </HighlightCard>
+              <CardGrid role="list" aria-label="Professional projects">
+                {mainProjects.map((project, index) => (
+                  <ProjectCard key={index} role="listitem">
+                    <ProjectHeader>
+                      <ProjectIcon aria-hidden="true">
+                        {project.icon}
+                      </ProjectIcon>
+                      <ProjectTitle>{project.title}</ProjectTitle>
+                    </ProjectHeader>
+                    <CardText>{project.description}</CardText>
+                    <ProjectTags
+                      aria-label={`Technologies used in ${project.title}`}
+                    >
+                      {project.tags.map((tag, i) => (
+                        <ProjectTag key={i}>{tag}</ProjectTag>
+                      ))}
+                    </ProjectTags>
+                  </ProjectCard>
+                ))}
               </CardGrid>
-            </Section>
-          )}
+
+              <ProjectCategoryTitle style={{ marginTop: "3rem" }}>
+                <IconWrapper
+                  style={{ color: theme.secondary }}
+                  aria-hidden="true"
+                >
+                  <Flame size={18} />
+                </IconWrapper>
+                Self-Initiated Projects
+              </ProjectCategoryTitle>
+
+              <CardGrid role="list" aria-label="Self-initiated projects">
+                {selfInitiatedProjects.map((project, index) => (
+                  <ProjectCard key={index} role="listitem">
+                    <ProjectHeader>
+                      <ProjectIcon aria-hidden="true">
+                        {project.icon}
+                      </ProjectIcon>
+                      <ProjectTitle>{project.title}</ProjectTitle>
+                    </ProjectHeader>
+                    <CardText>{project.description}</CardText>
+                    <ProjectTags
+                      aria-label={`Technologies used in ${project.title}`}
+                    >
+                      {project.tags.map((tag, i) => (
+                        <ProjectTag key={i}>{tag}</ProjectTag>
+                      ))}
+                    </ProjectTags>
+                  </ProjectCard>
+                ))}
+              </CardGrid>
+            </ProjectsContainer>
+          </Section>
 
           {/* Education Section */}
-          {activeSection === "education" && isVisible.education && (
-            <Section>
-              <SectionTitle>
-                <IconWrapper aria-hidden="true">
-                  <BookOpen size={22} />
-                </IconWrapper>{" "}
-                Education
-              </SectionTitle>
+          <Section id="education" style={{ marginBottom: "4rem" }}>
+            <SectionTitle>
+              <IconWrapper aria-hidden="true">
+                <BookOpen size={22} />
+              </IconWrapper>{" "}
+              Education
+            </SectionTitle>
 
-              <Card style={{ marginBottom: "2rem" }}>
+            <Card style={{ marginBottom: "2rem" }}>
+              <CardTitle as="h3">
+                Bachelor of Technology (B.Tech) in Computer Science
+              </CardTitle>
+              <TimelineHeader>
+                <TimelineCompany>
+                  BK Birla Institute of Engineering and Technology, Pilani
+                </TimelineCompany>
+                <TimelineDate>2018 - 2022</TimelineDate>
+              </TimelineHeader>
+              <CardText>CGPA: 8.7</CardText>
+            </Card>
+
+            <Card style={{ marginBottom: "2rem" }}>
+              <CardTitle as="h3">Senior Secondary (12th Grade)</CardTitle>
+              <TimelineHeader>
+                <TimelineCompany>Birla School Pilani</TimelineCompany>
+                <TimelineDate>Completed</TimelineDate>
+              </TimelineHeader>
+              <CardText>CGPA: 8.7</CardText>
+            </Card>
+
+            <Card style={{ marginBottom: "2rem" }}>
+              <CardTitle as="h3">Secondary (10th Grade)</CardTitle>
+              <TimelineHeader>
+                <TimelineCompany>Birla School Pilani</TimelineCompany>
+                <TimelineDate>Completed</TimelineDate>
+              </TimelineHeader>
+              <CardText>CGPA: 8.4</CardText>
+            </Card>
+          </Section>
+
+          {/* Awards Section */}
+          <Section id="awards" style={{ marginBottom: "4rem" }}>
+            <SectionTitle>
+              <IconWrapper aria-hidden="true">
+                <Award size={22} />
+              </IconWrapper>{" "}
+              Awards & Recognition
+            </SectionTitle>
+
+            <CardGrid role="list" aria-label="Awards and recognition">
+              <HighlightCard role="listitem">
                 <CardTitle as="h3">
-                  Bachelor of Technology (B.Tech) in Computer Science
+                  'Overachiever' Recognition - Swivl.tech
                 </CardTitle>
-                <TimelineHeader>
-                  <TimelineCompany>
-                    BK Birla Institute of Engineering and Technology, Pilani
-                  </TimelineCompany>
-                  <TimelineDate>2018 - 2022</TimelineDate>
-                </TimelineHeader>
-              </Card>
-            </Section>
-          )}
+                {/* <CardText>
+                  Recognized for exceptional technical delivery and consistently
+                  exceeding sprint commitments.
+                </CardText> */}
+              </HighlightCard>
+
+              <HighlightCard role="listitem">
+                <CardTitle as="h3">
+                  'New Star on the Block' - Daffodil Software
+                </CardTitle>
+                {/* <CardText>
+                  Delivered mission-critical modules 30% ahead of schedule with
+                  zero production incidents.
+                </CardText> */}
+              </HighlightCard>
+
+              <HighlightCard role="listitem">
+                <CardTitle as="h3">Resume.io Technical Excellence</CardTitle>
+                {/* <CardText>
+                  Acknowledged as top technical contributor; 25% rendering
+                  optimization impacting 50,000+ users.
+                </CardText> */}
+              </HighlightCard>
+            </CardGrid>
+          </Section>
         </Main>
 
         <Footer role="contentinfo">

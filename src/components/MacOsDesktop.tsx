@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 // Import wallpaper & sounds
-import OsWallpaper from "../assets/os-wallpaper2.avif";
+import OsWallpaper from "../assets/wallpaper.jpg";
 import bootSound from "../assets/start-sound.wav";
 
 // Import MacHeader and MacWindow components
