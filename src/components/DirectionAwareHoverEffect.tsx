@@ -5,7 +5,7 @@ import styled, { createGlobalStyle, keyframes, css } from "styled-components";
 const duration = "300ms";
 const timingFn = "ease";
 // const wetAsphalt = "#34495E";
-const clouds = "#5d5d5d00";
+// const clouds = "#5d5d5d00";
 
 // --- Color palettes for random backgrounds ---
 const colorPalettes = [
