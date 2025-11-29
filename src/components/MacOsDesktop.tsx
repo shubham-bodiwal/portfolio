@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 // Import wallpaper & sounds
@@ -347,6 +348,34 @@ const loadState = () => {
 
 // Main component
 export default function EnhancedMacOSDesktop() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      if (window.innerWidth < 768) {
+        navigate("/");
+      }
+    };
+
+    const checkFullscreen = () => {
+      if (!document.fullscreenElement) {
+        navigate("/");
+      }
+    };
+
+    // Initial checks
+    checkMobile();
+    // We don't enforce fullscreen on mount immediately to allow for transition, 
+    // but we listen for changes.
+
+    window.addEventListener("resize", checkMobile);
+    document.addEventListener("fullscreenchange", checkFullscreen);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      document.removeEventListener("fullscreenchange", checkFullscreen);
+    };
+  }, [navigate]);
   // System state
   const [systemState, setSystemState] = useState<
     "booting" | "running" | "shuttingDown" | "off"
@@ -452,9 +481,12 @@ export default function EnhancedMacOSDesktop() {
         } else if ((document as any).msExitFullscreen) {
           (document as any).msExitFullscreen();
         }
+        
+        // Navigate back to landing page
+        navigate("/");
       }, 5000); // Allow time for shutdown animation
     }
-  }, [systemState, openWindows]);
+  }, [systemState, openWindows, navigate]);
 
   // Show/hide Dock based on mouse position
   useEffect(() => {

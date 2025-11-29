@@ -55,17 +55,18 @@ const slideUp = keyframes`
 
 // Theme colors
 const theme = {
-  primary: "#6C63FF", // Purple
-  secondary: "#FFA454", // Orange
+  primary: "#4d9fff", // Bright Blue
+  secondary: "#ffaa33", // Gold/Orange
   tertiary: "#4ECDC4", // Mint
-  background: "#1E1C31", // Dark purple-blue
-  backgroundLight: "#2A2844",
-  backgroundLighter: "#343256",
-  text: "#F9F9F9",
-  textMuted: "#B3B1CD",
+  background: "#050b14", // Very dark, almost black-blue
+  surface: "rgba(255, 255, 255, 0.03)", // Glass effect
+  surfaceHighlight: "rgba(255, 255, 255, 0.06)", // Hover state
+  border: "rgba(255, 255, 255, 0.08)",
+  text: "#ffffff",
+  textMuted: "#94a3b8", // Slate gray
   accent: "#FF5E7D", // Pink
   success: "#6EE7B7", // Green
-  gradient: "linear-gradient(45deg, #6C63FF, #FF5E7D)",
+  gradient: "linear-gradient(135deg, #4d9fff 0%, #3a7bd5 100%)",
 };
 
 // Global Styles
@@ -77,9 +78,9 @@ const GlobalStyle = createGlobalStyle`
 
 // Styled Components
 const Container = styled.div`
-  height: 100%;
+  height: calc(100vh - 107px);
   overflow: auto;
-  background: linear-gradient(135deg, ${theme.background} 0%, #16141f 100%);
+  background: linear-gradient(135deg, ${theme.background} 0%, #02040a 100%);
   color: ${theme.text};
   display: flex;
   flex-direction: column;
@@ -131,7 +132,7 @@ const ContactLink = styled.a`
   font-size: 0.9rem;
 
   &:hover {
-    color: ${theme.primary};
+    color: ${theme.secondary};
   }
 `;
 
@@ -150,22 +151,24 @@ const NavList = styled.ul`
 const NavButton = styled.button<{ active: boolean }>`
   padding: 0.6rem 1.25rem;
   background: ${(props) =>
-    props.active ? theme.gradient : theme.backgroundLight};
+    props.active ? theme.gradient : "transparent"};
   color: ${(props) => (props.active ? theme.text : theme.textMuted)};
   border-radius: 2rem;
   font-size: 0.95rem;
-  border: none;
+  border: 1px solid ${(props) => (props.active ? "transparent" : theme.border)};
   cursor: pointer;
   transition: all 0.3s;
   text-transform: capitalize;
   font-weight: ${(props) => (props.active ? "600" : "400")};
   box-shadow: ${(props) =>
-    props.active ? "0 0.25rem 0.9375rem rgba(108, 99, 255, 0.2)" : "none"};
+    props.active ? "0 0.25rem 0.9375rem rgba(77, 159, 255, 0.3)" : "none"};
 
   &:hover {
     background: ${(props) =>
-      props.active ? theme.gradient : theme.backgroundLighter};
+      props.active ? theme.gradient : theme.surfaceHighlight};
     transform: translateY(-0.125rem);
+    border-color: ${(props) => (props.active ? "transparent" : theme.primary)};
+    color: ${(props) => (props.active ? theme.text : theme.primary)};
   }
 `;
 
@@ -189,6 +192,7 @@ const SectionTitle = styled.h3`
   align-items: center;
   gap: 0.5rem;
   position: relative;
+  color: ${theme.text};
 
   &::after {
     content: "";
@@ -197,19 +201,20 @@ const SectionTitle = styled.h3`
     left: 0;
     width: 3rem;
     height: 0.1875rem;
-    background: ${theme.gradient};
+    background: ${theme.secondary};
     border-radius: 0.1875rem;
   }
 `;
 
 const IconWrapper = styled.span`
-  color: ${theme.primary};
+  color: ${theme.secondary};
 `;
 
 const AboutText = styled.p`
   line-height: 1.7;
   margin-bottom: 2rem;
   color: ${theme.textMuted};
+  font-size: 1.05rem;
 `;
 
 const CardGrid = styled.div`
@@ -220,35 +225,41 @@ const CardGrid = styled.div`
 `;
 
 const Card = styled.div`
-  background: ${theme.backgroundLight};
+  background: ${theme.surface};
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 0.75rem;
   padding: 1.5rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-  border: 0.0625rem solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  border: 1px solid ${theme.border};
 
   &:hover {
     transform: translateY(-0.3125rem);
-    box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: ${theme.surfaceHighlight};
   }
 `;
 
 const HighlightCard = styled(Card)`
-  border-left: 0.25rem solid ${theme.primary};
+  border-left: 0.25rem solid ${theme.secondary};
 `;
 
 const CardTitle = styled.h4`
   font-size: 1.15rem;
   margin-bottom: 0.75rem;
   color: ${theme.primary};
+  font-weight: 600;
 `;
 
 const CardText = styled.p`
   font-size: 0.95rem;
   color: ${theme.textMuted};
+  line-height: 1.5;
 `;
 
 const SkillCard = styled(Card)`
-  background: ${theme.backgroundLight};
+  background: ${theme.surface};
 `;
 
 const SkillHeader = styled.div`
@@ -262,6 +273,7 @@ const SkillName = styled.span`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-weight: 500;
 `;
 
 // const SkillValue = styled.span`
@@ -272,7 +284,7 @@ const SkillName = styled.span`
 const SkillBar = styled.div`
   width: 100%;
   height: 0.5rem;
-  background: ${theme.backgroundLighter};
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   overflow: hidden;
 `;
@@ -294,10 +306,11 @@ const TagsContainer = styled.div`
 
 const Tag = styled.span`
   font-size: 0.85rem;
-  background: ${theme.backgroundLighter};
-  color: ${theme.textMuted};
+  background: rgba(77, 159, 255, 0.1);
+  color: ${theme.primary};
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
+  border: 1px solid rgba(77, 159, 255, 0.2);
 `;
 
 const Timeline = styled.div`
@@ -311,7 +324,7 @@ const Timeline = styled.div`
     top: 0;
     bottom: 0;
     width: 0.125rem;
-    background: ${theme.backgroundLighter};
+    background: ${theme.border};
   }
 `;
 
@@ -327,8 +340,10 @@ const TimelineItem = styled.div`
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    background: ${theme.primary};
-    border: 0.1875rem solid ${theme.backgroundLight};
+    background: ${theme.background};
+    border: 0.1875rem solid ${theme.secondary};
+    box-shadow: 0 0 0 4px ${theme.background};
+    z-index: 2;
   }
 `;
 
@@ -346,14 +361,16 @@ const TimelineHeader = styled.div`
 
 const TimelineDate = styled.span`
   font-size: 0.85rem;
-  background: ${theme.backgroundLighter};
+  background: rgba(255, 255, 255, 0.05);
   color: ${theme.textMuted};
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
+  border: 1px solid ${theme.border};
 `;
 
 const TimelineCompany = styled.span`
-  color: ${theme.textMuted};
+  color: ${theme.secondary};
+  font-weight: 500;
 `;
 
 const BulletList = styled.ul`
@@ -370,7 +387,7 @@ const BulletItem = styled.li`
 
   &::before {
     content: "•";
-    color: ${theme.primary};
+    color: ${theme.secondary};
     font-weight: bold;
     margin-right: 0.5rem;
   }
@@ -383,7 +400,7 @@ const ProjectsContainer = styled.div`
 const ProjectCategoryTitle = styled.h4`
   font-size: 1.25rem;
   margin-bottom: 1.5rem;
-  color: ${theme.primary};
+  color: ${theme.text};
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -392,7 +409,7 @@ const ProjectCategoryTitle = styled.h4`
     content: "";
     flex-grow: 1;
     height: 0.0625rem;
-    background: ${theme.backgroundLighter};
+    background: ${theme.border};
     margin-left: 1rem;
   }
 `;
@@ -409,6 +426,7 @@ const ProjectCard = styled(Card)`
     width: 0.25rem;
     height: 2.5rem;
     border-radius: 0 0.75rem 0 0.75rem;
+    background: ${theme.secondary};
   }
 `;
 
@@ -426,13 +444,14 @@ const ProjectIcon = styled.div`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.75rem;
-  background: rgba(108, 99, 255, 0.1);
-  color: ${theme.primary};
+  background: rgba(255, 170, 51, 0.1);
+  color: ${theme.secondary};
 `;
 
 const ProjectTitle = styled.h5`
   font-size: 1.1rem;
   color: ${theme.primary};
+  font-weight: 600;
 `;
 
 const ProjectTags = styled(TagsContainer)`
@@ -441,17 +460,18 @@ const ProjectTags = styled(TagsContainer)`
 
 const ProjectTag = styled(Tag)`
   font-size: 0.85rem;
-  background: ${theme.backgroundLighter};
+  background: rgba(255, 255, 255, 0.05);
   color: ${theme.textMuted};
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
+  border: 1px solid ${theme.border};
 `;
 
 const Footer = styled.footer`
   text-align: center;
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 0.0625rem solid ${theme.backgroundLighter};
+  border-top: 0.0625rem solid ${theme.border};
   color: ${theme.textMuted};
   font-size: 0.85rem;
 `;

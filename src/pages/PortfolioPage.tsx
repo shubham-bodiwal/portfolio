@@ -6,6 +6,8 @@ import Footer from "../components/Footer";
 import { DirectionAwareHoverEffect } from "../components/DirectionAwareHoverEffect";
 import ColorChangingAnimation from "../components/ColorChangingAnimation";
 
+import { useNavigate } from "react-router-dom";
+
 const fadeInText = keyframes`
   0% {
     opacity: 0;
@@ -53,11 +55,10 @@ const Section = styled.section<{ $active?: boolean }>`
   align-items: center;
   background: radial-gradient(ellipse at top, #09416c, transparent),
   radial-gradient(ellipse at bottom, #001238);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  transform: ${(p) =>
-    p.$active ? "translateY(0) scale(1)" : "translateY(5%) scale(0.98)"};
-  z-index: ${(p) => (p.$active ? 2 : 1)};
-  pointer-events: ${(p) => (p.$active ? "auto" : "none")};
+  opacity: ${(props) => (props.$active ? 1 : 0)};
+  visibility: ${(props) => (props.$active ? "visible" : "hidden")};
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  z-index: ${(props) => (props.$active ? 1 : 0)};
 `;
 
 const IndicatorWrapper = styled.div`
@@ -141,6 +142,20 @@ const VerticalRightText = styled.div`
 function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      if (window.innerWidth < 768) {
+        navigate("/");
+      }
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [navigate]);
+
   const isScrolling = useRef(false);
   const [active, setActive] = useState(0);
   const totalSections = 5;

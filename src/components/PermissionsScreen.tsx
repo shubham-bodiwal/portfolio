@@ -1,5 +1,6 @@
 import { useEffect, useState, FC, KeyboardEvent } from "react";
 import styled, { keyframes, createGlobalStyle } from "styled-components";
+import { useNavigate } from "react-router-dom";
 import StartImageAnimation from "./StartImageAnimation";
 import CursorAnimation from "./CursorAnimation";
 
@@ -143,25 +144,37 @@ const pulse = keyframes`
   }
 `;
 
-const Button = styled.button`
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`;
+
+const Button = styled.button<{ variant?: "primary" | "secondary" }>`
   padding: 1rem 2rem;
   font-size: 1.5rem;
   cursor: pointer;
-  background: rgba(30, 50, 100, 0.2);
-  color: #4d9fff;
-  border: 0.125rem solid #4d9fff;
+  background: ${props => props.variant === "secondary" ? "rgba(255, 255, 255, 0.05)" : "rgba(30, 50, 100, 0.2)"};
+  color: ${props => props.variant === "secondary" ? "white" : "#4d9fff"};
+  border: 0.125rem solid ${props => props.variant === "secondary" ? "rgba(255, 255, 255, 0.2)" : "#4d9fff"};
   border-radius: 0.375rem;
-  box-shadow: 0 0 0.625rem rgba(61, 139, 255, 0.3);
+  box-shadow: ${props => props.variant === "secondary" ? "none" : "0 0 0.625rem rgba(61, 139, 255, 0.3)"};
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   font-weight: 500;
   letter-spacing: 0.0313rem;
-  animation: ${pulse} 2s infinite;
+  animation: ${props => props.variant === "secondary" ? "none" : pulse} 2s infinite;
   cursor: none;
+  min-width: 200px;
 
   &:hover {
-    background: rgba(61, 139, 255, 0.2);
+    background: ${props => props.variant === "secondary" ? "rgba(255, 255, 255, 0.1)" : "rgba(61, 139, 255, 0.2)"};
     transform: translateY(-0.125rem);
     color: white;
   }
@@ -233,11 +246,12 @@ const StatusText = styled.div`
 `;
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
   shutdownMode?: boolean;
 };
 
 const PermissionScreen: FC<Props> = ({ onClick, shutdownMode = false }) => {
+  const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [statusText, setStatusText] = useState("Initializing...");
   const [isMobile, setIsMobile] = useState(false);
@@ -295,11 +309,20 @@ const PermissionScreen: FC<Props> = ({ onClick, shutdownMode = false }) => {
     }
   }, [shutdownMode]);
 
+  const handleEnterOs = () => {
+    navigate("/os");
+  };
+
+  const handleQuickView = () => {
+    navigate("/portfolio");
+  };
+
   // Handle keyboard events for the button
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      onClick();
+      if (onClick) onClick();
+      else handleEnterOs();
     }
   };
 
@@ -345,7 +368,7 @@ const PermissionScreen: FC<Props> = ({ onClick, shutdownMode = false }) => {
               </ProgressBar>
               <StatusText aria-live="polite">{statusText}</StatusText>
               <Button
-                onClick={onClick}
+                onClick={onClick || handleEnterOs}
                 onKeyDown={handleKeyDown}
                 tabIndex={0}
                 aria-label="Resume portfolio session"
@@ -358,23 +381,30 @@ const PermissionScreen: FC<Props> = ({ onClick, shutdownMode = false }) => {
               <Message id="screen-message">
                 This portfolio experience requires <strong>Fullscreen</strong>{" "}
                 access to properly showcase the projects and work in an optimal
-                presentation.{" "}
-                {!isMobile && "It is only available on desktop devices."}
+                presentation.
               </Message>
-              <Button
-                onClick={onClick}
-                disabled={isMobile}
-                onKeyDown={handleKeyDown}
-                tabIndex={0}
-                aria-disabled={isMobile}
-                aria-label={
-                  isMobile
-                    ? "Desktop required for this portfolio"
-                    : "Enter fullscreen mode"
-                }
-              >
-                {isMobile ? "Desktop Required" : "Enter Fullscreen"}
-              </Button>
+              <ButtonContainer>
+                <Button
+                  onClick={handleEnterOs}
+                  disabled={isMobile}
+                  onKeyDown={handleKeyDown}
+                  tabIndex={0}
+                  aria-disabled={isMobile}
+                  aria-label="Enter Immersive OS"
+                >
+                  Enter Immersive OS
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={handleQuickView}
+                  disabled={isMobile}
+                  tabIndex={0}
+                  aria-disabled={isMobile}
+                  aria-label="Quick Portfolio View"
+                >
+                  Quick Portfolio View
+                </Button>
+              </ButtonContainer>
               <StatusText>Portfolio • Version 2.0</StatusText>
               <Message>
                 {!isMobile && "Do not forget to "}
